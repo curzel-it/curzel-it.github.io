@@ -8,6 +8,7 @@ a {
     text-decoration: none;
     font-weight: 400;
     color: #FF0080;
+    background-color: transparent;
 }
 
 div,
@@ -275,7 +276,8 @@ strong {
     .job-container::after,
     .job-container::before,
     .left::after,
-    .right::after {
+    .right::after,
+    .sideproject {
         display: none;
     }
     .job-container,
