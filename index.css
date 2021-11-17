@@ -209,3 +209,26 @@ strong {
     size: auto;
     margin: 0mm;
 }
+
+@media (prefers-color-scheme: dark) {
+    * {
+        color: #d0d0d0;
+        background-color: black;
+    }
+    h1 {
+        color: #f0f0f0;
+    }
+    h2,
+    h3 {
+        color: #eeeeee;
+    }
+    a {
+        color: #ff0080;
+    }
+    .profile-pic {
+        border-color: #ff0080;
+    }
+    .content {
+        background-color: black;
+    }
+}
