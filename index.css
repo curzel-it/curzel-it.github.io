@@ -106,6 +106,12 @@ strong {
 
 .socials a {
     color: black;
+    font-size: 21pt;
+    margin-right: 8px;
+}
+
+.socials>a>i {
+    margin-top: -5px;
 }
 
 .myprivacy {
@@ -162,7 +168,7 @@ strong {
     position: absolute;
     width: 20px;
     height: 20px;
-    right: -14px;
+    right: -12px;
     background-color: white;
     border: 2px solid #ff0080;
     top: 24px;
@@ -202,7 +208,7 @@ strong {
 }
 
 .right::after {
-    left: -14px;
+    left: -12px;
 }
 
 .job-content {
@@ -229,13 +235,13 @@ strong {
 
 @media screen and (max-width: 600px) {
     .timeline::after {
-        left: 31px;
+        left: 16px;
     }
     .job-container,
     .job-container.right,
     .job-container.left {
         width: 100%;
-        padding-left: 70px;
+        padding-left: 48px;
         padding-right: 0px;
         margin-top: 0px;
     }
@@ -247,7 +253,7 @@ strong {
     }
     .left::after,
     .right::after {
-        left: 15px;
+        left: 4px;
     }
     .right {
         left: 0%;
@@ -328,7 +334,8 @@ strong {
     }
     h2,
     h3,
-    .job-title {
+    .job-title,
+    .job-date {
         color: #eeeeee;
     }
     a {
@@ -341,11 +348,9 @@ strong {
         background-color: black;
     }
     .left::before {
-        border-width: 10px 0 10px 10px;
         border-color: transparent transparent transparent #202020;
     }
     .right::before {
-        border-width: 10px 10px 10px 0;
         border-color: transparent #202020 transparent transparent;
     }
     .left::before {
@@ -361,7 +366,7 @@ strong {
         background-color: #202020;
     }
     .job-container::after {
-        border: 4px solid #00b2ff;
+        border: 2px solid #00b2ff;
     }
 }
 
