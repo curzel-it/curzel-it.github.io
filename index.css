@@ -114,6 +114,8 @@ strong {
 
 .job-date {
     font-weight: 100;
+    font-size: 11pt;
+    margin-left: 4px;
 }
 
 .flex-second-column-64 {
@@ -164,8 +166,8 @@ strong {
         display: block;
     }
     .profile-pic {
-        width: 150px;
-        height: 150px;
+        width: 120px;
+        height: 120px;
     }
     .content {
         padding: 0.8cm 1cm;
@@ -174,7 +176,7 @@ strong {
         font-size: 10pt;
     }
     h1 {
-        font-size: 24pt;
+        font-size: 21pt;
         margin-bottom: 0px;
     }
     h5 {
