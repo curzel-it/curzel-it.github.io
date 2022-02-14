@@ -1,39 +1,8 @@
-* {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    box-sizing: border-box;
+.non-printable {
+    display: block;
 }
-
-a {
-    text-decoration: none;
-    font-weight: 400;
-    color: #FF0080;
-    background-color: transparent;
-}
-
-div,
-span {
-    font-size: 12pt;
-    background-color: transparent;
-}
-
-body {
-    padding: 0px;
-    margin: 0px;
-}
-
-h1 {
-    font-size: 36pt;
-    font-weight: 300;
-    text-transform: uppercase;
-    margin-top: 0;
-}
-
-h5 {
-    font-size: 12pt;
-    font-weight: 500;
-    margin-bottom: 8px;
-    margin-top: 0px;
+.print-only {
+    display: none;
 }
 
 .cv-heading>h5,
@@ -41,18 +10,10 @@ h5 {
     margin-top: 16px;
 }
 
-strong {
-    font-weight: 500;
-}
-
 .tagline {
     margin-top: -28px;
     font-size: 14pt;
     font-family: 'Marck Script', sans-serif;
-}
-
-.flex {
-    display: flex;
 }
 
 .profile-pic-container {
@@ -73,16 +34,10 @@ strong {
     padding: 40px 40px 0px 40px;
 }
 
-.section-separator {
-    margin-top: 24px;
-    margin-bottom: 32px;
-}
-
-.content {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: white;
-    padding: 40px 40px 100px 40px;
+.skill-set {
+    font-size: 12pt;
+    font-weight: 500;
+    margin: -8px 0px -8px 0px;
 }
 
 .flexcontainer {
@@ -91,28 +46,12 @@ strong {
     flex-wrap: nowrap;
 }
 
-.skill-set {
-    font-size: 12pt;
-    font-weight: 500;
-    margin: -8px 0px -8px 0px;
-}
-
 .flex-second-column-64 {
     margin-left: 64px;
 }
 
 .flex-second-column-24 {
     margin-left: 24px;
-}
-
-.socials a {
-    color: black;
-    font-size: 21pt;
-    margin-right: 8px;
-}
-
-.socials>a>i {
-    margin-top: -5px;
 }
 
 .myprivacy {
@@ -265,6 +204,12 @@ strong {
 /* Professional Experience Print */
 
 @media print {
+    .non-printable {
+        display: none;
+    }
+    .print-only {
+        display: block;
+    }
     .timeline {
         left: 0px;
         width: 100%;
@@ -276,8 +221,7 @@ strong {
     .job-container::after,
     .job-container::before,
     .left::after,
-    .right::after,
-    .sideproject {
+    .right::after {
         display: none;
     }
     .job-container,
@@ -297,7 +241,6 @@ strong {
         left: 0%;
     }
 }
-
 
 /* Responsive */
 
@@ -323,31 +266,15 @@ strong {
     }
 }
 
-
 /* Dark Mode */
 
 @media (prefers-color-scheme: dark) {
-    * {
-        color: #d0d0d0;
-        background-color: black;
-    }
-    h1 {
-        color: #f0f0f0;
-    }
-    h2,
-    h3,
     .job-title,
     .job-date {
         color: #eeeeee;
     }
-    a {
-        color: #ff0080;
-    }
     .profile-pic {
         border-color: #ff0080;
-    }
-    .content {
-        background-color: black;
     }
     .left::before {
         border-color: transparent transparent transparent #202020;
