@@ -11,6 +11,13 @@ a {
     background-color: transparent;
 }
 
+.download-button {
+    margin-top: 24px;
+}
+.download-button a img {
+    margin-top: 8px;
+}
+
 div,
 span {
     font-size: 12pt;
