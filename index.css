@@ -1,3 +1,20 @@
+@font-face {
+    font-family: Dogica;
+    src: url(fonts/Dogica_Pixel_Bold.ttf);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Dogica;
+    line-height: 150%;
+}
+
+h1 {
+    font-size: 18pt;
+}
+h2 {
+    font-size: 14pt;
+}
+
 .non-printable {
     display: block;
 }
@@ -10,10 +27,14 @@
     margin-top: 16px;
 }
 
+.address.non-printable {
+    margin-top: 16px;
+}
+
 .tagline {
-    margin-top: -28px;
-    font-size: 14pt;
-    font-family: 'Marck Script', sans-serif;
+    margin-top: -12px;
+    font-size: 12pt;
+    /* font-family: 'Marck Script', sans-serif; */
 }
 
 .profile-pic-container {
@@ -24,7 +45,7 @@
 
 .profile-pic {
     border-radius: 50%;
-    border: 4px solid #FF0080;
+    border: 4px solid #ff0080A0;
     margin-top: 1rem;
     width: 200px;
     height: 200px;
@@ -38,6 +59,14 @@
     font-size: 12pt;
     font-weight: 500;
     margin: -8px 0px -8px 0px;
+}
+
+.its-printable {
+    margin-top: 24px;
+}
+
+.phone {
+    min-width: 120px;
 }
 
 .flexcontainer {
@@ -77,7 +106,7 @@
     content: '';
     position: absolute;
     width: 6px;
-    background-color: #FF0080;
+    background-color: #ff0080A0;
     top: 0;
     bottom: 0;
     margin-left: -26px;
@@ -99,7 +128,7 @@
     height: 20px;
     left: -35px;
     background-color: white;
-    border: 2px solid #ff0080;
+    border: 2px solid #ff0080A0;
     top: 24px;
     border-radius: 50%;
     z-index: 1;
@@ -118,9 +147,26 @@
     margin: 2px 0px 8px 0px;
 }
 
-/* Professional Experience Print */
+/* Print */
+
+.pagebreak { 
+    display: none;
+}
+
+.pagestart { 
+    display: none;
+}
 
 @media print {
+    .pagebreak {
+        display: block;
+        clear: both;
+        page-break-after: always;
+    }
+    .pagestart {
+        display: block;
+        margin-top: 40px;
+    }
     .non-printable {
         display: none;
     }
@@ -208,11 +254,11 @@
         font-size: 10pt;
     }
     h1 {
-        font-size: 21pt;
+        font-size: 16pt;
         margin-bottom: 0px;
     }
     h5 {
-        font-size: 10pt;
+        font-size: 8pt;
         margin-bottom: 4px;
     }
     .job-title {
@@ -234,6 +280,12 @@
     }
     .skill-set {
         font-size: 10pt;
+    }
+    .section.about {
+        margin-top: 32px;
+    }
+    .section.skills {
+        margin-top: 12px;
     }
 }
 
