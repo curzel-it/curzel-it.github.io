@@ -34,7 +34,6 @@ h2 {
 .tagline {
     margin-top: -12px;
     font-size: 12pt;
-    /* font-family: 'Marck Script', sans-serif; */
 }
 
 .profile-pic-container {
@@ -237,6 +236,18 @@ h2 {
 /* Print */
 
 @media print {
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 600;
+        line-height: 100%;
+        margin-bottom: 0px;
+    }
+    h1 {
+        font-size: 16pt;
+    }
+    h5 {
+        font-size: 8pt;
+    }
     .cv-heading {
         width: 100%;
         padding-left: 0px;
@@ -252,14 +263,6 @@ h2 {
     }
     div {
         font-size: 10pt;
-    }
-    h1 {
-        font-size: 16pt;
-        margin-bottom: 0px;
-    }
-    h5 {
-        font-size: 8pt;
-        margin-bottom: 4px;
     }
     .job-title {
         font-weight: 400;
@@ -281,11 +284,8 @@ h2 {
     .skill-set {
         font-size: 10pt;
     }
-    .section.about {
-        margin-top: 32px;
-    }
-    .section.skills {
-        margin-top: 12px;
+    .section.about > h2, .section.interests > h2 {
+        margin-bottom: 8px;
     }
 }
 
