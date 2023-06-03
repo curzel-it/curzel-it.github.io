@@ -1,3 +1,7 @@
+---
+layout: default
+title: Terms and Conditions
+---
 # Terms and Conditions
 ## TLDR;
 - I collect as little data as possible

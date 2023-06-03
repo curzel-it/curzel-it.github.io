@@ -1,3 +1,7 @@
+---
+layout: default
+title: Privacy Policy
+---
 # Terms and Conditions
 ## TLDR;
 - I collect as little data as possible
