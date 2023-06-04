@@ -2,7 +2,11 @@
 layout: default
 title: About me
 ---
-# About me
+# Federico Curzel
+## Latest on this site
+* [This Cartoon does not exist](https://curzel.it/blog/this-cartoon-does-not-exist/)
+
+## About me
 I am and hands-on, highly competent Software Engineer.
 <br>
 I've spent most of my career working on Mobile Apps, especially iOS, but I've also worked on Android, backend and frontend, across many industries. I currently lead an iOS team working on home automation and IOT projects.
