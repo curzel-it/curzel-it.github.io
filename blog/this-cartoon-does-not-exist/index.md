@@ -8,8 +8,9 @@ The results are both surprisingly good and very, very cringe.
 Source code, prompts etc coming soon!
 <br>
 Here's the final result:
-<iframe width="560" height="315" src="https://youtu.be/-aBBTKBW9lE" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-aBBTKBW9lE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 <br>
+
 ## Initial Idea
 Like many others, since the beginning of the year I started working with generative AI quite a bit.
 <br>
@@ -322,7 +323,7 @@ As mentioned the process is quite straightforward:
 1. Used macOS's `say` to generate audio
 1. Used AVFoundation to merge audio and video
 1. Write this article
-1. [Upload the final result on YouTube!](https://youtu.be/-aBBTKBW9lE)
+1. [Upload the final result on YouTube!](https://www.youtube.com/watch?v=-aBBTKBW9lE)
 
 If there is enough people interested i might share the code or talk about the use of AVFoundation in generating the video, we'll see!
 <br>
