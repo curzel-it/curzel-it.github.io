@@ -1,5 +1,10 @@
 # This cartoon does not exists
 
+## Update - 5 June
+I've started working on the first episode of my own YouTube show!
+<br>
+Also, I am integrating Google Cloud TTS to replace macOS's "say" command.
+
 ## TLDR;
 Started with the idea of generating comics with GPT4 and Midjourney, ended up with an animated show!
 <br>
@@ -40,7 +45,7 @@ I would also need some characters, I kept it very generic:
 Alice and Bob are married and just bought a house together.
 ```
 
-So, with that information, I simply asked for a couple of concepts, it came up with:
+So, with that information, I simply asked for a couple of ideas, it came up with:
 ```response
 Alice and Bob decide to visit the Obscureville Ikea Showroom, but Bob gets lost
 ```
@@ -326,5 +331,10 @@ As mentioned the process is quite straightforward:
 1. [Upload the final result on YouTube!](https://www.youtube.com/watch?v=-aBBTKBW9lE)
 
 If there is enough people interested i might share the code or talk about the use of AVFoundation in generating the video, we'll see!
+
+## Screenshots
+![Screnshot from the app rendering a couple of scenes](assets/app-rendering-process.png)
+![CPU and Memory usage](assets/cpu-memory-usage.png)
+
 <br>
 PS. If you got this far, thanks for reading my article!
