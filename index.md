@@ -18,7 +18,6 @@ Outside of tech, I quickly fall in love with any topic that stimulates my brain,
 ## Contacts
 
 - Email: [federico@curzel.it](mailto:federico@curzel.it)
-- Phone: [+39 351 394 7619](tel:+393513947619)
 - Socials: [LinkedIn](https://www.linkedin.com/in/federico-curzel-225698b7/), [Github](https://github.com/curzel-it/), [Twitter](https://twitter.com/Cuuuurzel/)
 - YouTube: [@Urimanara](https://www.youtube.com/@urimanara)
 

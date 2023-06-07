@@ -55,7 +55,7 @@ Alice and Bob decide to visit the Obscureville Ikea Showroom, but Bob gets lost
 ## Developing concepts
 I heard about something called the "But-Therefore" rule recently.
 <br>
-The idea is simple: Each event is either is something unexpected with the previous event (x but y) or directly caused by it.
+The idea is simple: Each event is either directly cause by the previous one (_therefore_) or is an unexpected twist on it (_but_)
 <br>
 So I asked GPT to apply it to the concept above:
 ```prompt
@@ -198,7 +198,7 @@ pipeline.post {
     bob.walk(to: .farLeft)
 }
 ```
-Run `pipeline.update(time:)` a couple of times, compile images into an MP4, add TTS on top of it what you have now is *Cartoon as Code*!
+Run `pipeline.update(time:)` a couple of times, compile images into an MP4, add TTS on top of it, and what you get is basically *Cartoon as Code*!
 <br>
 It's turning from *not very clean* to *ugly*, but let's remember it's optimized for GPT, and it's easy to explain how to use the pipeline in a prompt:
 ```prompt
@@ -210,9 +210,9 @@ Actions happening in parallel should be posted with the same closure, closures a
 For simplicity, let's call this solution I hacked together "the framework"...
 
 ## Can GPT use *the framework*?
-We obviously know GPT4 can code, and it also has a context window large enough to allow quite a code from *the framework* to be *prompted it*.
+We obviously know GPT4 can code, so we just need to add the relevant bits of our framework to its context window.
 <br>
-So I found a *creative solution* for sharing code with GPT automatically...
+I found a *creative solution* for sharing code with GPT automatically...
 <br>
 In my codebase I have some special delimiter comments:
 ```swift
@@ -238,7 +238,7 @@ This allows me to share snippets of the code which can be updated without much w
 <br>
 I also found that sharing a protocol yields better results than sharing a class.
 <br>
-I though about this a bit, my conclusion is that GPT sees `protocols` a good summary for `classes`:
+I thought about this a bit and my conclusion is that GPT sees `protocols` a good summary for `classes`:
 - Simpler interface
 - Less code (remember: Context window has a finite size!)
 - No unnecessary implementation details
@@ -321,11 +321,11 @@ class AliceAndBobIkeaScene {
 ```
 
 ## Speech Synthesis and Lip-sync
-I am using Google Cloud Text to Speech with Neural voices, why by themself are already miles better than what macOS `say` command offers.
+I switched to Google Cloud Text to Speech with Neural voices, which by itself is already miles better than what macOS `say` command could offer.
 <br>
 But the real deal is SSML (Speech Synthesis Markup Language) generation, as with that, you can make sure:
 * Words are spelled correctly
-* There's emphasis non the correct words
+* There's emphasis on the correct words
 * Speech "effects" can be applied (ie. "Ooook" will have a long "o", rather than a "u")
 * We can attach informations about emotion, which seems to not be supported by Google TTS at the time of writing, but it doesn't hurt to try!
 
@@ -397,6 +397,12 @@ Should produce the following:
 <some example>
 ```
 
+## Special Effects
+Initially, I was using sprites for special effects like fire and explosions, as that fits very well with the scene-as-a-tree model, but I've then moved to a simpler approach.
+<br>
+Posting an effect to the pipeline simply allows a green-screen video to be enqueued at a certain time, which will then be overlayed on top of the rest of the scene at build-time.
+<br>
+The video is simply centered on top of the subject of the effect.
 
 ## Getting a video out of it
 As mentioned the process is quite straightforward:
