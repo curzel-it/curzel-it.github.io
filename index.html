@@ -11,27 +11,32 @@
 </head>
 
 <body>
-    <h1>Federico Curzel</h1>
-    <p>
-        I am a hands-on, highly competent Software Engineer. <br>
-        I've spent most of my career working on Mobile Apps, especially iOS, but I've also worked on Android, backend
-        and frontend, across many industries. <br>
-        I currently lead an iOS team working on smart lighting and other IOT products. <br>
-        Outside of tech, I quickly fall in love with any topic that stimulates my brain, from science and futurism to
-        physics, space exploration, design... You name it. <br>
-    </p>
+    <section>
+        <h1>Federico Curzel</h1>
+        <p>
+            I am a hands-on, highly competent Software Engineer. <br>
+            I've spent most of my career working on Mobile Apps, especially iOS, but I've also worked on Android,
+            backend
+            and frontend, across many industries. <br>
+            I currently lead an iOS team working on smart lighting and other IOT products. <br>
+            Outside of tech, I quickly fall in love with any topic that stimulates my brain, from science and futurism
+            to
+            physics, space exploration, design... You name it. <br>
+        </p>
+    </section>
 
-    <h2>Contacts</h2>
-    <li><a href="mailto:federico@curzel.it">federico@curzel.it</a></li>
-    <li><a href="https://www.linkedin.com/in/federico-curzel-225698b7/">LinkedIn</a></li>
-    <li><a href="https://github.com/curzel-it/">GitHub</a></li>
+    <section class="contacts printonly">
+        <h2>Contacts</h2>
+        <li><a href="mailto:federico@curzel.it">federico@curzel.it</a></li>
+        <li><a href="https://www.linkedin.com/in/federico-curzel-225698b7">LinkedIn</a></li>
+        <li><a href="https://github.com/curzel-it">GitHub</a></li>
+        <li>Address: ...</li>
+        <li>Phone: ...</li>
+    </section>
 
-    <br>
-    <hr>
-    <br>
-    <table>
-        <tr>
-            <td>
+    <section>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+            <div style="flex: 0 1 auto; min-width: 300px;">
                 <h2>Skills</h2>
                 <ul>
                     <li>Product-Oriented mindset</li>
@@ -40,9 +45,8 @@
                     <li>Test-Driven Development</li>
                     <li>Lots of patience</li>
                 </ul>
-            </td>
-            <td>
-
+            </div>
+            <div style="flex: 1; min-width: 300px;">
                 <h2>Programming Languages</h2>
                 <ul>
                     <li>Swift (SwiftUI, UIKit, AppKit) - Since 2014</li>
@@ -51,89 +55,195 @@
                     <li>I also know my way around C#, Objective C, Java and TypeScript</li>
                     <li>Currently learning Rust</li>
                 </ul>
-            </td>
-        </tr>
-    </table>
+            </div>
+        </div>
+    </section>
 
-    <hr>
+    <section>
+        <h2>Personal Projects</h2>
 
-    <h2>Personal Projects</h2>
+        <section>
+            <h3>SneakBit</h3>
+            Started as a side project to learn Rust, it's now a fully-fledged game.<br>
+            The game is a story-driven RPG, with aesthetic and mechanics heavily influenced by OG GameBoy games.<br>
+            I personally made everything from scratch, including the engine and all the sprite (except for fonts, music
+            and
+            sound effects).<br>
+            The project is <a href="https://github.com/curzel-it/sneakbit">open source</a>, but if you like the game
+            please
+            buy it :)
 
-    <h3>Hidden Mugs</h3>
-    My very own YouTube Channel where I use animated characters to discuss and make fun of the latest Tech News.<br>
-    The videos are generated using a tool i designed from scratch (Funnybot), which I have not open sourced as of
-    yet.<br>
-    Check it out <a href="https://youtube.com/@hiddenmugs">here</a>.
+            <a href="sneakbit.html" class="noprint">
+                <div class="previews">
+                    <img src="sneakbit/1.png" alt="A screenshot of SneakBit">
+                    <img src="sneakbit/2.png" alt="A screenshot of SneakBit">
+                    <img src="sneakbit/3.png" alt="A screenshot of SneakBit">
+                    <img src="sneakbit/4.png" alt="A screenshot of SneakBit">
+                    <img src="sneakbit/5.png" alt="A screenshot of SneakBit">
+                </div>
+            </a>
 
-    <h3>Bit Therapy</h3>
-    Bit Therapy is an app that brings Desktop Pets to macOS, currently used by over 10.000 users every day!<br>
-    The project is <a href="https://github.com/curzel-it/bit-therapy">open source</a> and available on the <a
-        href="https://apps.apple.com/app/desktop-pets/id1575542220">App
-        Store</a>.<br>
-    An increasing number of assets are being drawn by me!
+            <div class="download-links noprint">
+                <a href="https://github.com/curzel-it/sneakbit">
+                    <img src="images/github_badge.webp" alt="SneakBit on Github">
+                </a>
+                <a href="https://store.steampowered.com/app/3360860/SneakBit/">
+                    <img src="images/steam_badge.webp" alt="SneakBit on Steam">
+                </a>
+                <a href="https://apps.apple.com/app/sneakbit/id6737452377">
+                    <img src="images/appstore_badge.webp" alt="SneakBit on the App Store">
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=it.curzel.bitscape">
+                    <img src="images/playstore_badge.webp" alt="SneakBit on the Play Store">
+                </a>
+            </div>
 
-    <h3>Pipper</h3>
-    Pipper is a web browser in its simplest possible form: a webview and exactly 6 buttons.<br>
-    Its only distinctive feature is the ability to float over other windows, allowing content to be always visible.<br>
-    Some early users have started to use it as a control panel for audio mixers, among other things.<br>
-    The project is <a href="https://github.com/curzel-it/pipper/">open source</a> and will soon be available on the App
-    Store.<br>
+            <p class="printonly">
+                <a href="https://store.steampowered.com/app/3360860/SneakBit/">Steam</a>
+                | <a href="https://apps.apple.com/app/sneakbit/id6737452377">App Store</a>
+                | <a href="https://play.google.com/store/apps/details?id=it.curzel.bitscape">Play Store</a>
+            </p>
+        </section>
 
-    <br>
-    <hr>
+        <section>
+            <h3>Hidden Mugs</h3>
+            My very own YouTube Channel where I use animated characters to make fun of the latest Tech News.<br>
+            The videos are generated using a tool i designed from scratch called <a
+                href="https://github.com/curzel-it/funnybot">Funnybot</a>, which is now open source.<br>
+            I stopped this series, but <a href="https://youtube.com/@hiddenmugs">my channel</a> is still up.
 
-    <h2>Professional Experience</h2>
+            <a href="https://youtu.be/Q4dWr85J4hA" class="noprint">
+                <div class="previews">
+                    <img src="yt_tech_news/1.webp" alt="A video made with FunnyBot">
+                    <img src="yt_tech_news/2.webp" alt="A video made with FunnyBot">
+                    <img src="yt_tech_news/3.webp" alt="A video made with FunnyBot">
+                </div>
+            </a>
 
-    <h3>iOS Tech Lead at Ledworks srl</h3>
-    <p class="caption experience-date">Since June 2023</p>
-    I am leading a great iOS team working on Smart Lighting products for Twinkly (Ledworks Srl). <br>
-    My responsibilities include analysis of requirements, managing my team, and coordinating with other company
-    departments.
+            <div class="download-links noprint">
+                <a href="https://github.com/curzel-it/funnybot">
+                    <img src="images/github_badge.webp" alt="Funnybot on Github">
+                </a>
+                <a href="https://youtube.com/@hiddenmugs">
+                    <img src="images/youtube_badge.webp" alt="Hidden Mugs on YouTube">
+                </a>
+            </div>
+        </section>
 
-    <h3>iOS Tech Lead at Vimar Spa</h3>
-    <p class="caption experience-date">Sept 2022 / June 2023</p>
-    I am leading a great iOS team working on home automation and IOT projects for Vimar (one of the industry leaders in
-    the space in Italy).<br>
-    While I continue to work primarily on development tasks, my focus is also on helping the team grow personally and
-    professionally so that they can be more effective.<br>
-    My responsibilities include analysis of requirements, managing my team, and coordinating with other company
-    departments.
+        <section>
+            <h3>BitTherapy</h3>
+            BitTherapy is an app that brings Desktop Pets to macOS, with stellar reviews, 350k downloads and 10k daily
+            active users!<br>
+            The project is <a href="https://github.com/curzel-it/bit-therapy">open source</a> and available on the <a
+                href="https://apps.apple.com/app/desktop-pets/id1575542220">App Store</a>.<br>
 
-    <h3>Senior Software Engineer at Gucci</h3>
-    <p class="caption experience-date">Aug 2021 / Sept 2022</p>
-    As a member of their first mobile team, I have helped Gucci internalize the development process of their
-    existing Mobile App. <br>
-    Worked in Swift and SwiftUI, Kotlin and TypeScript, used Bitrise, Browserstack, Appium.
+            <a href="https://github.com/curzel-it/bit-therapy" class="noprint">
+                <div class="previews">
+                    <img src="bittherapy/1.png" alt="BitTherapy screenshot">
+                    <img src="bittherapy/2.png" alt="BitTherapy screenshot">
+                </div>
+            </a>
 
-    <h3>Lead iOS Developer at Xanadu Consultancy Ltd</h3>
-    <p class="caption experience-date">Feb 2016 / Aug 2021</p>
-    I was the Lead iOS Developer for the Matchbook Betting Exchange App, a highly-regulated gambling platform with a lot
-    of similarities with a regular trading platform. <br>
-    I architected and developed the app from scratch using Swift. <br>
-    Brought app store ratings to 4.7 stars (up from 2.1), 10x-ing the app revenue in the process. <br>
-    Worked in a distributed and international team, using Agile and Design Thinking methodologies.
+            <div class="download-links noprint">
+                <a href="https://github.com/curzel-it/bit-therapy">
+                    <img src="images/github_badge.webp" alt="BitTherapy on Github">
+                </a>
+                <a href="https://apps.apple.com/app/desktop-pets/id1575542220">
+                    <img src="images/appstore_badge.webp" alt="BitTherapy on the App Store">
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <h3>Pipper</h3>
+            Pipper is a web browser in its simplest possible form: a webview and exactly 6 buttons.<br>
+            Its only distinctive feature is the ability to float over other windows, allowing content to be always
+            visible.<br>
+            Some early users have started to use it as a control panel for audio mixers, among other things.<br>
+            The project is <a href="https://github.com/curzel-it/pipper/">open source</a> and available on
+            the
+            <a href="https://apps.apple.com/app/pipper/id1587335166">App Store</a>.<br>
+
+            <div class="download-links noprint">
+                <a href="https://github.com/curzel-it/pipper">
+                    <img src="images/github_badge.webp" alt="Pipper on Github">
+                </a>
+                <a href="https://apps.apple.com/app/pipper/id1587335166">
+                    <img src="images/appstore_badge.webp" alt="Pipper on the App Store">
+                </a>
+            </div>
+        </section>
+    </section>
+    <section>
+        <h2>Professional Experience</h2>
+
+        <h3>iOS Tech Lead at Ledworks srl</h3>
+        <p class="caption experience-date">Since June 2023</p>
+        I am leading a great iOS team working on Smart Lighting products for Twinkly (Ledworks Srl). <br>
+        My responsibilities include analysis of requirements, managing my team, and coordinating with other company
+        departments.
+
+        <h3>iOS Tech Lead at Vimar Spa</h3>
+        <p class="caption experience-date">Sept 2022 / June 2023</p>
+        I am leading a great iOS team working on home automation and IOT projects for Vimar (one of the industry leaders
+        in
+        the space in Italy).<br>
+        While I continue to work primarily on development tasks, my focus is also on helping the team grow personally
+        and
+        professionally so that they can be more effective.<br>
+        My responsibilities include analysis of requirements, managing my team, and coordinating with other company
+        departments.
+
+        <h3>Senior Software Engineer at Gucci</h3>
+        <p class="caption experience-date">Aug 2021 / Sept 2022</p>
+        As a member of their first mobile team, I have helped Gucci internalize the development process of their
+        existing Mobile App. <br>
+        Worked in Swift and SwiftUI, Kotlin and TypeScript, used Bitrise, Browserstack, Appium.
+
+        <h3>Lead iOS Developer at Xanadu Consultancy Ltd</h3>
+        <p class="caption experience-date">Feb 2016 / Aug 2021</p>
+        I was the Lead iOS Developer for the Matchbook Betting Exchange App, a highly-regulated gambling platform with a
+        lot
+        of similarities with a regular trading platform. <br>
+        I architected and developed the app from scratch using Swift. <br>
+        Brought app store ratings to 4.7 stars (up from 2.1), 10x-ing the app revenue in the process. <br>
+        Worked in a distributed and international team, using Agile and Design Thinking methodologies.
 
 
-    <h3>Software Developer Freelance</h3>
-    <p class="caption experience-date">Jan 2015 / Dec 2019</p>
-    I helped startups and small companies bootstrapping their mobile projects by offering development, mentorship
-    and
-    other services.
+        <h3>Software Developer Freelance</h3>
+        <p class="caption experience-date">Jan 2015 / Dec 2019</p>
+        I helped startups and small companies bootstrapping their mobile projects by offering development, mentorship
+        and
+        other services.
 
-    <h3>Software Developer at Ixora Team Srl</h3>
-    <p class="caption experience-date">Feb 2014 - Aug 2015</p>
-    At Ixora Team Srl, I was responsible for the maintenance and development of an in-house developed ERP solution
-    for
-    Fashion Retail. I've designed and developed mobile apps for inventory and sales, in addition to an architecture
-    that
-    enabled these applications to communicate with the ERP, synchronizing data effectively. This experience allowed
-    me
-    to broaden my skill set, deepen my understanding of mobile applications and data synchronization, and directly
-    contribute to the efficiency of the fashion retail industry.<br>
-    <br>
-    <hr>
-    <br>
-    <p class="caption">I grant the usage of my personal information according to art. 13 GDPR 679/16</p>
+        <h3>Software Developer at Ixora Team Srl</h3>
+        <p class="caption experience-date">Feb 2014 - Aug 2015</p>
+        At Ixora Team Srl, I was responsible for the maintenance and development of an in-house developed ERP solution
+        for
+        Fashion Retail. I've designed and developed mobile apps for inventory and sales, in addition to an architecture
+        that
+        enabled these applications to communicate with the ERP, synchronizing data effectively. This experience allowed
+        me
+        to broaden my skill set, deepen my understanding of mobile applications and data synchronization, and directly
+        contribute to the efficiency of the fashion retail industry.<br>
+    </section>
+
+    <section class="contacts noprint">
+        <h2>Contacts</h2>
+        <div class="social-links">
+            <a href="mailto:federico@curzel.it">federico@curzel.it</a>
+            | <a href="https://www.linkedin.com/in/federico-curzel-225698b7"><img src="images/linkedin.png"
+                    alt="LinkedIn"></a>
+            | <a href="https://github.com/curzel-it/sneakbit"><img src="images/github.png" alt="GitHub"></a>
+            | <a href="https://discord.gg/ZP7vfXub"><img src="images/discord.png" alt="Discord"></a>
+            | <a href="https://www.youtube.com/@HiddenMugs"><img src="images/youtube.png" alt="YouTube"></a>
+            | <a href="https://x.com/HiddenMugs"><img src="images/twitter.png" alt="Twitter"></a>
+        </div>
+    </section>
+
+    <footer>
+        <p class="caption">I grant the usage of my personal information according to art. 13 GDPR 679/16</p>
+    </footer>
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 body {
-    max-width: 900px;
+    max-width: 1024px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -57,6 +57,92 @@ h3 {
     color: #000;
 }
 
+.previews {
+    margin: 20px 0px;
+}
+
+.previews img {
+    width: 300; 
+    height: auto;
+}
+
+.download-links {
+    margin: 20px 0px;
+}
+
+.download-links a {
+    margin-right: 8px;
+}
+
+.download-links a img {
+    width: 150px; 
+    height: auto;
+}
+
+.carousel {
+    display: flex;
+    width: 100%;
+    height: auto;
+    margin: 20px 0;
+    border-radius: 10px;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel img {
+    border-radius: 8px;
+    flex: 0 0 100%;
+    width: 100%;
+    height: auto;
+}
+
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    max-width: 900px;
+    margin: auto;
+}
+
+.carousel-controls {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    background: rgba(0, 0, 0, 0);
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.carousel-controls button {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+footer {
+    text-align: center;
+    margin-top: 60px;
+    font-size: 0.85rem;
+}
+
+.social-links a {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.social-links img {
+    width: 20px;
+    height: auto;
+    vertical-align: middle;
+}
+
+.printonly {
+    display: none !important;
+}
+
 @media (prefers-color-scheme: dark) {
     * {
         background-color: #101010;
@@ -77,5 +163,35 @@ h3 {
 
     .caption {
         color: #ddd;
+    }
+}
+
+@media print {
+    .noprint {
+        display: none !important;
+    }
+    .printonly {
+        display: block !important;
+    }
+    
+    body {
+        font-size: 0.8rem;
+    }
+    caption {
+        font-size: 0.6rem;
+    }
+    h1 {
+        font-size: 1.2rem;
+    }    
+    h2 {
+        font-size: 1.05rem;
+    }    
+    h3 {
+        font-size: 0.9rem;
+    }
+
+    a {
+        color: black;
+        text-decoration: underline;
     }
 }
