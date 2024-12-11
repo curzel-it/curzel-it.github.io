@@ -2,6 +2,7 @@ body {
     max-width: 1024px;
     margin-left: auto;
     margin-right: auto;
+    padding: 16px;
 }
 
 * {
@@ -62,8 +63,9 @@ h3 {
 }
 
 .previews img {
-    width: 300; 
+    width: 300px; 
     height: auto;
+    padding: 4px;
 }
 
 .download-links {
@@ -141,6 +143,12 @@ footer {
 
 .printonly {
     display: none !important;
+}
+
+@media only screen and (max-width: 660px) {
+    .previews img {
+        width: 100%
+    }
 }
 
 @media (prefers-color-scheme: dark) {
