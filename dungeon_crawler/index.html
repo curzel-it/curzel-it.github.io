@@ -1,0 +1,112 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dungeon Crawler</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;0,600;0,800;1,200&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Dungeon Crawler</h1>
+        <h2><em>Name is a work in progress!</em></h2>        
+        <div>
+        Descend into mysterious dungeons filled with danger, magic, and treasure.<br><br>
+        Navigate through procedurally generated maze corridors with first-person perspective.<br>
+        Battle enemies in turn-based combat, master combo attacks, and explore immersive dungeon environments.
+        </div>
+    </header>
+
+    <section>
+        <div class="carousel-container">
+            <div class="carousel" style="transform: translateX(-200%);">
+                <img src="7.png" alt="Screenshot 7">
+                <img src="4.png" alt="Screenshot 4">
+                <img src="5.png" alt="Screenshot 5">
+                <img src="1.png" alt="Screenshot 1">
+                <img src="2.png" alt="Screenshot 2">
+                <img src="3.png" alt="Screenshot 3">
+                <img src="6.png" alt="Screenshot 6">
+            </div>
+            <div class="carousel-controls">
+                <button id="prev">❮</button>
+                <button id="next">❯</button>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Coming Soon!</h2>
+        <ul>
+            <li>iOS</li>
+            <li>Android</li>
+            <li>macOS</li>
+            <li>Windows</li>
+            <li>Linux</li>
+        </ul>
+        Watch development progress and previews:<br>
+        <div class="download-links noprint">
+        <a href="https://www.youtube.com/watch?v=jCYiLXYL20E&list=PLgWO0p8FHBHyqVfvbqEMS8m5k_vXO5gjf">
+            <img src="../images/youtube_badge.webp" alt="Hidden Mugs on YouTube">
+        </a>
+        </div>
+    </section>
+    
+    <section class="features">
+        <h2>Features</h2>
+        <ul>
+            <li>First-person 3D maze navigation with pre-rendered sprite animations.</li>
+            <li>Turn-based combat system with combo attacks and magic spells.</li>
+            <li>Character progression with experience points and equipment system.</li>
+            <li>Multiple enemy types, including bosses...</li>
+            <li>Interactive dialogue system with branching conversations.</li>
+            <li>Inventory management with weapons, shields, and consumables.</li>
+            <li>Challenge-based traps and puzzles throughout the dungeon.</li>
+        </ul>
+    </section>
+    
+    <section class="features">
+        <h2>Credits</h2>
+        <ul>
+            <li>Music by <a href="https://www.filippovicarelli.com/8bit-game-background-music">Filippo Vicarelli</a></li>
+            <li>Sound Effects by <a href="https://opengameart.org/content/512-sound-effects-8-bit-style">SubspaceAudio</a>
+        </li></ul>
+    </section>
+
+    <footer>
+        <p>© Federico Curzel</p>
+        <div class="social-links">
+            <a href="https://discord.gg/ZP7vfXub"><img src="../images/discord.png" alt="Discord"></a>
+            | <a href="https://www.youtube.com/@HiddenMugs"><img src="../images/youtube.png" alt="YouTube"></a>
+            | <a href="https://x.com/HiddenMugs"><img src="../images/twitter.png" alt="Twitter"></a>
+            | <a href="https://curzel.it/support">Support</a>
+            | <a href="https://curzel.it/privacy">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <script>
+        // Carousel functionality
+        const carousel = document.querySelector('.carousel');
+        const images = carousel.children;
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        let index = 0;
+
+        function showImage(newIndex) {
+            index = (newIndex + images.length) % images.length;
+            carousel.style.transform = `translateX(-${index * 100}%)`;
+        }
+
+        function autoScroll() {
+            showImage(index + 1);
+        }
+
+        prevButton.addEventListener('click', () => showImage(index - 1));
+        nextButton.addEventListener('click', () => showImage(index + 1));
+
+        setInterval(autoScroll, 3000);
+    </script>
+
+
+</body></html>
