@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mugs's Blog</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;0,600;0,800;1,200&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1>Sonnet 4.5 blows my mind</h1>
+        <em>Sunday, October 5th 2025</em>
+    </header>
+
+    <section>
+        So, I'm building <a href="https://github.com/curzel-it/battld">a multiplaye game you can play in the termial</a>
+        with Claude Code.<br>
+        With most of the project in place, I decided to add rate limiting.<br>
+        <br>
+        TLDR;<br>
+        I am amazed by Claude approach to this task:
+        <ol>
+            <li>What is this project I am looking at?</li>
+            <li>Is there anything already in place I can use?</li>
+            <li>What are the existing dependencies?</li>
+            <li>Let me try YOLO it</li>
+            <li>Ok, let me read the docs</li>
+            <li>Actually, let me try YOLO it again</li>
+            <li>Ok, let me read the docs</li>
+            <li>Nope... I need some example</li>
+            <li>Can't find example, let me look it up</li>
+            <li>Mmmh... Nope... I'm missing something, let me take a look at the public interface of the crate</li>
+            <li>Oh I see</li>
+            <li>Cool, let me clean up</li>
+            <li>Done, and oh, btw, here's a summary and some notes I left you</li>
+        </ol>
+        All of this in the time it took me to smoke a cigarette while hanging out in my yard, taking in the morning sun.<br>
+            It's so, damn, cool.<br>
+        <br>
+        The following is the (abbreviated) log of what Claude did, with some comments:<br>
+        <pre>
+&gt; let's implement api rate limiting 
+
+⏺ I'll help you implement API rate limiting. Let me first examine your codebase to understand the current API structure.
+
+⏺ Search(pattern: "**/*.py")
+⏺ Search(pattern: "**/requirements*.txt")
+⏺ Search(pattern: "**/pyproject.toml")
+⏺ Bash(find /Users/curzel/dev/battld -type f -name "*.py" | head -20)
+⏺ Read(server/install.py)
+        </pre>
+        It got fooled into thinking this is a python codebase due to install.py being open in Visual Studio Code, but
+        that's actually a script that sets up the server, and after reading it, it know knows this is a Rust codebase:
+        <pre>
+⏺ Bash(ls -la /Users/curzel/dev/battld)
+⏺ Bash(ls -la /Users/curzel/dev/battld/server)
+⏺ Bash(ls -la /Users/curzel/dev/battld/server/src)
+⏺ Read(server/src/main.rs)
+⏺ Read(server/Cargo.toml)
+
+⏺ I'll implement API rate limiting using tower-governor, a popular rate limiting middleware for Axum. Let me start by adding the
+  dependency.
+        </pre>
+        Nothing unusual so far, it sniffed around the project, found tower was being used for other things and opted for
+        tower-governor:
+        <pre>
+⏺ Update(server/Cargo.toml)
+
+</pre>
+        Skipping over the detail of the actual implementation here, but at a certain points it decides to see if the
+        codebase builds correctly:
+        <pre>
+⏺ Update(server/src/rate_limit.rs)
+⏺ Bash(cargo build --bin server 2&gt;&1 | tail -50)
+  ⎿     Compiling server v0.1.0 (/Users/curzel/dev/battld/server)                                  
+     error[E0412]: cannot find type `DefaultDirectRateLimiter` in module `tower_governor::governor`
+       --&gt; server/src/rate_limit.rs:11:94
+     … +7 lines (ctrl+o to expand)
+</pre>
+        Build fails, seems it hallucinated some API
+        <pre>
+⏺ Let me check the tower_governor documentation to find the correct type:
+
+⏺ Update(server/src/rate_limit.rs)
+
+⏺ Bash(cargo build --bin server 2&gt;&1 | tail -50)
+  ⎿  error[E0425]: cannot find function, tuple struct or tuple variant `Json` in this scope
+       --&gt; server/src/rate_limit.rs:32:9
+        |
+     … +47 lines (ctrl+o to expand)
+</pre>
+        It said "let me check the documentation", but doesn't look like it actually did, he just tried some other
+        approach instead, but let's continue
+        <pre>
+
+⏺ Read(server/src/rate_limit.rs)
+⏺ Write(server/src/rate_limit.rs)
+
+⏺ Bash(cargo build --bin server 2&gt;&1 | tail -50)
+  ⎿    --&gt; /Users/curzel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tower_governor-0.4.3/src/lib.rs:30:8
+        |
+     27 | pub struct GovernorLayer&lt;K, M&gt;
+     … +53 lines (ctrl+o to expand)
+
+⏺ Let me use a simpler approach with tower_governor:
+</pre>
+        Simpler approach is always welcome as a solution, worth a shot (but still didn't read the docs)
+        <pre>
+⏺ Write(server/src/rate_limit.rs)
+
+⏺ Bash(cargo build --bin server 2&gt;&1 | grep -A 5 "error\|Finished")
+  ⎿  error[E0412]: cannot find type `DefaultDirectRateLimiter` in module `tower_governor::governor`
+       --&gt; server/src/rate_limit.rs:10:94
+        |
+     … +6 lines (ctrl+o to expand)
+
+⏺ Let me check the tower_governor version and use the correct API:
+
+⏺ Fetch(https://docs.rs/tower_governor/0.4.0/tower_governor/)
+  ⎿  Received 38KB (200 OK)
+
+⏺ Perfect! Now I understand the correct API:
+</pre>
+        Omg it did it!
+        <pre>
+⏺ Write(server/src/rate_limit.rs)
+⏺ Bash(cargo build --bin server 2&gt;&1 | grep -E "(error|warning:|Finished)" | head -20)
+⏺ Bash(cargo build --bin server 2&gt;&1 | grep -A 10 "error\[")
+⏺ Write(server/src/rate_limit.rs)
+
+⏺ Bash(cargo build --bin server 2&gt;&1 | grep -E "(error|warning:|Finished)")
+  ⎿  error[E0433]: failed to resolve: could not find `middleware` in `governor`
+     error[E0433]: failed to resolve: could not find `clock` in `governor`
+     For more information about this error, try `rustc --explain E0433`.
+     error: could not compile `server` (bin "server") due to 2 previous errors
+
+</pre>
+        Still something wrong, it now tries a slightly different approach
+        <pre>
+⏺ Let me use type inference instead:
+
+⏺ Write(server/src/rate_limit.rs)
+  ⎿  Updated server/src/rate_limit.rs with 1 addition and 1 removal                                                
+        ...
+
+⏺ Bash(cargo build --bin server 2&gt;&1 | tail -20)
+  ⎿  error[E0277]: `&lt;impl Layer&lt;Route&gt; as Layer&lt;Route&gt;&gt;::Service` cannot be sent between threads safely
+        --&gt; server/src/main.rs:76:16
+         |
+     … +18 lines (ctrl+o to expand)
+
+⏺ Let me check the latest tower_governor examples more carefully:
+</pre>
+        The docs didn't help, so now it searches for an example.
+        <pre>
+⏺ Fetch(https://github.com/benwis/tower-governor/blob/main/tower-governor/examples/axum.rs)
+  ⎿  Error: Request failed with status code 404
+</pre>
+        Likely an hallucinated or old link
+        <pre>
+⏺ Web Search("tower_governor axum 0.4 example GovernorLayer usage")
+  ⎿  Did 1 search in 17s                                                                                                          
+</pre>
+        Nice!
+        <pre>
+⏺ Now I understand - I need to use .into_make_service_with_connect_info::&lt;SocketAddr&gt;() and the simple configuration. Let me update
+   the code:
+
+⏺ Write(server/src/rate_limit.rs)
+⏺ Now I need to update the main.rs to use into_make_service_with_connect_info:
+⏺ Read(server/src/main.rs)
+⏺ Update(server/src/main.rs)
+⏺ Update(server/src/main.rs)
+⏺ Update(server/src/main.rs)
+⏺ Bash(cargo build --bin server 2&gt;&1 | tail -30)
+⏺ Write(server/src/rate_limit.rs)
+⏺ Bash(cargo build --bin server 2&gt;&1 | grep -E "(error|warning:|Finished)")
+⏺ Let me check the actual tower_governor source to find the correct middleware type:
+⏺ Bash(cargo tree -p tower_governor 2&gt;&1 | head -5)
+⏺ Bash(cargo doc --package tower_governor --no-deps --open 2&gt;&1 | head -20) timeout: 1m 0s
+⏺ Let me simplify and use the type inference properly:
+⏺ Write(server/src/rate_limit.rs)
+⏺ Bash(cargo build --bin server 2&gt;&1 | grep -A 3 "error\[")
+  ⎿  error[E0433]: failed to resolve: could not find `middleware` in `governor`
+      --&gt; server/src/rate_limit.rs:6:93
+       |
+     … +6 lines (ctrl+o to expand)                                                                                                  
+</pre>
+        It failed again! But it still has one ace up the sleeve....
+        <pre>
+
+⏺ Let me check what's actually exposed by the crate:
+
+⏺ Bash(cat /Users/curzel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tower_governor-0.4.3/src/lib.rs | head -100)
+  ⎿  #![doc = include_str!("../README.md")]
+
+     #[cfg(test)]
+     … +97 lines (ctrl+o to expand)
+
+⏺ I see! The NoOpMiddleware is re-exported from ::governor, not tower_governor::governor. Let me fix this:
+                                                                                                  
+</pre>
+        I'm loving this.
+        <pre>
+⏺ Write(server/src/rate_limit.rs)
+⏺ Bash(cargo build --bin server 2&gt;&1 | grep -E "(error|warning:|Finished)")
+⏺ I need to add the governor crate dependency:
+⏺ Update(server/Cargo.toml)
+⏺ Bash(cargo build --bin server 2&gt;&1 | tail -20)
+  ⎿     Compiling server v0.1.0 (/Users/curzel/dev/battld/server)
+     warning: unused import: `ConnectInfo`
+      --&gt; server/src/main.rs:6:21
+     … +8 lines (ctrl+o to expand)
+  ⎿  Found 2 new diagnostic issues in 1 file (ctrl-o to expand)
+
+⏺ Excellent! It compiled! Let me clean up the code I wrote:
+</pre>
+        Finally!
+        <pre>
+⏺ Update(server/src/main.rs)
+⏺ Bash(cargo build --bin server 2&gt;&1 | tail -5) timeout: 1m 0s
+⏺ Perfect! Now let me create a brief documentation comment in the .notes file to explain how to configure the rate limiting:
+⏺ Read(.notes)
+⏺ Update(.notes)
+⏺ Perfect! API rate limiting has been successfully implemented. Here's a summary of what was done:
+</pre>
+        Good sport, thanks
+        <pre>
+
+  Implementation Summary
+
+  ✅ Added Dependencies
+  - tower_governor = "0.4" for rate limiting middleware
+  - governor = "0.6" for the rate limiting algorithm
+
+  ✅ Created Rate Limiting Module (server/src/rate_limit.rs:1-26)
+  - Configurable via RATE_LIMIT_RPS environment variable
+  - Default: 10 requests per second per IP address
+  - Burst size: 2x the rate limit (20 requests by default)
+  - Uses PeerIpKeyExtractor to identify clients by IP address
+
+  ✅ Applied to API Routes (server/src/main.rs:68-85)
+  - Rate limiting applied to all API endpoints:
+    - /player (POST & GET)
+    - /player/current
+    - /player/:id
+    - /matches/active
+    - /stats
+    - /leaderboard
+  - WebSocket and static file routes are not rate limited
+  - Updated server to use into_make_service_with_connect_info::&lt;SocketAddr&gt;() for IP extraction
+
+  ✅ Configuration
+  - Added RATE_LIMIT_RPS option to .env file
+  - Default of 10 requests/second if not configured
+  - Easy to adjust per environment
+
+  The rate limiter tracks requests per IP address and will return a 429 Too Many Requests response when the limit is exceeded.
+</pre>
+        All tests passing, runs, works. One-shotted!
+    </section>
+</body>
+</thml>
