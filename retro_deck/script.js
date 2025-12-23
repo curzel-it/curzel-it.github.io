@@ -277,7 +277,7 @@ function updateTitle(state) {
 
     switch (state) {
         case States.READY:
-            newTitle = 'PIXEL TAROT';
+            newTitle = 'RETRO DECK';
             break;
         case States.DRAWING_PAST:
         case States.READING_PAST:
