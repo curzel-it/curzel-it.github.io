@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Tarot Reading</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="dither-bg" class="pixelated"></canvas>
+    <div class="container">
+        <div class="page-header">
+            <h1>PIXEL TAROT</h1>
+        </div>
+
+        <div class="page-main">
+            <!-- Persistent Card Container (stays visible across states) -->
+            <div id="card-container" class="hidden"></div>
+
+            <!-- Ready State -->
+            <section id="ready-state" class="state-section">
+                <h2>Are you ready?</h2>
+                <p class="ready-description">Draw one card for your PAST, one for your PRESENT, and one for your FUTURE.</p>
+                <p class="ready-description">Let the cards reveal the threads that connect your journey through time.</p>
+                <button id="begin-btn" class="pixel-btn primary">BEGIN YOUR JOURNEY</button>
+                <div class="cta-container">
+                    <p><strong><em>Coming Soon!</em></strong></p>
+                </div>
+                <div id="ready-faq-container"></div>
+            </section>
+
+            <!-- Drawing State -->
+            <section id="drawing-state" class="state-section hidden">
+                <div id="drawing-text" class="drawing-text"></div>
+            </section>
+
+            <!-- Reading State -->
+            <section id="reading-state" class="state-section hidden">
+                <div id="reading-text" class="reading-text"></div>
+                <button id="next-btn" class="pixel-btn primary">CONTINUE</button>
+            </section>
+
+            <!-- Complete State -->
+            <section id="complete-state" class="state-section hidden">
+                <div class="complete-content">
+                    <div id="all-cards" class="all-cards-display"></div>
+                    <p id="final-quote" class="final-quote"></p>
+                    <div class="action-buttons">
+                        <p><strong><em>Coming Soon!</em></strong></p>
+                        <button id="restart-btn" class="pixel-btn secondary">READ AGAIN</button>
+                    </div>
+                    <div id="complete-faq-container"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- FAQ Section Template (moved via JS) -->
+        <div id="faq-section" class="faq-section" style="display: none;">
+            <div class="faq-item">
+                <div class="faq-question">Fully Hand-drawn</div>
+                <div class="faq-answer">Over 3.5 million, hand-placed, pixels! Need proof? <a href="http://youtube.com/@hiddenmugs" target="_blank">Check this out!</a></div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Where can I buy?</div>
+                <div class="faq-answer">Available now on <a href="https://www.etsy.com/shop/bittherapy" target="_blank">Etsy</a>!</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What can the cards be used for?</div>
+                <div class="faq-answer">One deck: Tarot reading, Briscola, Poker (suits are different, but the cards are the same)<br>Two decks: Scala 40, Pinochle, etc.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Do you have a list of cards and their design?</div>
+                <div class="faq-answer">
+                    The deck includes:
+                    <ul>
+                        <li>22 Major Arcana cards</li>
+                        <li>Suits: Pentacles, Swords, Cups and Wands</li>
+                        <li>Numbers: 1 to 10</li>
+                        <li>Figures: Page, Knight, Queen and King</li>
+                        <li>Extras: 2 Jokers per deck</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dither.js"></script>
+    <script src="tarotCards.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

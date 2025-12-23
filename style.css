@@ -95,9 +95,13 @@ h3 {
 }
 
 .previews img {
-    width: 300px; 
+    width: 300px;
     height: auto;
     padding: 4px;
+}
+
+.previews.retro-deck img {
+    width: 180px;
 }
 
 .download-links {
@@ -179,6 +183,10 @@ footer {
 @media only screen and (max-width: 660px) {
     .previews img {
         width: 100%
+    }
+
+    .previews.retro-deck img {
+        width: 30%;
     }
 }
 
