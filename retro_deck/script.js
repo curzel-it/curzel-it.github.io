@@ -46,12 +46,12 @@ function setupEventListeners() {
     document.getElementById('next-btn').addEventListener('click', handleNext);
     document.getElementById('restart-btn').addEventListener('click', restart);
 
-    // Shop buttons - disabled for "Coming Soon"
-    // document.querySelectorAll('#ready-shop-btn, #shop-btn').forEach(btn => {
-    //     btn.addEventListener('click', () => {
-    //         window.open('https://www.etsy.com/shop/bittherapy', '_blank');
-    //     });
-    // });
+    // Shop buttons
+    document.querySelectorAll('#ready-shop-btn, #shop-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            window.open('https://www.kickstarter.com/projects/curzel/retro-deck', '_blank');
+        });
+    });
 }
 
 function startReading() {
