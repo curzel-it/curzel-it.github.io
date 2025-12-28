@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initializeDeck() {
-    // Use the tarotCards array from tarotCards.js
+    // Use the tarotCards array from cards.js
     fullDeck = [...tarotCards];
 }
 
@@ -45,6 +45,10 @@ function setupEventListeners() {
     document.getElementById('begin-btn').addEventListener('click', startReading);
     document.getElementById('next-btn').addEventListener('click', handleNext);
     document.getElementById('restart-btn').addEventListener('click', restart);
+
+    // Modal event listeners
+    document.getElementById('modal-close').addEventListener('click', closeCardModal);
+    document.getElementById('modal-overlay').addEventListener('click', closeCardModal);
 
     // Shop buttons
     document.querySelectorAll('#ready-shop-btn, #shop-btn').forEach(btn => {
@@ -188,6 +192,7 @@ function showReadingState(card, description, question, position) {
         <p class="reading-description">${description}</p>
         <p class="reading-meaning">${positionMeaning}</p>
         <p class="reading-question">${question}</p>
+        <a class="read-more-link" onclick="openCardModal('${card.cardName}')">Read more about this card</a>
     `;
 }
 
@@ -332,4 +337,33 @@ function moveFAQSection(state) {
         container.appendChild(faqSection);
         faqSection.style.display = 'block';
     }
+}
+
+// Modal functions
+function openCardModal(cardName) {
+    const modal = document.getElementById('card-modal');
+    const iframe = document.getElementById('card-iframe');
+
+    // Set iframe src to codex page with card parameter, no background, and no image
+    iframe.src = `codex.html?card=${cardName}&bg=none&image=none`;
+
+    // Show modal
+    modal.classList.remove('hidden');
+
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCardModal() {
+    const modal = document.getElementById('card-modal');
+    const iframe = document.getElementById('card-iframe');
+
+    // Hide modal
+    modal.classList.add('hidden');
+
+    // Clear iframe src to stop any loading
+    iframe.src = '';
+
+    // Restore body scroll
+    document.body.style.overflow = '';
 }

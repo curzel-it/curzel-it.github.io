@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Deck Codex</title>
+    <link rel="stylesheet" href="codex.css">
+    <script>
+        // Check URL params early to prevent flash of title
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('card')) {
+            document.documentElement.style.setProperty('--title-display', 'none');
+        }
+    </script>
+    <style>
+        h1 {
+            display: var(--title-display, block);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="dither-bg" class="pixelated"></canvas>
+    <div class="container">
+        <h1>Retro Deck Codex</h1>
+        <div id="cards-container">
+            <!-- Cards will be dynamically generated here -->
+        </div>
+    </div>
+
+    <script src="cards.js"></script>
+    <script src="dither.js"></script>
+    <script>
+        // Generate card HTML from tarotCards data
+        function generateCardHTML(card, imageParam) {
+            // Convert newlines to <br> tags for HTML display
+            const formatText = (text) => {
+                if (!text) return '';
+                return text.replace(/\n/g, '<br>');
+            };
+
+            // Check if we have meaningful classic description
+            const hasClassicDescription = card.classicDesign &&
+                card.classicDesign.length > 50; // Must be substantial, not just placeholder
+
+            // Check if we have meaningful meanings
+            const hasMeanings = card.meanings?.upright?.full ||
+                card.meanings?.upright?.general;
+
+            // Check if we should show the image
+            const showImage = imageParam !== 'none';
+
+            let html = `
+<div class="card">
+<h2 id="${card.cardName}">${card.name}</h2>`;
+
+            // Only add Classic Description section if available
+            if (hasClassicDescription) {
+                html += `
+    <div class="card-section card-description">
+        <strong>Classic Description</strong>
+        <div>${formatText(card.classicDesign)}</div>
+    </div>`;
+            }
+
+            // Only add Meaning section if available
+            if (hasMeanings) {
+                html += `
+    <div class="card-section card-meaning">
+        <strong>Meaning</strong>
+        <table class="meaning-table">
+            <tr>
+                <th>Upright</th>
+                <th>Reversed</th>
+            </tr>
+            <tr>
+                <td>
+                    <div class="mobile-label">Upright</div>
+                    ${formatText(card.meanings?.upright?.full || card.meanings?.upright?.general || '')}
+                </td>
+                <td>
+                    <div class="mobile-label">Reversed</div>
+                    ${formatText(card.meanings?.reversed?.full || card.meanings?.reversed?.general || '')}
+                </td>
+            </tr>
+        </table>
+    </div>`;
+            }
+
+            // Always add Retro Deck section
+            html += `
+    <div class="card-section card-retro">
+        <strong>Retro Deck</strong>`;
+
+            if (showImage) {
+                // Show image and notes in table format
+                html += `
+        <table class="retro-table">
+            <tr>
+                <th>Design</th>
+                <th>Notes from the author</th>
+            </tr>
+            <tr>
+                <td class="card-image-cell">
+                    <div class="mobile-label">Design</div>
+                    <img src="cards/${card.cardName}.png">
+                </td>
+                <td>
+                    <div class="mobile-label">Notes from the author</div>
+                    ${formatText(card.retroDeckDesign || 'Design notes not available.')}
+                </td>
+            </tr>
+        </table>`;
+            } else {
+                // Show only notes without image
+                html += `
+        <div>
+            ${formatText(card.retroDeckDesign || 'Design notes not available.')}
+        </div>`;
+            }
+
+            html += `
+    </div>
+</div>
+`;
+            return html;
+        }
+
+        // Generate all cards and insert into the container
+        function renderCards() {
+            const container = document.getElementById('cards-container');
+
+            if (typeof allCards === 'undefined') {
+                container.innerHTML = '<p>Error: cards.js not loaded</p>';
+                return;
+            }
+
+            // Check if there's a query parameter for a specific card
+            const urlParams = new URLSearchParams(window.location.search);
+            const cardParam = urlParams.get('card');
+            const bgParam = urlParams.get('bg');
+            const imageParam = urlParams.get('image');
+
+            let cardsToRender = allCards;
+
+            // If bg=none, disable the dithered background
+            if (bgParam === 'none') {
+                const canvas = document.getElementById('dither-bg');
+                if (canvas) {
+                    canvas.style.display = 'none';
+                }
+                document.body.style.backgroundColor = '#000';
+            }
+
+            // If ?card=... parameter exists, filter to only that card
+            if (cardParam) {
+                cardsToRender = allCards.filter(card => card.cardName === cardParam);
+
+                if (cardsToRender.length === 0) {
+                    container.innerHTML = `<p>Card "${cardParam}" not found.</p>`;
+                    return;
+                }
+            }
+
+            const cardsHTML = cardsToRender.map(card => generateCardHTML(card, imageParam)).join('\n');
+            container.innerHTML = cardsHTML;
+        }
+
+        // Render cards when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', renderCards);
+        } else {
+            renderCards();
+        }
+    </script>
+</body>
+</html>

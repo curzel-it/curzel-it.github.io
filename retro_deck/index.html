@@ -25,7 +25,7 @@
                 <a href="https://www.kickstarter.com/projects/curzel/retro-deck" target="_blank" class="kickstarter-logo">
                     <img src="kickstarter_button.png" alt="Kickstarter" style="width: 200px; height: auto; margin: 16px auto; display: block;">
                 </a>
-                <button id="begin-btn" class="pixel-btn primary">START DEMO</button>
+                <button id="begin-btn" class="pixel-btn primary">CHECK OUT THE CARDS</button>
                 <div id="ready-faq-container"></div>
             </section>
 
@@ -86,8 +86,17 @@
         </div>
     </div>
 
+    <!-- Card Details Modal -->
+    <div id="card-modal" class="modal hidden">
+        <div class="modal-overlay" id="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <iframe id="card-iframe" class="modal-iframe"></iframe>
+        </div>
+    </div>
+
     <script src="dither.js"></script>
-    <script src="tarotCards.js"></script>
+    <script src="cards.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
