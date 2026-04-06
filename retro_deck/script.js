@@ -53,7 +53,7 @@ function setupEventListeners() {
     // Shop buttons
     document.querySelectorAll('#ready-shop-btn, #shop-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            window.open('https://www.kickstarter.com/projects/curzel/retro-deck', '_blank');
+            window.open('https://www.etsy.com/listing/4483818873/pixel-art-tarot-card-deck', '_blank');
         });
     });
 }
