@@ -106,15 +106,62 @@ h3 {
 
 .download-links {
     margin: 20px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
 }
 
 .download-links a {
-    margin-right: 8px;
+    display: inline-flex;
+    align-items: center;
 }
 
 .download-links a img {
-    width: 150px; 
+    width: 150px;
     height: auto;
+}
+
+.text-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 150px;
+    height: 44px;
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #a6a6a6;
+    border-radius: 8px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.3px;
+    box-sizing: border-box;
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+.text-btn svg {
+    background: transparent;
+    flex-shrink: 0;
+}
+
+.text-btn:hover {
+    opacity: 0.85;
+}
+
+.preview-pixel {
+    margin: 20px 0;
+}
+
+.preview-pixel img {
+    display: block;
+    width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
 }
 
 .carousel {
