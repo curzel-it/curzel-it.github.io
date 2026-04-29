@@ -151,6 +151,10 @@ h3 {
     opacity: 0.85;
 }
 
+.pixel-art img {
+    image-rendering: pixelated;
+}
+
 .preview-pixel {
     margin: 20px 0;
 }

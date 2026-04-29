@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cozy Flight Sim</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;0,600;0,800;1,200&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Cozy Flight Sim</h1>
+        <h2>Fly, Explore, Relax</h2>
+        <div>
+        A cozy, pixel art flight simulator.<br><br>
+        Take to the skies and explore a charming world from above.<br>
+        Currently in beta, with more content and platforms coming soon!
+        </div>
+    </header>
+
+    <section>
+        <div class="carousel-container">
+            <div class="carousel pixel-art">
+                <img src="images/flight_sim_1.png" alt="Screenshot 1">
+            </div>
+            <div class="carousel-controls">
+                <button id="prev">&#10094;</button>
+                <button id="next">&#10095;</button>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Play it Now!</h2>
+        <div class="download-links">
+            <a href="https://testflight.apple.com/join/gDKb893q">
+                <img src="images/appstore_badge.webp" alt="TestFlight Beta" style="width: 200px; height: auto;">
+            </a>
+            <a href="#" onclick="alert('Coming soon!'); return false;">
+                <img src="images/playstore_badge.webp" alt="Play Store" style="width: 200px; height: auto;">
+            </a>
+            <a href="#" onclick="alert('Coming soon!'); return false;">
+                <img src="images/steam_badge.webp" alt="Steam" style="width: 200px; height: auto;">
+            </a>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2>Credits</h2>
+        <ul>
+            <li>Music by <a href="https://www.filippovicarelli.com/8bit-game-background-music">Filippo Vicarelli</a>
+            <li>Sound Effects by <a href="https://opengameart.org/content/512-sound-effects-8-bit-style">SubspaceAudio</a>
+            <li>Font by <a href="https://dl.dafont.com/dl/?f=pixel_operator">HarvettFox96</a>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; Federico Curzel</p>
+        <div class="social-links">
+            <a href="https://github.com/curzel-it/sneakbit"><img src="images/github.png" alt="GitHub"></a>
+            | <a href="https://discord.gg/ZP7vfXub"><img src="images/discord.png" alt="Discord"></a>
+            | <a href="https://www.youtube.com/@HiddenMugs"><img src="images/youtube.png" alt="YouTube"></a>
+            | <a href="https://x.com/HiddenMugs"><img src="images/twitter.png" alt="Twitter"></a>
+            | <a href="https://curzel.it/support">Support</a>
+            | <a href="https://curzel.it/privacy">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <script>
+        const carousel = document.querySelector('.carousel');
+        const images = carousel.children;
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        let index = 0;
+
+        function showImage(newIndex) {
+            index = (newIndex + images.length) % images.length;
+            carousel.style.transform = `translateX(-${index * 100}%)`;
+        }
+
+        function autoScroll() {
+            showImage(index + 1);
+        }
+
+        if (images.length <= 1) {
+            prevButton.style.display = 'none';
+            nextButton.style.display = 'none';
+        }
+
+        prevButton.addEventListener('click', () => showImage(index - 1));
+        nextButton.addEventListener('click', () => showImage(index + 1));
+
+        if (images.length > 1) setInterval(autoScroll, 3000);
+    </script>
+</body>
+</html>
