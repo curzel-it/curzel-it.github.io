@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mugs's Blog</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;0,600;0,800;1,200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="blog-nav">
+        <a href="../index.html">← Back to homepage</a>
+    </nav>
+    <header>
+        <h1>One scene, three renderers</h1>
+        <em>Tuesday, August 4th 2026</em>
+    </header>
+
+    <section>
+        <p>
+            I've been building a game called BELT NINE. It's first person, you fly around an asteroid
+            belt, shoot rocks until they come apart, fill your hold and take it home to the
+            mothership. Vanilla JavaScript, no engine, no libraries, and no assets at all — the whole
+            belt comes out of a seed and the soundtrack is played by a sequencer instead of an mp3.
+        </p>
+
+        <div class="preview-pixel">
+            <img src="../beltnine/menu.png" alt="The BELT NINE title screen">
+        </div>
+
+        <p>
+            The part I'm most happy with is a settings row called THEME. It has three values, and they
+            are not filters. They're three different renderers, and you can swap them without leaving
+            the flight.
+        </p>
+
+        <h2>Same scene, three times</h2>
+        <p>This is what the game opens as — lines, drawn at whatever resolution your display has:</p>
+        <div class="preview-pixel">
+            <img src="../beltnine/vector.png" alt="BELT NINE drawn as glowing wireframe: rocks as lit outlines">
+        </div>
+
+        <p>This is the pixel one, which is a real framebuffer and not a filter over the one above:</p>
+        <div class="preview-pixel">
+            <img src="../beltnine/pixel.png" alt="BELT NINE drawn as dithered pixels: a green hauler quarrying a rock">
+        </div>
+
+        <p>And this one started as a joke and stayed:</p>
+        <div class="preview-pixel">
+            <img src="../beltnine/ascii.png" alt="BELT NINE drawn as characters: the mothership as a slab of ASCII">
+        </div>
+
+        <p>
+            Same seed, same world, same projection, same sort order. Only the marks are different.
+        </p>
+
+        <h2>The scene renderer can't tell which one it's talking to</h2>
+        <p>
+            There's exactly one file that turns the world into screen positions. 3D floats in, 2D out,
+            everything drawn back to front because there is no depth buffer anywhere in this game —
+            painter's order <em>is</em> the depth buffer. That file never touches a canvas. It calls
+            whatever object is sitting in <b>screen.paint</b>:
+        </p>
+        <pre>
+export const RASTER = {
+  strokes: false,
+  tint: true,
+  grain: 1,
+  lodMax: 3,
+  creaseCos: null,
+  clear, plot, dot, line, circle, disc, fillTriangleShaded,
+  beginBody: () =&gt; {},
+  endBody: () =&gt; {},
+  resize: resizeScreen,
+  finish: blit,
+};</pre>
+        <p>
+            Seven drawing calls and a handful of facts. Switching renderer is assigning a different
+            object to that field.
+        </p>
+        <p>
+            The functions are the boring half. The facts are the half that made this actually work,
+            because they're what let the renderer stop caring:
+        </p>
+        <ul>
+            <li><b>grain</b> — how many art pixels the smallest mark of this backend covers. 1 for
+                pixels and for lines, 3 for a character (a cell is 2x3).</li>
+            <li><b>lodMax</b> — how far up the mesh detail ladder it's worth climbing. 3 for pixels, 2
+                for lines, 0 for characters.</li>
+            <li><b>creaseCos</b> — the fold angle worth drawing an edge along, or null for "never ask
+                me that".</li>
+            <li><b>strokes</b>, <b>tint</b> — whether edges come out as lines, and whether distance
+                should be spent on the colour ramp.</li>
+        </ul>
+        <p>
+            My first attempt at this had the same code three times with <b>if (theme === "ascii")</b>
+            sprinkled through it, which is exactly as bad as it sounds. The version that works asks
+            the backend a question instead:
+        </p>
+        <pre>
+const marks = rs / paint.grain;   // radius in marks this backend can make</pre>
+        <p>
+            <b>rs</b> is a rock's radius on screen in art pixels. Three pixels across is a shape you
+            can draw; the same rock is one character, and one character can't have a silhouette. Every
+            size threshold in the renderer is measured in <em>marks</em> rather than pixels, so "too
+            small to bother meshing" gets a different answer per backend and nobody had to write the
+            branch.
+        </p>
+
+        <h2>1. Pixels</h2>
+        <p>
+            A <b>Uint8Array</b>, one byte per pixel, and that byte is a palette index — never a colour,
+            never a brightness. Shading is a 4x4 Bayer matrix, so a continuous shade becomes a stable
+            dither pattern instead of noise:
+        </p>
+        <pre>
+export function ditherAt(shade, x, y) {
+  return shade * 16 &gt; BAYER[(y &amp; 3) * 4 + (x &amp; 3)] ? 1 : 0;
+}</pre>
+        <p>Once a frame the whole buffer goes through a lookup table and out:</p>
+        <pre>
+for (let i = 0; i &lt; data.length; i++) px[i] = PALETTE[data[i]];
+ctx.putImageData(img, 0, 0);</pre>
+        <p>
+            That's the entire "pixel art" of it. Nothing is rendered big and scaled down, nothing is
+            posterized afterwards. The nice side effect is that the palette is one file of 35 entries,
+            and the interface reads the same values as CSS variables — so retuning the game's colours
+            retunes the HUD and the menus with it. The stylesheet has exactly one hex value in it, and
+            it's the page background, because that one has to paint before any script runs.
+        </p>
+
+        <h2>2. Lines</h2>
+        <p>
+            Same projection, but strokes onto the canvas at the display's own resolution, so this one is
+            crisp on a retina screen while the pixel one is deliberately not.
+        </p>
+        <p>
+            Two decisions make it cheap enough to run. Shade is quantized into 8 bands, so every face at
+            the same brightness is one path and one fill rather than hundreds. And an edge is only
+            stroked when the two faces meeting along it disagree by more than 22 degrees:
+        </p>
+        <pre>
+const CREASE = Math.cos((22 * Math.PI) / 180);</pre>
+        <p>
+            Lower and you can see the tessellation of the mesh; higher and the rocks go flat. I tuned it
+            by eye and there is no principled answer.
+        </p>
+        <p>
+            Line width is 1.4 device pixels, which looks like a magic number and is. At exactly 1 some
+            browsers snap lines to the pixel grid, and the whole picture shimmers when you roll.
+        </p>
+
+        <h2>3. Characters</h2>
+        <p>
+            Cells are 2x3 art pixels, and there are two alphabets:
+        </p>
+        <pre>
+export const FILL = " .:;ox%@";   // how lit
+export const EDGE = "-|/\\";      // which way the edge runs</pre>
+        <p>
+            A lit surface gets the fill character matching its brightness; a silhouette gets the
+            character matching its actual slope on screen. Both together is the whole look — the ramp
+            alone is a coverage gradient with no shape in it, the slopes alone are a wireframe with
+            nothing inside.
+        </p>
+        <p>
+            I built this first as a filter over the finished pixel buffer, and it was wrong in a way it
+            took me embarrassingly long to name. A framebuffer has already thrown away the thing you
+            need: a cell that a rock <em>covers but does not light</em> and a cell of empty space are
+            the same byte, so stars shine straight through asteroids. As a real backend, a body writes
+            every cell it covers, including the dark ones, and the rock eclipses the star — which is
+            what a rock is for.
+        </p>
+        <p>
+            That's also the argument for the whole design, really. A filter can only ever know what
+            survived; a backend gets asked before anything is thrown away.
+        </p>
+
+        <h2>How do you test three renderers?</h2>
+        <p>
+            The logic tests — about 3,000 of them, plain Node, no DOM, no timers, dt is just a number I
+            pass in — are no help here at all. They'll happily prove the projection is correct while the
+            page draws absolutely nothing.
+        </p>
+        <p>
+            So there's a second kind of check that launches headless Chrome, drives the real game over
+            the DevTools protocol, and reads pixels back off the canvas. One per backend. The vector one
+            exists to ask the single question a headless framebuffer can't answer: did strokes actually
+            land on the glass. And not by asking "is the canvas non-empty" — there's a bloom pass that
+            leaves a wash of near-background pixels around every line, and counting those rates a blank
+            screen as a drawn one. It has to be lit <em>meaningfully</em> off the void.
+        </p>
+        <p>
+            Every screenshot in this post came out of that harness. There's an <b>?autoplay=1</b> flag
+            that hands every seat to an autopilot which flies, mines, fights and docks indefinitely,
+            through the same bag of inputs a hand writes to — nothing else in the game knows it exists.
+            I don't frame these shots: the autopilot picks the moment, I just press the shutter.
+        </p>
+        <p>
+            The one below is the exception, since I did have to arrange for the poor thing to die — but
+            the 28 units of ore on it were flown home by the autopilot, one hold at a time:
+        </p>
+        <div class="preview-pixel">
+            <img src="../beltnine/death.png" alt="The HULL BREACH card: ore delivered 28, ships down 1, time flown 1:45">
+        </div>
+
+        <h2>Play it</h2>
+        <p>
+            It's at <a href="https://beltnine.curzel.it">beltnine.curzel.it</a> — runs in a browser, no
+            install, no account, and it never talks to anything. THEME is in the settings if you want to
+            see the other two.
+        </p>
+    </section>
+</body>
+
+</html>
