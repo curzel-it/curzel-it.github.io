@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELT NINE — a first-person game about mining asteroids</title>
+    <meta name="description"
+        content="BELT NINE is a first-person game about mining asteroids: break rocks, fill your hold, fly it home. Up to four pilots on one screen. Play free in your browser — no install, no account, no network.">
+    <link rel="icon" href="/favicon.ico">
+
+    <!-- Open Graph / social cards -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="BELT NINE">
+    <meta property="og:description"
+        content="Break rocks, fill your hold, fly it home. A first-person mining game in vanilla JavaScript, with no assets in it at all.">
+    <meta property="og:image" content="https://curzel.it/beltnine/vector.png">
+    <meta property="og:url" content="https://curzel.it/beltnine/">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <style>
+        /* Self-contained, like sneakbit.curzel.it's landing: this page matches the GAME rather
+           than the rest of curzel.it. The colours are the game's own palette (src/palette.js)
+           and the font stack is the one its HUD uses, so the page and the thing it's selling
+           agree. It stays dark in both schemes on purpose — the game is a black void. */
+        :root {
+            --void: #06080c;
+            --panel: #0c1016;
+            --ink: #e2ecf7;
+            --dim: #7c90b4;
+            --rock: #c6ae8b;
+            --hull: #5cff7a;
+            --alarm: #ff4a4a;
+            --font: ui-monospace, "Cascadia Mono", Consolas, monospace;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 16px;
+            font-family: var(--font);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--ink);
+            background-color: var(--void);
+        }
+
+        a { color: var(--hull); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .topbar { margin-bottom: 32px; font-size: 0.85rem; }
+        .topbar a { color: var(--dim); }
+
+        h1 {
+            margin: 0;
+            font-weight: 400;
+            font-size: clamp(2rem, 9vw, 3.4rem);
+            letter-spacing: clamp(6px, 3vw, 18px);
+            color: var(--ink);
+        }
+
+        h2 {
+            margin: 0 0 1rem;
+            font-weight: 400;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--rock);
+        }
+
+        header { margin-bottom: 44px; }
+        header .tagline { margin: 10px 0 22px; color: var(--dim); letter-spacing: 2px; }
+        header .lede { max-width: 62ch; }
+        section { margin: 44px 0; }
+
+        /* Screenshot carousel — same behaviour as the other pages on this site. */
+        .carousel-container { position: relative; overflow: hidden; margin: auto; }
+        .carousel {
+            display: flex; width: 100%; margin: 20px 0;
+            border-radius: 8px; transition: transform 0.5s ease-in-out;
+        }
+        .carousel img { flex: 0 0 100%; width: 100%; height: auto; border-radius: 8px; }
+        .carousel-controls {
+            display: flex; justify-content: space-between;
+            position: absolute; top: 50%; width: 100%;
+            transform: translateY(-50%); z-index: 10;
+        }
+        .carousel-controls button {
+            background: rgba(6, 8, 12, 0.7); border: 1px solid var(--dim); border-radius: 4px;
+            color: var(--ink); padding: 10px; cursor: pointer; font-size: 1rem;
+            font-family: var(--font);
+        }
+        .shot-caption { color: var(--dim); font-size: 0.85rem; text-align: center; }
+
+        .download-links { margin: 20px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+        .download-links a { display: inline-flex; align-items: center; }
+        .download-links img { width: 200px; height: auto; }
+        .play-badge {
+            display: inline-flex; align-items: center; gap: 10px;
+            width: 200px; aspect-ratio: 560 / 168; padding: 0 14px;
+            background-color: #000; color: var(--ink);
+            border: 1px solid var(--dim); border-radius: 10px;
+        }
+        .play-badge:hover { opacity: 0.85; text-decoration: none; }
+        .play-badge svg { flex: 0 0 auto; color: var(--hull); }
+        .play-badge .label { display: flex; flex-direction: column; line-height: 1.2; white-space: nowrap; }
+        .play-badge .label .small { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); }
+        .play-badge .label .big { font-size: 1.05rem; }
+
+        ul { padding-left: 22px; }
+        li { margin-bottom: 8px; }
+        li b { color: var(--ink); font-weight: 700; }
+
+        /* The credits block, laid out the way the game's own credits page lays it out. */
+        .rows { border-top: 1px solid #1b232e; }
+        .row {
+            display: flex; justify-content: space-between; gap: 16px;
+            padding: 7px 0; border-bottom: 1px solid #1b232e;
+            font-size: 0.85rem; letter-spacing: 1px;
+        }
+        .row .tag { color: var(--dim); text-transform: uppercase; }
+        .row .value { color: var(--ink); text-align: right; word-break: break-word; }
+        .rows p { color: var(--dim); font-size: 0.85rem; margin: 14px 0 0; }
+
+        .quiet { color: var(--dim); }
+
+        footer {
+            margin-top: 64px; padding-top: 20px;
+            border-top: 1px solid #1b232e;
+            text-align: center; font-size: 0.8rem; color: var(--dim);
+        }
+        footer a { color: var(--dim); }
+        footer .links a { margin: 0 6px; }
+
+        @media only screen and (max-width: 660px) {
+            .download-links img, .play-badge { width: 100%; max-width: 320px; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topbar"><a href="/">← curzel.it</a></div>
+
+    <header>
+        <h1>BELT NINE</h1>
+        <div class="tagline">MINE THE BELT. TAKE IT HOME.</div>
+        <div class="lede">
+            A first-person game about mining asteroids. Shoot a rock until it comes apart, take the ore
+            and whatever it was hiding, fill your hold, and fly it back to the mothership — which is the
+            only place ore turns into anything. Up to four pilots on one screen.
+        </div>
+    </header>
+
+    <section>
+        <div class="carousel-container">
+            <div class="carousel">
+                <img src="vector.png" alt="BELT NINE drawn as glowing wireframe, a bolt in the air">
+                <img src="pixel.png" alt="BELT NINE drawn as dithered pixels, quarrying a rock">
+                <img src="ascii.png" alt="BELT NINE drawn as characters, the mothership dead ahead">
+                <img src="menu.png" alt="The BELT NINE title screen">
+                <img src="death.png" alt="The HULL BREACH card at the end of a run">
+            </div>
+            <div class="carousel-controls">
+                <button id="prev" aria-label="Previous screenshot">&#10094;</button>
+                <button id="next" aria-label="Next screenshot">&#10095;</button>
+            </div>
+        </div>
+        <p class="shot-caption">Every screenshot here was taken with the game playing itself.</p>
+    </section>
+
+    <section>
+        <h2>Play it now</h2>
+        <p>It runs in a browser. No install, no account, and it never talks to anything:</p>
+        <div class="download-links">
+            <a href="https://beltnine.curzel.it" class="play-badge">
+                <svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor" stroke="none" aria-hidden="true">
+                    <polygon points="7,4 20,12 7,20" />
+                </svg>
+                <span class="label">
+                    <span class="small">Play it now</span>
+                    <span class="big">In Browser</span>
+                </span>
+            </a>
+            <!-- TODO: placeholder — swap for the real store page once the Steam app exists. -->
+            <a href="https://store.steampowered.com/app/0000000/Belt_Nine/" target="_blank" rel="noopener">
+                <img src="/images/steam_badge.webp" alt="Belt Nine on Steam">
+            </a>
+        </div>
+        <p class="quiet">The desktop build is on its way to Steam. The browser one is the whole game.</p>
+    </section>
+
+    <section>
+        <h2>What you do out there</h2>
+        <ul>
+            <li><b>Take rocks apart.</b> Asteroids are terrain, not targets: shoot one long enough and
+                it shatters into smaller rocks, and a shatter pays out in ore and in upgrades — a
+                bigger hold, more barrels, better radiators, an inertial coupler.</li>
+            <li><b>Watch the heat.</b> The gun overheats, the hull doesn't grow back on its own, and
+                there are hostiles in the belt who are also flying.</li>
+            <li><b>Fly it home.</b> A full hold is worth nothing until it's docked, and the trip back is
+                the part of the run you can lose.</li>
+            <li><b>Bring friends.</b> Two, three or four pilots split-screen on one screen. Friendly
+                fire is on by default. Every pilot after the first needs a controller.</li>
+            <li><b>Pick a belt.</b> The world is grown from a seed — <span class="quiet">?seed=belt</span>
+                names one, and the same seed is the same belt for everybody.</li>
+            <li><b>Play it however.</b> Keyboard and mouse, a controller, or touch on a phone. English
+                and Italian.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Three ways to draw it</h2>
+        <p>
+            There's a THEME row in the settings with three values, and they aren't filters — they're
+            three renderers behind one interface, drawing the same scene with the same projection. A
+            palette-indexed framebuffer with Bayer dithering, a wireframe stroked at your display's own
+            resolution, and a grid of characters. You can swap them mid-flight.
+        </p>
+        <p>
+            I wrote up how that works, and why the ASCII one had to stop being a filter, over here:
+            <a href="/blog/2026_08_04_one_scene_three_renderers.html">One scene, three renderers</a>.
+        </p>
+    </section>
+
+    <section>
+        <h2>Made of nothing</h2>
+        <div class="rows">
+            <div class="row"><span class="tag">Made by</span><span class="value">Federico Curzel</span></div>
+            <div class="row"><span class="tag">Soundtrack</span><span class="value">musicbox2</span></div>
+            <div class="row"><span class="tag">Desktop shell</span><span class="value">Electron</span></div>
+            <div class="row"><span class="tag">Runtime libraries</span><span class="value">zero</span></div>
+            <p>
+                Nothing here is loaded. The belt is grown from a seed, every note is played by a
+                sequencer, and there is not one asset in the build — no sprites, no models, no audio
+                files. It is vanilla JavaScript and a canvas.
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; Federico Curzel</p>
+        <div class="links">
+            <a href="https://beltnine.curzel.it">Play</a>
+            | <a href="https://github.com/curzel-it" target="_blank" rel="noopener">GitHub</a>
+            | <a href="https://www.youtube.com/@HiddenMugs" target="_blank" rel="noopener">YouTube</a>
+            | <a href="https://x.com/HiddenMugs" target="_blank" rel="noopener">X</a>
+            | <a href="/support.html">Support</a>
+        </div>
+    </footer>
+
+    <script>
+        // Screenshot carousel — auto-advances, with prev/next controls.
+        const carousel = document.querySelector('.carousel');
+        const images = carousel.children;
+        let index = 0;
+
+        function showImage(newIndex) {
+            index = (newIndex + images.length) % images.length;
+            carousel.style.transform = `translateX(-${index * 100}%)`;
+        }
+
+        document.getElementById('prev').addEventListener('click', () => showImage(index - 1));
+        document.getElementById('next').addEventListener('click', () => showImage(index + 1));
+        setInterval(() => showImage(index + 1), 4000);
+    </script>
+</body>
+
+</html>
