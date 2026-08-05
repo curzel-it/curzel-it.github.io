@@ -43,9 +43,10 @@
            sneakbit's, to the pixel, because it stands next to a Steam badge and the pair have to
            read as two badges rather than as a badge and an idea.
 
-           THE COLOURS ARE THE GAME'S PALETTE, values copied out of src/palette.js — BG, INK, STAR,
-           ROCK, LASER — and nothing here invents one. --dim is the panel's own dim, INK mixed 55%
-           toward BG, which is the game's rule for scaffolding.
+           THE GROUND AND THE INK ARE THE GAME'S PALETTE, values copied out of src/palette.js — BG,
+           INK, STAR — and --dim is the panel's own dim, INK mixed 55% toward BG, which is the
+           game's rule for scaffolding. THE ACCENT IS THE SITE'S: one colour does all the pointing
+           on this page, and it is curzel.it's rather than the game's.
 
            IT STAYS DARK IN BOTH SCHEMES on purpose: the game is a black void and there is no light
            version of the belt. */
@@ -53,8 +54,13 @@
             --bg: #06080c;
             --ink: #e2ecf7;
             --star: #7c90b4;
-            --rock: #c6ae8b;
-            --laser: #5cff7a;
+
+            /* ONE ACCENT, AND IT IS THE SITE'S — #ffb703, the value style.css keeps and sneakbit's
+               landing copies. The game's own ROCK and LASER were here before, which left the page
+               pointing in three colours at once: a tan tagline, a green link and a grey control,
+               none of them curzel.it's. A page can be built out of the game's black and the game's
+               instrument and still say whose site it is, in the one colour that does the pointing. */
+            --accent: #ffb703;
 
             --dim: color-mix(in srgb, var(--ink) 55%, var(--bg));
             --scan: color-mix(in srgb, var(--ink) 7%, transparent);
@@ -197,12 +203,12 @@
         section { margin: calc(var(--gap) * 4) 0; }
         section:first-child { margin-top: calc(var(--gap) * 2); }
 
-        a { color: var(--laser); text-decoration: none; }
+        a { color: var(--accent); text-decoration: none; }
         a:hover { text-decoration: underline; }
 
         .tagline {
             margin: 0 0 var(--gap);
-            color: var(--rock);
+            color: var(--accent);
             letter-spacing: 0.24em;
             text-transform: uppercase;
             font-size: 0.9em;
@@ -248,10 +254,9 @@
         /* ---- the one thing on the page that is news ---------------------------------------- */
 
         /* NOT A NEW SHAPE — TWO THAT ARE ALREADY HERE. The stripe and the wash are a selected row's
-           (below), and the tag is punched the way the keys along the foot are; only the hue is
-           different, and it is ROCK because that is the colour the page already announces itself
-           in. Assembled out of parts rather than invented, so a banner cannot look like something
-           another site left behind.
+           (below), and the tag is punched the way the keys along the foot are; the hue is the
+           accent, which is the only hue on the page. Assembled out of parts rather than invented,
+           so a banner cannot look like something another site left behind.
 
            AND IT IS QUIETER THAN THE BUTTON ABOVE IT, deliberately. There is one thing to press on
            this page and it is not this: a promise about a build nobody can play yet must not be
@@ -263,8 +268,8 @@
             gap: var(--gap);
             margin: 0;
             padding: calc(var(--gap) * 1.25) calc(var(--gap) * 1.5);
-            border-left: calc(var(--line) * 3) solid var(--rock);
-            background: color-mix(in srgb, var(--rock) 8%, transparent);
+            border-left: calc(var(--line) * 3) solid var(--accent);
+            background: color-mix(in srgb, var(--accent) 8%, transparent);
             color: var(--dim);
             font-size: 0.9em;
             line-height: 1.5;
@@ -272,7 +277,7 @@
 
         .soon .tag {
             padding: 2px 6px;
-            background: var(--rock);
+            background: var(--accent);
             color: var(--bg);
             letter-spacing: 0.2em;
             text-transform: uppercase;
@@ -301,12 +306,12 @@
         }
 
         .rows a .tag { color: var(--dim); }
-        .rows a .value { color: var(--laser); }
+        .rows a .value { color: var(--accent); }
 
         .rows a:hover,
         .rows a:focus-visible {
-            border-left-color: var(--ink);
-            background: color-mix(in srgb, var(--ink) 10%, transparent);
+            border-left-color: var(--accent);
+            background: color-mix(in srgb, var(--accent) 10%, transparent);
             text-decoration: none;
             outline: none;
         }
@@ -366,20 +371,24 @@
             transform: translateY(-50%);
         }
 
-        /* PUNCHED INTO THE BAR RATHER THAN PRINTED ON IT — BG on dim, the same inversion the
-           function keys along the bottom of the game's pages wear. */
+        /* PUNCHED INTO THE BAR RATHER THAN PRINTED ON IT — the same inversion the function keys
+           along the bottom of the game's pages wear, but in the accent rather than in dim: these
+           are pressable and the keys in the foot are not, and the page says pressable in one
+           colour. */
         .carousel-controls button {
             font: inherit;
             padding: 6px 11px;
             margin: 0 8px;
-            background: var(--dim);
+            background: var(--accent);
             color: var(--bg);
             border: none;
             cursor: pointer;
             line-height: 1;
         }
 
-        .carousel-controls button:hover { background: var(--ink); }
+        .carousel-controls button:hover {
+            background: color-mix(in srgb, var(--accent) 70%, var(--ink));
+        }
 
         .shot-foot {
             display: flex;
@@ -405,7 +414,7 @@
             cursor: pointer;
         }
 
-        .dots button[aria-current="true"] { background: var(--ink); opacity: 1; }
+        .dots button[aria-current="true"] { background: var(--accent); opacity: 1; }
 
         /* ---- the foot ---------------------------------------------------------------------- */
 
