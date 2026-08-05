@@ -8,6 +8,7 @@
     <meta name="description"
         content="BELT NINE is a first-person game about mining asteroids: break rocks, fill your hold, fly it home. Up to four pilots on one screen. Play free in your browser — no install, no account, no network.">
     <link rel="icon" href="/favicon.ico">
+    <meta name="theme-color" content="#06080c">
 
     <!-- Open Graph / social cards -->
     <meta property="og:type" content="website">
@@ -19,250 +20,603 @@
     <meta name="twitter:card" content="summary_large_image">
 
     <style>
-        /* Self-contained, like sneakbit.curzel.it's landing: this page matches the GAME rather
-           than the rest of curzel.it. The colours are the game's own palette (src/palette.js)
-           and the font stack is the one its HUD uses, so the page and the thing it's selling
-           agree. It stays dark in both schemes on purpose — the game is a black void. */
+        /* THIS PAGE IS THE GAME'S INTERFACE, PRINTED ON THE WEB. Self-contained, like sneakbit's
+           landing: it matches the GAME rather than the rest of curzel.it.
+
+           IT SAYS AS LITTLE AS IT CAN. The game is six readings, five screenshots and one button;
+           anything that needed a paragraph to explain was not worth a paragraph. What is left is
+           borrowed from the game's own stylesheet as whole materials rather than as a mood:
+
+             THE GROUND     the void, the belt in it, and one line of scan texture in three — over
+                            the whole window, not a box, because a page is not over anything.
+             THE MASTHEAD   the name in large tracked type over an INK rule, with the crumb back to
+                            where you came from and the machine's own line at the far end.
+             THE HEADS      dim, tracked, hung off a tick in the gutter with a hairline running out
+                            of the word — which is what turns a list into a page.
+             THE READOUTS   a dim label, a dotted leader carrying the eye across, and the value at
+                            full ink. Full INK is reserved for what you are meant to read now.
+             THE ROWS       a thing you can aim at: a stripe in the gutter that lights, and a wash
+                            the width of the row.
+             THE FOOT       one band, quieter than the masthead, with the keys punched into it.
+
+           THE ONE THING THAT IS NOT THE GAME'S IS THE PLAY BADGE, and that is deliberate: it is
+           sneakbit's, to the pixel, because it stands next to a Steam badge and the pair have to
+           read as two badges rather than as a badge and an idea.
+
+           THE COLOURS ARE THE GAME'S PALETTE, values copied out of src/palette.js — BG, INK, STAR,
+           ROCK, LASER — and nothing here invents one. --dim is the panel's own dim, INK mixed 55%
+           toward BG, which is the game's rule for scaffolding.
+
+           IT STAYS DARK IN BOTH SCHEMES on purpose: the game is a black void and there is no light
+           version of the belt. */
         :root {
-            --void: #06080c;
-            --panel: #0c1016;
+            --bg: #06080c;
             --ink: #e2ecf7;
-            --dim: #7c90b4;
+            --star: #7c90b4;
             --rock: #c6ae8b;
-            --hull: #5cff7a;
-            --alarm: #ff4a4a;
+            --laser: #5cff7a;
+
+            --dim: color-mix(in srgb, var(--ink) 55%, var(--bg));
+            --scan: color-mix(in srgb, var(--ink) 7%, transparent);
+            /* A star on a page is not a star in the game: there it is the far field and has to be
+               seen, here it is the thing behind the words. Dimmed in the COLOUR rather than with
+               an opacity on the layer, because the grain rides on that same layer and would be
+               dimmed with it. */
+            --spark: color-mix(in srgb, var(--star) 45%, transparent);
+
+            /* The interface constants, in CSS pixels, as the game keeps them. --line is every rule
+               and tick on the page: one value, so the masthead, the foot and a head's stub are
+               visibly the same instrument. */
+            --line: 2px;
+            --gap: 8px;
             --font: ui-monospace, "Cascadia Mono", Consolas, monospace;
         }
 
         * { box-sizing: border-box; }
 
+        html { background: var(--bg); }
+
         body {
-            max-width: 1024px;
-            margin: 0 auto;
-            padding: 16px;
+            margin: 0;
+            padding: clamp(12px, 4vw, 40px) clamp(10px, 3vw, 24px);
             font-family: var(--font);
-            font-size: 0.95rem;
+            font-size: 15px;
             line-height: 1.7;
             color: var(--ink);
-            background-color: var(--void);
+            background: transparent;
+            letter-spacing: 0.02em;
         }
 
-        a { color: var(--hull); text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        /* THE GROUND, AND IT IS THE WHOLE WINDOW. One fixed layer carrying everything behind the
+           words: the void, the belt in it, and the grain over both. Nothing about it knows where
+           the column of text starts, which is the point — a ground that stopped at the column
+           would be a frame again, drawn in a slightly different black.
 
-        .topbar { margin-bottom: 32px; font-size: 0.85rem; }
-        .topbar a { color: var(--dim); }
+           STARS AT THREE SIZES THAT SHARE NO FACTOR, so the tiling has no seam you can find, and
+           dim enough that you know the belt is there without picking a single star out of it. A
+           fixed element rather than `background-attachment: fixed`, which iOS has never done. */
+        .belt {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(1px 1px at 17% 23%, var(--spark), transparent),
+                radial-gradient(1px 1px at 62% 11%, var(--spark), transparent),
+                radial-gradient(1px 1px at 84% 47%, var(--spark), transparent),
+                radial-gradient(1px 1px at 33% 71%, var(--spark), transparent),
+                radial-gradient(1px 1px at 8% 88%, var(--spark), transparent),
+                radial-gradient(2px 2px at 71% 79%, var(--spark), transparent),
+                radial-gradient(1px 1px at 45% 38%, var(--spark), transparent),
+                radial-gradient(1px 1px at 93% 16%, var(--spark), transparent),
+                radial-gradient(1px 1px at 26% 52%, var(--spark), transparent),
+                radial-gradient(2px 2px at 55% 91%, var(--spark), transparent);
+            background-size: 703px 521px, 1103px 829px, 1499px 1129px;
+        }
+
+        /* THE GRAIN, OVER THE STARS AND UNDER THE WORDS. One line in three at a fourteenth of the
+           ink — deliberately almost nothing, so the page reads as a lit screen rather than as a
+           rectangle of paint. Its own element rather than another layer on `.belt`, because the
+           star layers already cycle through three background-sizes and adding one at the front
+           shifts every one of them onto the wrong size. */
+        .belt::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(
+                to bottom, var(--scan) 0 1px, transparent 1px 3px);
+        }
+
+        /* ---- the column ------------------------------------------------------------------ */
+
+        /* NOT A PLATE AND NOT ANYTHING. The game's panel is a box because it came UP over a running
+           belt and has to say where it ends. This page is not over anything, so it has no frame and
+           no ground of its own — the ground is the window — and this is only a measure to set the
+           words in. The rules that are left are the ones doing a job. */
+        /* THE COLUMN IS THE MEASURE, which is the whole reason for the number. It was 1000px with
+           the paragraphs capped at 70ch inside it — so every rule on the page ran to 950px and
+           every sentence stopped at 630, and the text read as wrapping in the middle of the page
+           rather than as being set to a width. One of the two had to give, and it is the column:
+           lines running the full 950 would be ninety-five characters, which is a measure nobody
+           reads twice.
+           800 BECAUSE THAT IS THE GAME'S OWN PANEL — `#panel .page` is min(800px, …) — so the page
+           and the thing it is selling are set on the same width. Nothing is capped inside it now;
+           what ends the line is the column, and everything on the page ends at the same edge. */
+        .plate {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* ---- the masthead ---------------------------------------------------------------- */
+
+        /* WHICH PAGE, WHERE FROM, AND WHICH MACHINE — one line across the top, in that order,
+           because that is the order the questions come in. */
+        .masthead {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: var(--gap) calc(var(--gap) * 2);
+            padding: calc(var(--gap) * 2) calc(var(--gap) * 3) calc(var(--gap) * 2);
+            border-bottom: var(--line) solid var(--ink);
+        }
 
         h1 {
             margin: 0;
             font-weight: 400;
-            font-size: clamp(2rem, 9vw, 3.4rem);
-            letter-spacing: clamp(6px, 3vw, 18px);
-            color: var(--ink);
+            font-size: clamp(1.6rem, 7vw, 2.6rem);
+            line-height: 1.1;
+            letter-spacing: 0.42em;
+            white-space: nowrap;
         }
 
-        h2 {
-            margin: 0 0 1rem;
-            font-weight: 400;
-            font-size: 0.85rem;
-            letter-spacing: 3px;
+        /* WHERE THIS PAGE WAS OPENED FROM, in the word the arrow would take you back to. */
+        .crumb {
+            font-size: 0.85em;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
+        }
+
+        .crumb a { color: var(--dim); }
+        .crumb a::before { content: "← "; }
+
+        /* THE MACHINE'S OWN LINE, hard against the far end: it answers a different question from
+           the two marks beside it, so it takes the other end rather than a place in the sequence. */
+        .strip {
+            margin-left: auto;
+            color: var(--dim);
+            font-size: 0.85em;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* ---- the body of the page -------------------------------------------------------- */
+
+        .body { padding: calc(var(--gap) * 2) calc(var(--gap) * 3) calc(var(--gap) * 3); }
+
+        section { margin: calc(var(--gap) * 4) 0; }
+        section:first-child { margin-top: calc(var(--gap) * 2); }
+
+        a { color: var(--laser); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .tagline {
+            margin: 0 0 var(--gap);
             color: var(--rock);
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            font-size: 0.9em;
         }
 
-        header { margin-bottom: 44px; }
-        header .tagline { margin: 10px 0 22px; color: var(--dim); letter-spacing: 2px; }
-        header .lede { max-width: 62ch; }
-        section { margin: 44px 0; }
+        /* NO MEASURE OF THEIR OWN. The column is already one (see `.plate`), and a second cap
+           inside it is what put a ragged edge two thirds of the way across the page. */
+        .lede, .say { margin: 0; }
 
-        /* Screenshot carousel — same behaviour as the other pages on this site. */
-        .carousel-container { position: relative; overflow: hidden; margin: auto; }
-        .carousel {
-            display: flex; width: 100%; margin: 20px 0;
-            border-radius: 8px; transition: transform 0.5s ease-in-out;
+        /* AIR ABOVE, AND A TICK TO HANG THE BLOCK OFF. A head is scaffolding and not information,
+           so it stays dim — full INK is for the lines under it. The solid stub in the gutter is
+           what makes a block read as hanging off a mark rather than as a caption that happens to
+           be dimmer. */
+        h2 {
+            display: flex;
+            align-items: center;
+            gap: var(--gap);
+            margin: 0 0 calc(var(--gap) * 1.5);
+            font-weight: 400;
+            font-size: 0.8em;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--dim);
+            white-space: nowrap;
         }
-        .carousel img { flex: 0 0 100%; width: 100%; height: auto; border-radius: 8px; }
-        .carousel-controls {
-            display: flex; justify-content: space-between;
-            position: absolute; top: 50%; width: 100%;
-            transform: translateY(-50%); z-index: 10;
-        }
-        .carousel-controls button {
-            background: rgba(6, 8, 12, 0.7); border: 1px solid var(--dim); border-radius: 4px;
-            color: var(--ink); padding: 10px; cursor: pointer; font-size: 1rem;
-            font-family: var(--font);
-        }
-        .shot-caption { color: var(--dim); font-size: 0.85rem; text-align: center; }
 
-        .download-links { margin: 20px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+        h2::before {
+            content: "";
+            align-self: stretch;
+            width: calc(var(--line) * 2);
+            /* The tracking is applied to the right of every letter, so the gap after the word is
+               already 0.3em wider than the one before it. Taking that off centres the rule. */
+            margin-right: calc(var(--gap) * -0.3);
+            background: var(--dim);
+        }
+
+        h2::after {
+            content: "";
+            flex: 1;
+            border-bottom: var(--line) solid var(--dim);
+        }
+
+        /* ---- the one thing on the page that is news ---------------------------------------- */
+
+        /* NOT A NEW SHAPE — TWO THAT ARE ALREADY HERE. The stripe and the wash are a selected row's
+           (below), and the tag is punched the way the keys along the foot are; only the hue is
+           different, and it is ROCK because that is the colour the page already announces itself
+           in. Assembled out of parts rather than invented, so a banner cannot look like something
+           another site left behind.
+
+           AND IT IS QUIETER THAN THE BUTTON ABOVE IT, deliberately. There is one thing to press on
+           this page and it is not this: a promise about a build nobody can play yet must not be
+           the loudest mark on a page whose whole argument is that you can play right now. */
+        .soon {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: var(--gap);
+            margin: 0;
+            padding: calc(var(--gap) * 1.25) calc(var(--gap) * 1.5);
+            border-left: calc(var(--line) * 3) solid var(--rock);
+            background: color-mix(in srgb, var(--rock) 8%, transparent);
+            color: var(--dim);
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .soon .tag {
+            padding: 2px 6px;
+            background: var(--rock);
+            color: var(--bg);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-size: 0.85em;
+        }
+
+        .soon .said { flex: 1 1 20ch; }
+
+        /* ---- rows you can aim at --------------------------------------------------------- */
+
+        /* A ROW IS A TARGET. The stripe is always in the layout and only sometimes inked — added
+           and removed for real it would shove every label sideways as the cursor moved. */
+        .rows { margin: 0; padding: 0; list-style: none; }
+
+        .rows a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: calc(var(--gap) * 2);
+            padding: 10px calc(var(--gap) * 1.5);
+            border-left: calc(var(--line) * 3) solid transparent;
+            color: var(--ink);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.9em;
+        }
+
+        .rows a .tag { color: var(--dim); }
+        .rows a .value { color: var(--laser); }
+
+        .rows a:hover,
+        .rows a:focus-visible {
+            border-left-color: var(--ink);
+            background: color-mix(in srgb, var(--ink) 10%, transparent);
+            text-decoration: none;
+            outline: none;
+        }
+
+        .rows a:hover .tag,
+        .rows a:focus-visible .tag { color: var(--ink); }
+
+        /* ---- the badges ------------------------------------------------------------------ */
+
+        /* SNEAKBIT'S PLAY BADGE, COPIED RULE FOR RULE from /sneakbit/index.html rather than
+           restyled to match this page. It sits beside a Steam badge, and a store badge is a shape
+           people recognise before they read it — the pair have to be two badges. It is the only
+           thing on this page that is not the game's own interface, and that is the reason. */
+        .download-links { margin: 20px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
         .download-links a { display: inline-flex; align-items: center; }
-        .download-links img { width: 200px; height: auto; }
         .play-badge {
-            display: inline-flex; align-items: center; gap: 10px;
+            display: inline-flex; align-items: center; gap: 8px; box-sizing: border-box;
             width: 200px; aspect-ratio: 560 / 168; padding: 0 14px;
-            background-color: #000; color: var(--ink);
-            border: 1px solid var(--dim); border-radius: 10px;
+            background-color: #000; color: #fff;
+            border: 1px solid #a6a6a6; border-radius: 10px; text-decoration: none;
         }
         .play-badge:hover { opacity: 0.85; text-decoration: none; }
-        .play-badge svg { flex: 0 0 auto; color: var(--hull); }
-        .play-badge .label { display: flex; flex-direction: column; line-height: 1.2; white-space: nowrap; }
-        .play-badge .label .small { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); }
-        .play-badge .label .big { font-size: 1.05rem; }
+        .play-badge svg { flex: 0 0 auto; }
+        .play-badge .label { display: flex; flex-direction: column; line-height: 1.15; text-align: left; white-space: nowrap; }
+        .play-badge .label .small { font-size: 0.6rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+        .play-badge .label .big { font-size: 1.1rem; font-weight: 700; }
 
-        ul { padding-left: 22px; }
-        li { margin-bottom: 8px; }
-        li b { color: var(--ink); font-weight: 700; }
+        /* ---- the viewport ------------------------------------------------------------------ */
 
-        /* The credits block, laid out the way the game's own credits page lays it out. */
-        .rows { border-top: 1px solid #1b232e; }
-        .row {
-            display: flex; justify-content: space-between; gap: 16px;
-            padding: 7px 0; border-bottom: 1px solid #1b232e;
-            font-size: 0.85rem; letter-spacing: 1px;
+        .viewport {
+            position: relative;
+            overflow: hidden;
+            border: var(--line) solid var(--dim);
+            background: var(--bg);
         }
-        .row .tag { color: var(--dim); text-transform: uppercase; }
-        .row .value { color: var(--ink); text-align: right; word-break: break-word; }
-        .rows p { color: var(--dim); font-size: 0.85rem; margin: 14px 0 0; }
 
-        .quiet { color: var(--dim); }
-
-        footer {
-            margin-top: 64px; padding-top: 20px;
-            border-top: 1px solid #1b232e;
-            text-align: center; font-size: 0.8rem; color: var(--dim);
+        .carousel {
+            display: flex;
+            width: 100%;
+            transition: transform 0.5s ease-in-out;
         }
-        footer a { color: var(--dim); }
-        footer .links a { margin: 0 6px; }
 
-        @media only screen and (max-width: 660px) {
+        .carousel img {
+            flex: 0 0 100%;
+            width: 100%;
+            height: auto;
+            display: block;
+            image-rendering: pixelated;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            transform: translateY(-50%);
+        }
+
+        /* PUNCHED INTO THE BAR RATHER THAN PRINTED ON IT — BG on dim, the same inversion the
+           function keys along the bottom of the game's pages wear. */
+        .carousel-controls button {
+            font: inherit;
+            padding: 6px 11px;
+            margin: 0 8px;
+            background: var(--dim);
+            color: var(--bg);
+            border: none;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .carousel-controls button:hover { background: var(--ink); }
+
+        .shot-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--gap);
+            padding: var(--gap) 2px 0;
+            color: var(--dim);
+            font-size: 0.85em;
+        }
+
+        /* Where you are in the strip. Squares rather than dots, because nothing in this game is
+           round and the sensor's contacts are the same mark. */
+        .dots { display: flex; gap: 6px; }
+
+        .dots button {
+            width: 9px;
+            height: 9px;
+            padding: 0;
+            border: none;
+            background: var(--dim);
+            opacity: 0.45;
+            cursor: pointer;
+        }
+
+        .dots button[aria-current="true"] { background: var(--ink); opacity: 1; }
+
+        /* ---- the foot ---------------------------------------------------------------------- */
+
+        /* ONE BAND, QUIETER THAN THE MASTHEAD. Same shape, one step down, which is what makes the
+           two read as the top and the bottom of one page rather than as two headers. The keys are
+           the only instruction left on the page, and they need no sentence over them. */
+        .foot { border-top: var(--line) solid var(--ink); }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px 18px;
+            margin: 0;
+            padding: calc(var(--gap) * 1.5) calc(var(--gap) * 3);
+            list-style: none;
+            color: var(--dim);
+            font-size: 0.85em;
+            text-transform: uppercase;
+        }
+
+        .fkey { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+
+        .fkey .key {
+            padding: 2px 5px;
+            background: var(--dim);
+            color: var(--bg);
+            letter-spacing: 0.08em;
+        }
+
+        /* The links are not keys and must not be drawn as any: a bar of punched caps with a
+           hyperlink hiding among them is a bar where one of the keys does something. */
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px 16px;
+            margin: 0;
+            padding: var(--gap) calc(var(--gap) * 3) calc(var(--gap) * 2);
+            border-top: var(--line) solid var(--dim);
+            list-style: none;
+            font-size: 0.85em;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .links a { color: var(--dim); }
+        .links a:hover { color: var(--ink); }
+        .links .rule { margin-right: auto; }
+
+        /* A PHONE IS ONE COLUMN, which is the width the game's own panel gives up its two at. */
+        @media (max-width: 700px) {
             .download-links img, .play-badge { width: 100%; max-width: 320px; }
+
+            /* Two things holding opposite ends of a line only works while they are on one. */
+            .rows a { flex-wrap: wrap; gap: 0; }
+            .rows a .value { margin-left: auto; }
+            .shot-foot { align-items: flex-start; }
+            .links .rule { margin-right: 0; width: 100%; }
+            .strip { margin-left: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .carousel { transition: none; }
         }
     </style>
 </head>
 
 <body>
-    <div class="topbar"><a href="/">← curzel.it</a></div>
+    <div class="belt" aria-hidden="true"></div>
 
-    <header>
-        <h1>BELT NINE</h1>
-        <div class="tagline">MINE THE BELT. TAKE IT HOME.</div>
-        <div class="lede">
-            A first-person game about mining asteroids. Shoot a rock until it comes apart, take the ore
-            and whatever it was hiding, fill your hold, and fly it back to the mothership — which is the
-            only place ore turns into anything. Up to four pilots on one screen.
+    <main class="plate">
+        <div class="masthead">
+            <h1>BELT NINE</h1>
+            <div class="crumb"><a href="/">curzel.it</a></div>
+            <div class="strip">v0.9 · browser &amp; desktop</div>
         </div>
-    </header>
 
-    <section>
-        <div class="carousel-container">
-            <div class="carousel">
-                <img src="vector.png" alt="BELT NINE drawn as glowing wireframe, a bolt in the air">
-                <img src="pixel.png" alt="BELT NINE drawn as dithered pixels, quarrying a rock">
-                <img src="ascii.png" alt="BELT NINE drawn as characters, the mothership dead ahead">
-                <img src="menu.png" alt="The BELT NINE title screen">
-                <img src="death.png" alt="The HULL BREACH card at the end of a run">
-            </div>
-            <div class="carousel-controls">
-                <button id="prev" aria-label="Previous screenshot">&#10094;</button>
-                <button id="next" aria-label="Next screenshot">&#10095;</button>
-            </div>
+        <div class="body">
+            <section>
+                <p class="tagline">Mine the belt. Take it home.</p>
+                <p class="lede">
+                    A first-person game about mining asteroids. Up to four pilots on one screen.
+                    No install, no account, no network.
+                </p>
+
+                <div class="download-links">
+                    <a href="https://beltnine.curzel.it" class="play-badge">
+                        <svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor" stroke="none" aria-hidden="true">
+                            <polygon points="7,4 20,12 7,20" />
+                        </svg>
+                        <span class="label">
+                            <span class="small">Play it now</span>
+                            <span class="big">In Browser</span>
+                        </span>
+                    </a>
+                    <!-- THE STEAM BADGE IS OUT UNTIL THERE IS A STORE PAGE TO SEND ANYBODY TO. It
+                         pointed at app/0000000, which is not a placeholder so much as a broken
+                         promise with a logo on it — the banner below says the same thing and says
+                         it truthfully. Kept here rather than deleted: when the app id exists this
+                         is two lines of work, and the sizing has to match the badge beside it.
+                    <a href="https://store.steampowered.com/app/0000000/Belt_Nine/" target="_blank" rel="noopener">
+                        <img src="/images/steam_badge.webp" alt="Belt Nine on Steam" style="width: 200px; height: auto;">
+                    </a>
+                    -->
+                </div>
+
+                <p class="soon">
+                    <span class="tag">Soon</span>
+                    <span class="said">A desktop build is on its way to Steam. The browser one above
+                        is the whole game, and it always will be.</span>
+                </p>
+            </section>
+
+            <section>
+                <div class="viewport">
+                    <div class="carousel">
+                        <img src="vector.png" alt="BELT NINE drawn as glowing wireframe, a bolt in the air">
+                        <img src="pixel.png" alt="BELT NINE drawn as dithered pixels, quarrying a rock">
+                        <img src="ascii.png" alt="BELT NINE drawn as characters, the mothership dead ahead">
+                        <img src="menu.png" alt="The BELT NINE title screen">
+                        <img src="death.png" alt="The HULL BREACH card at the end of a run">
+                    </div>
+                    <div class="carousel-controls">
+                        <button id="prev" aria-label="Previous screenshot">&#10094;</button>
+                        <button id="next" aria-label="Next screenshot">&#10095;</button>
+                    </div>
+                </div>
+                <div class="shot-foot">
+                    <span>Every screenshot taken with the game playing itself.</span>
+                    <div class="dots" id="dots" role="tablist" aria-label="Screenshots"></div>
+                </div>
+            </section>
+
+            <section>
+                <h2>What you do out there</h2>
+                <p class="say">
+                    Asteroids are terrain rather than targets: shoot one long enough and it comes apart
+                    into ore and upgrades, while the gun overheats and the hull doesn't grow back.
+                    A full hold is worth nothing until it's docked at the mothership, and the flight
+                    home is the part of the run you can lose.
+                </p>
+            </section>
+
+            <section>
+                <h2>Made of nothing</h2>
+                <p class="say">
+                    The belt is grown from a seed and every note of the soundtrack is played by a
+                    sequencer, so there isn't one asset in the build — no sprites, no models, no audio
+                    files. It's vanilla JavaScript and a canvas, with no runtime libraries and three
+                    renderers behind one interface: pixels, wireframe or characters, swappable
+                    mid-flight.
+                </p>
+                <ul class="rows">
+                    <li>
+                        <a href="/blog/2026_08_04_one_scene_three_renderers.html">
+                            <span class="tag">Three renderers, one scene</span>
+                            <span class="value">Read it →</span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
         </div>
-        <p class="shot-caption">Every screenshot here was taken with the game playing itself.</p>
-    </section>
 
-    <section>
-        <h2>Play it now</h2>
-        <p>It runs in a browser. No install, no account, and it never talks to anything:</p>
-        <div class="download-links">
-            <a href="https://beltnine.curzel.it" class="play-badge">
-                <svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor" stroke="none" aria-hidden="true">
-                    <polygon points="7,4 20,12 7,20" />
-                </svg>
-                <span class="label">
-                    <span class="small">Play it now</span>
-                    <span class="big">In Browser</span>
-                </span>
-            </a>
-            <!-- TODO: placeholder — swap for the real store page once the Steam app exists. -->
-            <a href="https://store.steampowered.com/app/0000000/Belt_Nine/" target="_blank" rel="noopener">
-                <img src="/images/steam_badge.webp" alt="Belt Nine on Steam">
-            </a>
+        <div class="foot">
+            <ul class="legend">
+                <li class="fkey"><span class="key">W A S D</span> Fly</li>
+                <li class="fkey"><span class="key">Mouse</span> Aim</li>
+                <li class="fkey"><span class="key">Space</span> Fire</li>
+                <li class="fkey"><span class="key">Shift</span> Boost</li>
+                <li class="fkey"><span class="key">Q E</span> Roll</li>
+                <li class="fkey"><span class="key">X</span> Brake</li>
+                <li class="fkey"><span class="key">Esc</span> Menu</li>
+            </ul>
+            <ul class="links">
+                <li class="rule">&copy; Federico Curzel</li>
+                <li><a href="https://beltnine.curzel.it">Play</a></li>
+                <li><a href="https://github.com/curzel-it" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="https://www.youtube.com/@HiddenMugs" target="_blank" rel="noopener">YouTube</a></li>
+                <li><a href="https://x.com/HiddenMugs" target="_blank" rel="noopener">X</a></li>
+                <li><a href="/support.html">Support</a></li>
+            </ul>
         </div>
-        <p class="quiet">The desktop build is on its way to Steam. The browser one is the whole game.</p>
-    </section>
-
-    <section>
-        <h2>What you do out there</h2>
-        <ul>
-            <li><b>Take rocks apart.</b> Asteroids are terrain, not targets: shoot one long enough and
-                it shatters into smaller rocks, and a shatter pays out in ore and in upgrades — a
-                bigger hold, more barrels, better radiators, an inertial coupler.</li>
-            <li><b>Watch the heat.</b> The gun overheats, the hull doesn't grow back on its own, and
-                there are hostiles in the belt who are also flying.</li>
-            <li><b>Fly it home.</b> A full hold is worth nothing until it's docked, and the trip back is
-                the part of the run you can lose.</li>
-            <li><b>Bring friends.</b> Two, three or four pilots split-screen on one screen. Friendly
-                fire is on by default. Every pilot after the first needs a controller.</li>
-            <li><b>Pick a belt.</b> The world is grown from a seed — <span class="quiet">?seed=belt</span>
-                names one, and the same seed is the same belt for everybody.</li>
-            <li><b>Play it however.</b> Keyboard and mouse, a controller, or touch on a phone. English
-                and Italian.</li>
-        </ul>
-    </section>
-
-    <section>
-        <h2>Three ways to draw it</h2>
-        <p>
-            There's a THEME row in the settings with three values, and they aren't filters — they're
-            three renderers behind one interface, drawing the same scene with the same projection. A
-            palette-indexed framebuffer with Bayer dithering, a wireframe stroked at your display's own
-            resolution, and a grid of characters. You can swap them mid-flight.
-        </p>
-        <p>
-            I wrote up how that works, and why the ASCII one had to stop being a filter, over here:
-            <a href="/blog/2026_08_04_one_scene_three_renderers.html">One scene, three renderers</a>.
-        </p>
-    </section>
-
-    <section>
-        <h2>Made of nothing</h2>
-        <div class="rows">
-            <div class="row"><span class="tag">Made by</span><span class="value">Federico Curzel</span></div>
-            <div class="row"><span class="tag">Soundtrack</span><span class="value">musicbox2</span></div>
-            <div class="row"><span class="tag">Desktop shell</span><span class="value">Electron</span></div>
-            <div class="row"><span class="tag">Runtime libraries</span><span class="value">zero</span></div>
-            <p>
-                Nothing here is loaded. The belt is grown from a seed, every note is played by a
-                sequencer, and there is not one asset in the build — no sprites, no models, no audio
-                files. It is vanilla JavaScript and a canvas.
-            </p>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; Federico Curzel</p>
-        <div class="links">
-            <a href="https://beltnine.curzel.it">Play</a>
-            | <a href="https://github.com/curzel-it" target="_blank" rel="noopener">GitHub</a>
-            | <a href="https://www.youtube.com/@HiddenMugs" target="_blank" rel="noopener">YouTube</a>
-            | <a href="https://x.com/HiddenMugs" target="_blank" rel="noopener">X</a>
-            | <a href="/support.html">Support</a>
-        </div>
-    </footer>
+    </main>
 
     <script>
-        // Screenshot carousel — auto-advances, with prev/next controls.
+        // Screenshot carousel — auto-advances, with prev/next controls and a square per shot.
         const carousel = document.querySelector('.carousel');
         const images = carousel.children;
+        const dots = document.getElementById('dots');
         let index = 0;
+
+        for (let i = 0; i < images.length; i++) {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.setAttribute('aria-label', `Screenshot ${i + 1}`);
+            dot.addEventListener('click', () => showImage(i));
+            dots.appendChild(dot);
+        }
 
         function showImage(newIndex) {
             index = (newIndex + images.length) % images.length;
             carousel.style.transform = `translateX(-${index * 100}%)`;
+            for (let i = 0; i < dots.children.length; i++) {
+                dots.children[i].setAttribute('aria-current', i === index ? 'true' : 'false');
+            }
         }
 
         document.getElementById('prev').addEventListener('click', () => showImage(index - 1));
         document.getElementById('next').addEventListener('click', () => showImage(index + 1));
+        showImage(0);
         setInterval(() => showImage(index + 1), 4000);
     </script>
 </body>
