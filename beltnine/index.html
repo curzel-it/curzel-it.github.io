@@ -80,6 +80,10 @@
 
         * { box-sizing: border-box; }
 
+        /* NO `scroll-behavior: smooth` HERE, AND IT IS NOT AN OVERSIGHT. It was tried, and on a
+           cold load of /beltnine/#linux Chrome landed at the top of the page instead of on the
+           question — the smooth path defers the initial fragment scroll and then drops it. Sliding
+           to an anchor is worth nothing next to arriving at the one somebody was sent. */
         html { background: var(--bg); }
 
         body {
@@ -319,6 +323,84 @@
         .rows a:hover .tag,
         .rows a:focus-visible .tag { color: var(--ink); }
 
+        /* ---- the questions --------------------------------------------------------------- */
+
+        /* CLOSED UNTIL ASKED, AND NATIVE. `<details>` rather than a scripted accordion: it is
+           keyboard-operable, find-in-page reaches inside it, and it still opens if the script at
+           the bottom of this page never runs. A list of questions is a menu, and a menu of five
+           closed questions is read in one glance where five open ones are a wall.
+
+           THE ONE THING A DISCLOSURE COSTS is the deep link, which is the whole reason these have
+           ids: a link to #linux that lands on a closed question has answered nobody. The script
+           opens whatever the address names — see the note there.
+
+           THE MARKS ARE ALREADY ON THIS PAGE. A question under the cursor wears the stripe and the
+           wash a row wears, because it IS a row you aim at now; a question you were sent to wears
+           the same in the accent and keeps it. The toggle is `+` and `−` rather than a triangle:
+           the OS marker is a rounded shape from somebody else's interface, and nothing in this
+           game is round. */
+        .faq { margin: 0; }
+
+        .faq .qa {
+            border-left: calc(var(--line) * 3) solid transparent;
+            /* A question landed on is not a question jammed against the top of the glass. */
+            scroll-margin-block: calc(var(--gap) * 3);
+        }
+
+        .faq summary {
+            display: flex;
+            align-items: baseline;
+            gap: var(--gap);
+            padding: 10px calc(var(--gap) * 1.5);
+            cursor: pointer;
+            color: var(--ink);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.9em;
+            /* Both spellings of "no triangle" — the standard one and the one Safari still wants. */
+            list-style: none;
+        }
+
+        .faq summary::-webkit-details-marker { display: none; }
+
+        .faq summary::before {
+            content: "+";
+            color: var(--accent);
+            /* A fixed cell, so the question does not step sideways when the sign changes under it. */
+            flex: 0 0 1ch;
+        }
+
+        .faq .qa[open] > summary::before { content: "−"; }
+
+        .faq summary:hover,
+        .faq summary:focus-visible {
+            background: color-mix(in srgb, var(--accent) 10%, transparent);
+            outline: none;
+        }
+
+        .faq .qa:hover,
+        .faq .qa:focus-within { border-left-color: var(--accent); }
+
+        .faq .qa:target {
+            border-left-color: var(--accent);
+            background: color-mix(in srgb, var(--accent) 10%, transparent);
+        }
+
+        /* THE ADDRESS OF THIS ONE ANSWER, PRINTED RATHER THAN REVEALED ON HOVER: a mark that only
+           exists under a cursor is a mark nobody on a phone will ever find. Pushed to the far end
+           so it is a thing beside the question rather than a character in it. */
+        .faq .hash {
+            margin-left: auto;
+            color: var(--dim);
+            text-decoration: none;
+        }
+
+        .faq .hash:hover, .faq .hash:focus-visible { color: var(--accent); text-decoration: none; }
+
+        .faq .answer { padding: 0 calc(var(--gap) * 1.5) calc(var(--gap) * 1.5); }
+        .faq .answer p { margin: 0; }
+        .faq .answer p + p { margin-top: var(--gap); }
+
         /* ---- the badges ------------------------------------------------------------------ */
 
         /* SNEAKBIT'S PLAY BADGE, COPIED RULE FOR RULE from /sneakbit/index.html rather than
@@ -532,10 +614,10 @@
             <section>
                 <div class="viewport">
                     <div class="carousel">
-                        <img src="vector.png" alt="BELT NINE drawn as glowing wireframe, a bolt in the air">
-                        <img src="pixel.png" alt="BELT NINE drawn as dithered pixels, quarrying a rock">
-                        <img src="menu.png" alt="The BELT NINE title screen">
-                        <img src="death.png" alt="The HULL BREACH card at the end of a run">
+                        <img src="vector.png" width="1280" height="633" alt="BELT NINE drawn as glowing wireframe, a bolt in the air">
+                        <img src="pixel.png" width="1280" height="633" alt="BELT NINE drawn as dithered pixels, quarrying a rock">
+                        <img src="menu.png" width="1280" height="633" alt="The BELT NINE title screen">
+                        <img src="death.png" width="1280" height="633" alt="The HULL BREACH card at the end of a run">
                     </div>
                     <div class="carousel-controls">
                         <button id="prev" aria-label="Previous screenshot">&#10094;</button>
@@ -576,6 +658,96 @@
                     </li>
                 </ul>
             </section>
+
+            <!-- WHAT PEOPLE ACTUALLY WRITE IN TO ASK, WHICH IS ALL OF IT ABOUT MACHINES. Nobody
+                 needs a page to tell them what a mining game is; they need to know whether the
+                 thing will start on the box they own, and the Deck question is the one that comes
+                 in most. Every answer is a fact from the build rather than a hope about it: where
+                 an answer is not settled yet — the Deck's badge — it says so instead of rounding
+                 up to a yes.
+                 THE IDS ARE THE PROMISE, AND THEY DO NOT CHANGE. #faq and #linux go in mails,
+                 forum replies and a store page's support field, and a renamed anchor is a dead
+                 link somebody else has already sent. -->
+            <section id="faq">
+                <h2>Questions</h2>
+                <div class="faq">
+                    <details class="qa" id="browser">
+                        <summary>What do I need to play it?<a class="hash" href="#browser" aria-label="Link to this question">#</a></summary>
+                        <div class="answer">
+                            <p>
+                                A browser, on whatever the browser is running on. It's a canvas and
+                                under half a megabyte of JavaScript — no WebGL, no plugin, no
+                                install, no account, and nothing is fetched after the page itself,
+                                because the belt and the soundtrack are grown from a seed rather
+                                than loaded. Any current Chrome, Edge, Firefox or Safari will do.
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="qa" id="linux">
+                        <summary>Does it run on Linux, SteamOS or the Steam Deck?<a class="hash" href="#linux" aria-label="Link to this question">#</a></summary>
+                        <div class="answer">
+                            <p>
+                                In the browser, yes, and today.
+                                <a href="https://beltnine.curzel.it">beltnine.curzel.it</a> is the
+                                whole game, and nothing in it knows or cares which OS is under the
+                                browser — on a Deck that means desktop mode and any browser you have
+                                there.
+                            </p>
+                            <p>
+                                The desktop build isn't out yet. When it ships to Steam it ships
+                                with a native x86_64 Linux binary — Ubuntu 22.04 or SteamOS 3 and
+                                later — so there's no Proton in the way and no compatibility tool to
+                                go and pick.
+                            </p>
+                            <p>
+                                Steam Deck Verified is Valve's rating rather than mine, and it's
+                                awarded after they review the build. I'm not claiming it before it's
+                                earned, so treat the Deck as untested until the badge on the store
+                                page says otherwise.
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="qa" id="desktop">
+                        <summary>Which Windows, and which Mac?<a class="hash" href="#desktop" aria-label="Link to this question">#</a></summary>
+                        <div class="answer">
+                            <p>
+                                Windows 10 64-bit or later. macOS 12 Monterey or later on Apple
+                                Silicon — there's no Intel build, and that's a decision rather than
+                                a thing still coming. Either one wants about 500 MB on disk, 4 GB of
+                                memory, and no graphics card in particular: integrated is fine. The
+                                game is the half megabyte above; the other 499 are the browser
+                                engine it's wrapped in.
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="qa" id="mobile">
+                        <summary>Does it work on a phone or a tablet?<a class="hash" href="#mobile" aria-label="Link to this question">#</a></summary>
+                        <div class="answer">
+                            <p>
+                                It does. Touch controls — two sticks, a trigger and the roll keys —
+                                come up on first touch and are sized in millimetres rather than
+                                pixels, so they're the same size on every screen. Hold it in
+                                landscape; the game will ask you to.
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="qa" id="controller">
+                        <summary>Do I need a controller?<a class="hash" href="#controller" aria-label="Link to this question">#</a></summary>
+                        <div class="answer">
+                            <p>
+                                Not to fly alone — keyboard and mouse is what it was built on, and
+                                pads are fully supported if you'd rather. Split-screen is where it
+                                matters: up to four pilots share one screen, and every pilot after
+                                the first needs a controller of their own.
+                            </p>
+                        </div>
+                    </details>
+                </div>
+            </section>
         </div>
 
         <div class="foot">
@@ -591,6 +763,7 @@
             <ul class="links">
                 <li class="rule">&copy; Federico Curzel</li>
                 <li><a href="https://beltnine.curzel.it">Play</a></li>
+                <li><a href="#faq">Questions</a></li>
                 <li><a href="https://github.com/curzel-it" target="_blank" rel="noopener">GitHub</a></li>
                 <li><a href="https://www.youtube.com/@HiddenMugs" target="_blank" rel="noopener">YouTube</a></li>
                 <li><a href="https://x.com/HiddenMugs" target="_blank" rel="noopener">X</a></li>
@@ -626,6 +799,30 @@
         document.getElementById('next').addEventListener('click', () => showImage(index + 1));
         showImage(0);
         setInterval(() => showImage(index + 1), 4000);
+
+        // A QUESTION SOMEBODY WAS SENT A LINK TO HAS TO BE OPEN WHEN THEY ARRIVE. Browsers are
+        // starting to expand a <details> containing the fragment on their own, and the ones that
+        // do make this a no-op; the ones that do not would otherwise land a reader on a closed
+        // question, which is the one failure a permalink cannot survive. Re-scrolling after the
+        // open is not belt-and-braces either: the browser aimed at a collapsed box and everything
+        // below it moved the moment the answer unfolded.
+        function openFromHash() {
+            const id = decodeURIComponent(location.hash.slice(1));
+            if (!id) return;
+            const qa = document.getElementById(id);
+            if (!qa || !qa.classList.contains('qa')) return;
+            qa.open = true;
+            qa.scrollIntoView({ block: 'start' });
+        }
+
+        // The permalink is inside the summary, so its click would toggle the question shut on the
+        // way past. Stopping it there leaves the address change to do the opening, in one place.
+        for (const hash of document.querySelectorAll('.faq .hash')) {
+            hash.addEventListener('click', (e) => e.stopPropagation());
+        }
+
+        addEventListener('hashchange', openFromHash);
+        openFromHash();
     </script>
 </body>
 
