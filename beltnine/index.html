@@ -262,9 +262,9 @@
            accent, which is the only hue on the page. Assembled out of parts rather than invented,
            so a banner cannot look like something another site left behind.
 
-           AND IT IS QUIETER THAN THE BUTTON ABOVE IT, deliberately. There is one thing to press on
-           this page and it is not this: a promise about a build nobody can play yet must not be
-           the loudest mark on a page whose whole argument is that you can play right now. */
+           AND IT IS QUIETER THAN THE BADGES ABOVE IT, deliberately. The things to press are up
+           there and this is not one of them: a promise about a build nobody can play yet must not
+           be the loudest mark on a page whose whole argument is that you can play right now. */
         .soon {
             display: flex;
             align-items: baseline;
@@ -421,50 +421,26 @@
         .play-badge .label .small { font-size: 0.6rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
         .play-badge .label .big { font-size: 1.1rem; font-weight: 700; }
 
+        /* THE TRAILER IS A BADGE AND NOT A BANNER, and it is in this row because this row is
+           where somebody looks for a thing to press. It was a bar over the screenshots first,
+           which put the one link that leaves the site in the one place the page keeps for
+           showing the game; a badge in the row says the same thing and says it where it will
+           be looked for.
+           BUILT TO THE PLAY BADGE'S MEASUREMENTS — same width, same aspect, same hairline and
+           corner — so the row reads as a row of badges rather than as a badge with a link
+           leaning on it. It is the homepage's Trailer button, which is this button on a
+           lighter page. */
+        .text-btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            box-sizing: border-box;
+            width: 200px; aspect-ratio: 560 / 168;
+            background-color: #000; color: #fff;
+            border: 1px solid #a6a6a6; border-radius: 10px; text-decoration: none;
+            font-size: 1rem; letter-spacing: 0.08em;
+        }
+        .text-btn:hover { opacity: 0.85; text-decoration: none; }
+
         /* ---- the viewport ------------------------------------------------------------------ */
-
-        /* THE MOVING PICTURES, SITTING ON THE STILL ONES. The trailer is not a second
-           announcement — it is the top of the picture block, so it is drawn as the viewport's
-           own title bar: the same hairline, no bottom edge of its own, welded straight onto the
-           screenshots. A second accent banner under the SOON one would have made the page shout
-           twice in a row before it ever showed you the game; a bar attached to the thing it
-           belongs to says the same and costs one line.
-
-           THE MARK IS PUNCHED, like the keys in the foot and the SOON tag — the one shape this
-           page has for "a label rather than a word" — and the bar lights the way every other
-           target here lights, because that is what it is. */
-        .trailer {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: var(--gap);
-            padding: 10px calc(var(--gap) * 1.5);
-            border: var(--line) solid var(--dim);
-            border-bottom: none;
-            background: color-mix(in srgb, var(--accent) 6%, transparent);
-            color: var(--ink);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            font-size: 0.9em;
-        }
-
-        .trailer .mark {
-            display: inline-flex;
-            padding: 3px 6px;
-            background: var(--accent);
-            color: var(--bg);
-        }
-
-        /* Held at the far end, and never broken across two lines when it gets there. */
-        .trailer .value { margin-left: auto; color: var(--accent); white-space: nowrap; }
-
-        .trailer:hover,
-        .trailer:focus-visible {
-            border-color: var(--accent);
-            background: color-mix(in srgb, var(--accent) 12%, transparent);
-            text-decoration: none;
-            outline: none;
-        }
 
         .viewport {
             position: relative;
@@ -592,7 +568,7 @@
 
         /* A PHONE IS ONE COLUMN, which is the width the game's own panel gives up its two at. */
         @media (max-width: 700px) {
-            .download-links img, .play-badge { width: 100%; max-width: 320px; }
+            .download-links img, .play-badge, .text-btn { width: 100%; max-width: 320px; }
 
             /* Two things holding opposite ends of a line only works while they are on one. */
             .rows a { flex-wrap: wrap; gap: 0; }
@@ -636,6 +612,12 @@
                             <span class="big">In Browser</span>
                         </span>
                     </a>
+                    <a href="https://www.youtube.com/watch?v=m_XYyKTPgGw" class="text-btn" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polygon points="5 3 19 12 5 21 5 3" />
+                        </svg>
+                        Trailer
+                    </a>
                     <!-- THE STEAM BADGE IS OUT UNTIL THERE IS A STORE PAGE TO SEND ANYBODY TO. It
                          pointed at app/0000000, which is not a placeholder so much as a broken
                          promise with a logo on it — the banner below says the same thing and says
@@ -649,21 +631,12 @@
 
                 <p class="soon">
                     <span class="tag">Soon</span>
-                    <span class="said">A desktop build is on its way to Steam. The browser one above
-                        is the whole game, and it always will be.</span>
+                    <span class="said">The build above is the free demo. The full game is coming to
+                        Steam — there's no date on it yet.</span>
                 </p>
             </section>
 
             <section>
-                <a class="trailer" href="https://www.youtube.com/watch?v=m_XYyKTPgGw" target="_blank" rel="noopener">
-                    <span class="mark" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" stroke="none">
-                            <polygon points="7,4 20,12 7,20" />
-                        </svg>
-                    </span>
-                    <span class="said">The first trailer</span>
-                    <span class="value">Watch on YouTube →</span>
-                </a>
                 <div class="viewport">
                     <div class="carousel">
                         <img src="vector.png" width="1280" height="633" alt="BELT NINE drawn as glowing wireframe, a bolt in the air">
@@ -742,12 +715,12 @@
                             <p>
                                 In the browser, yes, and today.
                                 <a href="https://beltnine.curzel.it">beltnine.curzel.it</a> is the
-                                whole game, and nothing in it knows or cares which OS is under the
+                                demo, and nothing in it knows or cares which OS is under the
                                 browser — on a Deck that means desktop mode and any browser you have
                                 there.
                             </p>
                             <p>
-                                The desktop build isn't out yet. When it ships to Steam it ships
+                                The full game isn't out yet. When it ships to Steam it ships
                                 with a native x86_64 Linux binary — Ubuntu 22.04 or SteamOS 3 and
                                 later — so there's no Proton in the way and no compatibility tool to
                                 go and pick.
