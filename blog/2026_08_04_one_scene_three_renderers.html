@@ -17,18 +17,9 @@
         <a href="../index.html">← Back to homepage</a>
     </nav>
     <header>
-        <h1>One scene, three renderers</h1>
+        <h1>One scene, two renderers</h1>
         <em>Tuesday, August 4th 2026</em>
     </header>
-
-    <section>
-        <p>
-            <em>Update, August 2026: there are two of them now. The ASCII one was a good joke and a
-            real renderer, and it was also a third answer to every question about how a thing gets
-            drawn — so it was retired rather than carried. The rest of this post is left exactly as
-            it was written, characters and all.</em>
-        </p>
-    </section>
 
     <section>
         <p>
@@ -43,12 +34,12 @@
         </div>
 
         <p>
-            The part I'm most happy with is a settings row called THEME. It has three values, and they
-            are not filters. They're three different renderers, and you can swap them without leaving
+            The part I'm most happy with is a settings row called THEME. It has two values, and they
+            are not filters. They're two different renderers, and you can swap them without leaving
             the flight.
         </p>
 
-        <h2>Same scene, three times</h2>
+        <h2>Same scene, twice</h2>
         <p>This is what the game opens as — lines, drawn at whatever resolution your display has:</p>
         <div class="preview-pixel">
             <img src="../beltnine/vector.png" alt="BELT NINE drawn as glowing wireframe: rocks as lit outlines">
@@ -57,11 +48,6 @@
         <p>This is the pixel one, which is a real framebuffer and not a filter over the one above:</p>
         <div class="preview-pixel">
             <img src="../beltnine/pixel.png" alt="BELT NINE drawn as dithered pixels: a green hauler quarrying a rock">
-        </div>
-
-        <p>And this one started as a joke and stayed:</p>
-        <div class="preview-pixel">
-            <img src="../beltnine/ascii.png" alt="BELT NINE drawn as characters: the mothership as a slab of ASCII">
         </div>
 
         <p>
@@ -97,28 +83,26 @@ export const RASTER = {
             because they're what let the renderer stop caring:
         </p>
         <ul>
-            <li><b>grain</b> — how many art pixels the smallest mark of this backend covers. 1 for
-                pixels and for lines, 3 for a character (a cell is 2x3).</li>
+            <li><b>grain</b> — how many art pixels the smallest mark of this backend covers.</li>
             <li><b>lodMax</b> — how far up the mesh detail ladder it's worth climbing. 3 for pixels, 2
-                for lines, 0 for characters.</li>
+                for lines.</li>
             <li><b>creaseCos</b> — the fold angle worth drawing an edge along, or null for "never ask
                 me that".</li>
             <li><b>strokes</b>, <b>tint</b> — whether edges come out as lines, and whether distance
                 should be spent on the colour ramp.</li>
         </ul>
         <p>
-            My first attempt at this had the same code three times with <b>if (theme === "ascii")</b>
-            sprinkled through it, which is exactly as bad as it sounds. The version that works asks
-            the backend a question instead:
+            My first attempt at this had the same code once per renderer, branching on the theme name
+            all the way down, which is exactly as bad as it sounds. The version that works asks the
+            backend a question instead:
         </p>
         <pre>
 const marks = rs / paint.grain;   // radius in marks this backend can make</pre>
         <p>
-            <b>rs</b> is a rock's radius on screen in art pixels. Three pixels across is a shape you
-            can draw; the same rock is one character, and one character can't have a silhouette. Every
-            size threshold in the renderer is measured in <em>marks</em> rather than pixels, so "too
-            small to bother meshing" gets a different answer per backend and nobody had to write the
-            branch.
+            <b>rs</b> is a rock's radius on screen in art pixels; <b>marks</b> is that same radius in
+            the units the backend actually draws in. Every size threshold in the renderer is measured
+            in <em>marks</em> rather than pixels, so "too small to bother meshing" is the backend's
+            answer to give and nobody had to write the branch.
         </p>
 
         <h2>1. Pixels</h2>
@@ -137,10 +121,14 @@ for (let i = 0; i &lt; data.length; i++) px[i] = PALETTE[data[i]];
 ctx.putImageData(img, 0, 0);</pre>
         <p>
             That's the entire "pixel art" of it. Nothing is rendered big and scaled down, nothing is
-            posterized afterwards. The nice side effect is that the palette is one file of 35 entries,
-            and the interface reads the same values as CSS variables — so retuning the game's colours
-            retunes the HUD and the menus with it. The stylesheet has exactly one hex value in it, and
-            it's the page background, because that one has to paint before any script runs.
+            posterized afterwards — which is the argument for the whole design, really. A filter can
+            only ever know what survived; a backend gets asked before anything is thrown away.
+        </p>
+        <p>
+            The nice side effect is that the palette is one file of 35 entries, and the interface reads
+            the same values as CSS variables — so retuning the game's colours retunes the HUD and the
+            menus with it. The stylesheet has exactly one hex value in it, and it's the page background,
+            because that one has to paint before any script runs.
         </p>
 
         <h2>2. Lines</h2>
@@ -164,33 +152,7 @@ const CREASE = Math.cos((22 * Math.PI) / 180);</pre>
             browsers snap lines to the pixel grid, and the whole picture shimmers when you roll.
         </p>
 
-        <h2>3. Characters</h2>
-        <p>
-            Cells are 2x3 art pixels, and there are two alphabets:
-        </p>
-        <pre>
-export const FILL = " .:;ox%@";   // how lit
-export const EDGE = "-|/\\";      // which way the edge runs</pre>
-        <p>
-            A lit surface gets the fill character matching its brightness; a silhouette gets the
-            character matching its actual slope on screen. Both together is the whole look — the ramp
-            alone is a coverage gradient with no shape in it, the slopes alone are a wireframe with
-            nothing inside.
-        </p>
-        <p>
-            I built this first as a filter over the finished pixel buffer, and it was wrong in a way it
-            took me embarrassingly long to name. A framebuffer has already thrown away the thing you
-            need: a cell that a rock <em>covers but does not light</em> and a cell of empty space are
-            the same byte, so stars shine straight through asteroids. As a real backend, a body writes
-            every cell it covers, including the dark ones, and the rock eclipses the star — which is
-            what a rock is for.
-        </p>
-        <p>
-            That's also the argument for the whole design, really. A filter can only ever know what
-            survived; a backend gets asked before anything is thrown away.
-        </p>
-
-        <h2>How do you test three renderers?</h2>
+        <h2>How do you test two renderers?</h2>
         <p>
             The logic tests — about 3,000 of them, plain Node, no DOM, no timers, dt is just a number I
             pass in — are no help here at all. They'll happily prove the projection is correct while the
@@ -222,7 +184,7 @@ export const EDGE = "-|/\\";      // which way the edge runs</pre>
         <p>
             It's at <a href="https://beltnine.curzel.it">beltnine.curzel.it</a> — runs in a browser, no
             install, no account, and it never talks to anything. THEME is in the settings if you want to
-            see the other two.
+            see the other one.
         </p>
     </section>
 </body>
