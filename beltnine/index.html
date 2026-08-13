@@ -423,6 +423,49 @@
 
         /* ---- the viewport ------------------------------------------------------------------ */
 
+        /* THE MOVING PICTURES, SITTING ON THE STILL ONES. The trailer is not a second
+           announcement — it is the top of the picture block, so it is drawn as the viewport's
+           own title bar: the same hairline, no bottom edge of its own, welded straight onto the
+           screenshots. A second accent banner under the SOON one would have made the page shout
+           twice in a row before it ever showed you the game; a bar attached to the thing it
+           belongs to says the same and costs one line.
+
+           THE MARK IS PUNCHED, like the keys in the foot and the SOON tag — the one shape this
+           page has for "a label rather than a word" — and the bar lights the way every other
+           target here lights, because that is what it is. */
+        .trailer {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--gap);
+            padding: 10px calc(var(--gap) * 1.5);
+            border: var(--line) solid var(--dim);
+            border-bottom: none;
+            background: color-mix(in srgb, var(--accent) 6%, transparent);
+            color: var(--ink);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.9em;
+        }
+
+        .trailer .mark {
+            display: inline-flex;
+            padding: 3px 6px;
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        /* Held at the far end, and never broken across two lines when it gets there. */
+        .trailer .value { margin-left: auto; color: var(--accent); white-space: nowrap; }
+
+        .trailer:hover,
+        .trailer:focus-visible {
+            border-color: var(--accent);
+            background: color-mix(in srgb, var(--accent) 12%, transparent);
+            text-decoration: none;
+            outline: none;
+        }
+
         .viewport {
             position: relative;
             overflow: hidden;
@@ -612,6 +655,15 @@
             </section>
 
             <section>
+                <a class="trailer" href="https://www.youtube.com/watch?v=m_XYyKTPgGw" target="_blank" rel="noopener">
+                    <span class="mark" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" stroke="none">
+                            <polygon points="7,4 20,12 7,20" />
+                        </svg>
+                    </span>
+                    <span class="said">The first trailer</span>
+                    <span class="value">Watch on YouTube →</span>
+                </a>
                 <div class="viewport">
                     <div class="carousel">
                         <img src="vector.png" width="1280" height="633" alt="BELT NINE drawn as glowing wireframe, a bolt in the air">
