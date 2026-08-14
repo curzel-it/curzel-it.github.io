@@ -5,19 +5,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BELT NINE</title>
+    <!-- THE COPY ON THIS PAGE SELLS THE GAME AND NOT THE BUILD, and the difference is worth writing
+         down because the old version got it backwards twice.
+
+         IT SAID ASTEROIDS WERE "TERRAIN RATHER THAN TARGETS", which is the opposite of the game:
+         you shoot rock until it comes apart, and the belt shoots back. Whatever that sentence was
+         reaching for, it read as a promise that nothing out here is hostile.
+
+         AND IT LED WITH THE SEED. "The belt is grown from a seed, every note is played by a
+         sequencer, there isn't one asset in the build" is true, and it is a sentence a buyer reads
+         as NO ART, NO MUSIC AND NOBODY MADE ANY OF IT. It is a good engineering story and it
+         belongs in the blog post that is linked below, where the audience came for that. The
+         player-facing half of it, which is that the page opens and is playing, is in the FAQ
+         where somebody is actually asking what they need. Do not put it back at the top. -->
     <meta name="description"
-        content="BELT NINE is a third-person game about mining asteroids: break rocks, fill your hold, fly it home. Up to four pilots on one screen. Play free in your browser, with no install, no account and no network.">
+        content="BELT NINE: a third person space shooter about mining asteroids. Break rock, fill the hold, fly it home. Free in your browser, solo or four-player split screen.">
+    <link rel="canonical" href="https://curzel.it/beltnine/">
     <link rel="icon" href="/favicon.ico">
     <meta name="theme-color" content="#06080c">
 
     <!-- Open Graph / social cards -->
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="BELT NINE">
     <meta property="og:title" content="BELT NINE">
     <meta property="og:description"
-        content="Break rocks, fill your hold, fly it home. A third-person mining game in vanilla JavaScript, with no assets in it at all.">
+        content="Break rock, fill the hold, fly it home. A third person space shooter set in an asteroid belt that is not empty. Free in your browser.">
     <meta property="og:image" content="https://curzel.it/beltnine/vector.png">
+    <meta property="og:image:alt" content="A mining ship firing on an asteroid, drawn as glowing wireframe">
     <meta property="og:url" content="https://curzel.it/beltnine/">
     <meta name="twitter:card" content="summary_large_image">
+
+    <!-- WHAT A SEARCH ENGINE READS INSTEAD OF GUESSING: the same facts the page already states,
+         in the shape Google's game result wants them. The offer is the browser demo and says so by
+         name, because the full game is not free and this file must not imply it is. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Belt Nine",
+      "url": "https://curzel.it/beltnine/",
+      "image": "https://curzel.it/beltnine/vector.png",
+      "description": "A third person space shooter about mining asteroids. Break rock until it shatters, catch what falls out, and fly the hold back to the mothership. Solo, or up to four pilots on one screen.",
+      "genre": ["Action", "Shooter", "Space Simulation", "Indie"],
+      "gamePlatform": ["Web browser", "Windows", "macOS", "Linux"],
+      "playMode": ["SinglePlayer", "CoOp"],
+      "numberOfPlayers": { "@type": "QuantitativeValue", "minValue": 1, "maxValue": 4 },
+      "author": { "@type": "Person", "name": "Federico Curzel", "url": "https://curzel.it/" },
+      "publisher": { "@type": "Person", "name": "Federico Curzel", "url": "https://curzel.it/" },
+      "offers": {
+        "@type": "Offer",
+        "name": "Free browser demo",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://beltnine.curzel.it"
+      }
+    }
+    </script>
 
     <style>
         /* THIS PAGE IS THE GAME'S INTERFACE, PRINTED ON THE WEB. Self-contained, like sneakbit's
@@ -591,15 +635,19 @@
         <div class="masthead">
             <h1>BELT NINE</h1>
             <div class="crumb"><a href="/">curzel.it</a></div>
-            <div class="strip">v0.9 · browser &amp; desktop</div>
+            <!-- NO VERSION NUMBER HERE. It said v0.9 while the build was on 0.10, which is the
+                 failure mode of any number kept in two repositories: nobody comes back to a
+                 marketing page to bump it. What this line is for is WHERE YOU CAN PLAY IT. -->
+            <div class="strip">Free in browser · Steam soon</div>
         </div>
 
         <div class="body">
             <section>
-                <p class="tagline">Mine the belt. Take it home.</p>
+                <p class="tagline">Shoot the rock. Fill the hold. Get home.</p>
                 <p class="lede">
-                    A third-person game about mining asteroids. Up to four pilots on one screen.
-                    No install, no account, no network.
+                    A third-person space shooter about taking asteroids apart. Break rock for ore
+                    and hardware, fly the hold back to the mothership, and get through whatever
+                    else is out there with you. Solo, or up to four pilots on one screen.
                 </p>
 
                 <div class="download-links">
@@ -639,8 +687,8 @@
             <section>
                 <div class="viewport">
                     <div class="carousel">
-                        <img src="vector.png" width="1280" height="633" alt="BELT NINE drawn as glowing wireframe, a bolt in the air">
-                        <img src="pixel.png" width="1280" height="633" alt="BELT NINE drawn as dithered pixels, quarrying a rock">
+                        <img src="vector.png" width="1280" height="633" alt="BELT NINE in the wireframe theme: a mining ship firing on an asteroid, a bolt still in the air">
+                        <img src="pixel.png" width="1280" height="633" alt="BELT NINE in the pixel theme: quarrying an asteroid for ore">
                         <img src="menu.png" width="1280" height="633" alt="The BELT NINE title screen">
                         <img src="death.png" width="1280" height="633" alt="The HULL BREACH card at the end of a run">
                     </div>
@@ -650,7 +698,7 @@
                     </div>
                 </div>
                 <div class="shot-foot">
-                    <span>Every screenshot taken with the game playing itself.</span>
+                    <span>Wireframe or pixels, swapped without leaving the flight.</span>
                     <div class="dots" id="dots" role="tablist" aria-label="Screenshots"></div>
                 </div>
             </section>
@@ -658,21 +706,40 @@
             <section>
                 <h2>What you do out there</h2>
                 <p class="say">
-                    Asteroids are terrain rather than targets: shoot one long enough and it comes apart
-                    into ore and upgrades, while the gun overheats and the hull doesn't grow back.
-                    A full hold is worth nothing until it's docked at the mothership, and the flight
-                    home is the part of the run you can lose.
+                    Every rock is a target. Shoot one long enough and it comes apart into smaller
+                    rocks, and the break pays out: ore for the hold, hardware for the ship. The gun
+                    overheats, nothing on the hull grows back on its own, and ore is worth nothing
+                    until it's unloaded at the mothership. Every run is the same bet, one more rock
+                    or turn for home while the hull holds.
                 </p>
             </section>
 
             <section>
-                <h2>Made of nothing</h2>
+                <h2>The belt is not empty</h2>
                 <p class="say">
-                    The belt is grown from a seed and every note of the soundtrack is played by a
-                    sequencer, so there isn't one asset in the build: no sprites, no models, no audio
-                    files. It's vanilla JavaScript and a canvas, with no runtime libraries and two
-                    renderers behind one interface: wireframe or dithered pixels, swappable
-                    mid-flight.
+                    Something stocked this place. Break a big enough rock and a crab comes out of
+                    it, startled for a second and then jumping at the nearest solid thing, which is
+                    sometimes you. Squid land on the plating and stay. Their full-grown relatives
+                    are twenty times the size and have opinions about you, ships come looking, and
+                    whales strain dust in the deep field and mostly don't care.
+                </p>
+            </section>
+
+            <section>
+                <h2>Split-screen co-op</h2>
+                <p class="say">
+                    Two to four pilots on one screen: two and three side by side, four in a grid.
+                    Every pilot after the first needs a controller of their own. Friendly fire is on
+                    by default, and it's a setting for a reason.
+                </p>
+            </section>
+
+            <section>
+                <h2>Wireframe or pixels</h2>
+                <p class="say">
+                    The same sector draws two ways, and a row in the settings swaps them mid-flight:
+                    glowing wireframe at your display's own resolution, or dithered pixels through a
+                    palette. Same rocks, same run, two different games to look at.
                 </p>
                 <ul class="rows">
                     <li>
@@ -700,11 +767,10 @@
                         <summary>What do I need to play it?<a class="hash" href="#browser" aria-label="Link to this question">#</a></summary>
                         <div class="answer">
                             <p>
-                                A browser, on whatever the browser is running on. It's a canvas and
-                                under half a megabyte of JavaScript: no WebGL, no plugin, no
-                                install, no account, and nothing is fetched after the page itself,
-                                because the belt and the soundtrack are grown from a seed rather
-                                than loaded. Any current Chrome, Edge, Firefox or Safari will do.
+                                A browser, on whatever the browser is running on. No install, no
+                                plugin, no account, no patch and no download past the page itself:
+                                it opens and it's playing, and there are no loading screens in it
+                                anywhere. Any current Chrome, Edge, Firefox or Safari will do.
                             </p>
                         </div>
                     </details>
@@ -741,9 +807,7 @@
                                 Windows 10 64-bit or later. macOS 12 Monterey or later on Apple
                                 Silicon: there's no Intel build, and that's a decision rather than
                                 a thing still coming. Either one wants about 500 MB on disk, 4 GB of
-                                memory, and no graphics card in particular: integrated is fine. The
-                                game is the half megabyte above; the other 499 are the browser
-                                engine it's wrapped in.
+                                memory, and no graphics card in particular: integrated is fine.
                             </p>
                         </div>
                     </details>
