@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BELT NINE — a first-person game about mining asteroids</title>
+    <title>BELT NINE</title>
     <meta name="description"
-        content="BELT NINE is a first-person game about mining asteroids: break rocks, fill your hold, fly it home. Up to four pilots on one screen. Play free in your browser — no install, no account, no network.">
+        content="BELT NINE is a third-person game about mining asteroids: break rocks, fill your hold, fly it home. Up to four pilots on one screen. Play free in your browser, with no install, no account and no network.">
     <link rel="icon" href="/favicon.ico">
     <meta name="theme-color" content="#06080c">
 
@@ -14,7 +14,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="BELT NINE">
     <meta property="og:description"
-        content="Break rocks, fill your hold, fly it home. A first-person mining game in vanilla JavaScript, with no assets in it at all.">
+        content="Break rocks, fill your hold, fly it home. A third-person mining game in vanilla JavaScript, with no assets in it at all.">
     <meta property="og:image" content="https://curzel.it/beltnine/vector.png">
     <meta property="og:url" content="https://curzel.it/beltnine/">
     <meta name="twitter:card" content="summary_large_image">
@@ -27,12 +27,12 @@
            anything that needed a paragraph to explain was not worth a paragraph. What is left is
            borrowed from the game's own stylesheet as whole materials rather than as a mood:
 
-             THE GROUND     the void, the belt in it, and one line of scan texture in three — over
+             THE GROUND     the void, the belt in it, and one line of scan texture in three, over
                             the whole window, not a box, because a page is not over anything.
              THE MASTHEAD   the name in large tracked type over an INK rule, with the crumb back to
                             where you came from and the machine's own line at the far end.
              THE HEADS      dim, tracked, hung off a tick in the gutter with a hairline running out
-                            of the word — which is what turns a list into a page.
+                            of the word, which is what turns a list into a page.
              THE READOUTS   a dim label, a dotted leader carrying the eye across, and the value at
                             full ink. Full INK is reserved for what you are meant to read now.
              THE ROWS       a thing you can aim at: a stripe in the gutter that lights, and a wash
@@ -43,8 +43,8 @@
            sneakbit's, to the pixel, because it stands next to a Steam badge and the pair have to
            read as two badges rather than as a badge and an idea.
 
-           THE GROUND AND THE INK ARE THE GAME'S PALETTE, values copied out of src/palette.js — BG,
-           INK, STAR — and --dim is the panel's own dim, INK mixed 55% toward BG, which is the
+           THE GROUND AND THE INK ARE THE GAME'S PALETTE, values copied out of src/palette.js (BG,
+           INK, STAR), and --dim is the panel's own dim, INK mixed 55% toward BG, which is the
            game's rule for scaffolding. THE ACCENT IS THE SITE'S: one colour does all the pointing
            on this page, and it is curzel.it's rather than the game's.
 
@@ -55,7 +55,7 @@
             --ink: #e2ecf7;
             --star: #7c90b4;
 
-            /* ONE ACCENT, AND IT IS THE SITE'S — #ffb703, the value style.css keeps and sneakbit's
+            /* ONE ACCENT, AND IT IS THE SITE'S: #ffb703, the value style.css keeps and sneakbit's
                landing copies. The game's own ROCK and LASER were here before, which left the page
                pointing in three colours at once: a tan tagline, a green link and a grey control,
                none of them curzel.it's. A page can be built out of the game's black and the game's
@@ -82,8 +82,8 @@
 
         /* NO `scroll-behavior: smooth` HERE, AND IT IS NOT AN OVERSIGHT. It was tried, and on a
            cold load of /beltnine/#linux Chrome landed at the top of the page instead of on the
-           question — the smooth path defers the initial fragment scroll and then drops it. Sliding
-           to an anchor is worth nothing next to arriving at the one somebody was sent. */
+           question, because the smooth path defers the initial fragment scroll and then drops it.
+           Sliding to an anchor is worth nothing next to arriving at the one somebody was sent. */
         html { background: var(--bg); }
 
         body {
@@ -99,7 +99,7 @@
 
         /* THE GROUND, AND IT IS THE WHOLE WINDOW. One fixed layer carrying everything behind the
            words: the void, the belt in it, and the grain over both. Nothing about it knows where
-           the column of text starts, which is the point — a ground that stopped at the column
+           the column of text starts, which is the point: a ground that stopped at the column
            would be a frame again, drawn in a slightly different black.
 
            STARS AT THREE SIZES THAT SHARE NO FACTOR, so the tiling has no seam you can find, and
@@ -125,7 +125,7 @@
         }
 
         /* THE GRAIN, OVER THE STARS AND UNDER THE WORDS. One line in three at a fourteenth of the
-           ink — deliberately almost nothing, so the page reads as a lit screen rather than as a
+           ink, deliberately almost nothing, so the page reads as a lit screen rather than as a
            rectangle of paint. Its own element rather than another layer on `.belt`, because the
            star layers already cycle through three background-sizes and adding one at the front
            shifts every one of them onto the wrong size. */
@@ -141,15 +141,15 @@
 
         /* NOT A PLATE AND NOT ANYTHING. The game's panel is a box because it came UP over a running
            belt and has to say where it ends. This page is not over anything, so it has no frame and
-           no ground of its own — the ground is the window — and this is only a measure to set the
+           no ground of its own (the ground is the window), and this is only a measure to set the
            words in. The rules that are left are the ones doing a job. */
         /* THE COLUMN IS THE MEASURE, which is the whole reason for the number. It was 1000px with
-           the paragraphs capped at 70ch inside it — so every rule on the page ran to 950px and
+           the paragraphs capped at 70ch inside it, so every rule on the page ran to 950px and
            every sentence stopped at 630, and the text read as wrapping in the middle of the page
            rather than as being set to a width. One of the two had to give, and it is the column:
            lines running the full 950 would be ninety-five characters, which is a measure nobody
            reads twice.
-           800 BECAUSE THAT IS THE GAME'S OWN PANEL — `#panel .page` is min(800px, …) — so the page
+           800 BECAUSE THAT IS THE GAME'S OWN PANEL: `#panel .page` is min(800px, …), so the page
            and the thing it is selling are set on the same width. Nothing is capped inside it now;
            what ends the line is the column, and everything on the page ends at the same edge. */
         .plate {
@@ -159,7 +159,7 @@
 
         /* ---- the masthead ---------------------------------------------------------------- */
 
-        /* WHICH PAGE, WHERE FROM, AND WHICH MACHINE — one line across the top, in that order,
+        /* WHICH PAGE, WHERE FROM, AND WHICH MACHINE: one line across the top, in that order,
            because that is the order the questions come in. */
         .masthead {
             display: flex;
@@ -223,7 +223,7 @@
         .lede, .say { margin: 0; }
 
         /* AIR ABOVE, AND A TICK TO HANG THE BLOCK OFF. A head is scaffolding and not information,
-           so it stays dim — full INK is for the lines under it. The solid stub in the gutter is
+           so it stays dim, because full INK is for the lines under it. The solid stub in the gutter is
            what makes a block read as hanging off a mark rather than as a caption that happens to
            be dimmer. */
         h2 {
@@ -257,7 +257,7 @@
 
         /* ---- the one thing on the page that is news ---------------------------------------- */
 
-        /* NOT A NEW SHAPE — TWO THAT ARE ALREADY HERE. The stripe and the wash are a selected row's
+        /* NOT A NEW SHAPE, BUT TWO THAT ARE ALREADY HERE. The stripe and the wash are a selected row's
            (below), and the tag is punched the way the keys along the foot are; the hue is the
            accent, which is the only hue on the page. Assembled out of parts rather than invented,
            so a banner cannot look like something another site left behind.
@@ -292,8 +292,8 @@
 
         /* ---- rows you can aim at --------------------------------------------------------- */
 
-        /* A ROW IS A TARGET. The stripe is always in the layout and only sometimes inked — added
-           and removed for real it would shove every label sideways as the cursor moved. */
+        /* A ROW IS A TARGET. The stripe is always in the layout and only sometimes inked, because
+           added and removed for real it would shove every label sideways as the cursor moved. */
         .rows { margin: 0; padding: 0; list-style: none; }
 
         .rows a {
@@ -332,7 +332,7 @@
 
            THE ONE THING A DISCLOSURE COSTS is the deep link, which is the whole reason these have
            ids: a link to #linux that lands on a closed question has answered nobody. The script
-           opens whatever the address names — see the note there.
+           opens whatever the address names; see the note there.
 
            THE MARKS ARE ALREADY ON THIS PAGE. A question under the cursor wears the stripe and the
            wash a row wears, because it IS a row you aim at now; a question you were sent to wears
@@ -357,7 +357,7 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
             font-size: 0.9em;
-            /* Both spellings of "no triangle" — the standard one and the one Safari still wants. */
+            /* Both spellings of "no triangle": the standard one and the one Safari still wants. */
             list-style: none;
         }
 
@@ -405,7 +405,7 @@
 
         /* SNEAKBIT'S PLAY BADGE, COPIED RULE FOR RULE from /sneakbit/index.html rather than
            restyled to match this page. It sits beside a Steam badge, and a store badge is a shape
-           people recognise before they read it — the pair have to be two badges. It is the only
+           people recognise before they read it, so the pair have to be two badges. It is the only
            thing on this page that is not the game's own interface, and that is the reason. */
         .download-links { margin: 20px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
         .download-links a { display: inline-flex; align-items: center; }
@@ -426,8 +426,8 @@
            which put the one link that leaves the site in the one place the page keeps for
            showing the game; a badge in the row says the same thing and says it where it will
            be looked for.
-           BUILT TO THE PLAY BADGE'S MEASUREMENTS — same width, same aspect, same hairline and
-           corner — so the row reads as a row of badges rather than as a badge with a link
+           BUILT TO THE PLAY BADGE'S MEASUREMENTS (same width, same aspect, same hairline and
+           corner), so the row reads as a row of badges rather than as a badge with a link
            leaning on it. It is the homepage's Trailer button, which is this button on a
            lighter page. */
         .text-btn {
@@ -472,7 +472,7 @@
             transform: translateY(-50%);
         }
 
-        /* PUNCHED INTO THE BAR RATHER THAN PRINTED ON IT — the same inversion the function keys
+        /* PUNCHED INTO THE BAR RATHER THAN PRINTED ON IT: the same inversion the function keys
            along the bottom of the game's pages wear, but in the accent rather than in dim: these
            are pressable and the keys in the foot are not, and the page says pressable in one
            colour. */
@@ -598,7 +598,7 @@
             <section>
                 <p class="tagline">Mine the belt. Take it home.</p>
                 <p class="lede">
-                    A first-person game about mining asteroids. Up to four pilots on one screen.
+                    A third-person game about mining asteroids. Up to four pilots on one screen.
                     No install, no account, no network.
                 </p>
 
@@ -620,7 +620,7 @@
                     </a>
                     <!-- THE STEAM BADGE IS OUT UNTIL THERE IS A STORE PAGE TO SEND ANYBODY TO. It
                          pointed at app/0000000, which is not a placeholder so much as a broken
-                         promise with a logo on it — the banner below says the same thing and says
+                         promise with a logo on it. The banner below says the same thing and says
                          it truthfully. Kept here rather than deleted: when the app id exists this
                          is two lines of work, and the sizing has to match the badge beside it.
                     <a href="https://store.steampowered.com/app/0000000/Belt_Nine/" target="_blank" rel="noopener">
@@ -632,7 +632,7 @@
                 <p class="soon">
                     <span class="tag">Soon</span>
                     <span class="said">The build above is the free demo. The full game is coming to
-                        Steam — there's no date on it yet.</span>
+                        Steam, and there's no date on it yet.</span>
                 </p>
             </section>
 
@@ -669,7 +669,7 @@
                 <h2>Made of nothing</h2>
                 <p class="say">
                     The belt is grown from a seed and every note of the soundtrack is played by a
-                    sequencer, so there isn't one asset in the build — no sprites, no models, no audio
+                    sequencer, so there isn't one asset in the build: no sprites, no models, no audio
                     files. It's vanilla JavaScript and a canvas, with no runtime libraries and two
                     renderers behind one interface: wireframe or dithered pixels, swappable
                     mid-flight.
@@ -688,8 +688,8 @@
                  needs a page to tell them what a mining game is; they need to know whether the
                  thing will start on the box they own, and the Deck question is the one that comes
                  in most. Every answer is a fact from the build rather than a hope about it: where
-                 an answer is not settled yet — the Deck's badge — it says so instead of rounding
-                 up to a yes.
+                 an answer is not settled yet, as with the Deck's badge, it says so instead of
+                 rounding up to a yes.
                  THE IDS ARE THE PROMISE, AND THEY DO NOT CHANGE. #faq and #linux go in mails,
                  forum replies and a store page's support field, and a renamed anchor is a dead
                  link somebody else has already sent. -->
@@ -701,7 +701,7 @@
                         <div class="answer">
                             <p>
                                 A browser, on whatever the browser is running on. It's a canvas and
-                                under half a megabyte of JavaScript — no WebGL, no plugin, no
+                                under half a megabyte of JavaScript: no WebGL, no plugin, no
                                 install, no account, and nothing is fetched after the page itself,
                                 because the belt and the soundtrack are grown from a seed rather
                                 than loaded. Any current Chrome, Edge, Firefox or Safari will do.
@@ -716,13 +716,13 @@
                                 In the browser, yes, and today.
                                 <a href="https://beltnine.curzel.it">beltnine.curzel.it</a> is the
                                 demo, and nothing in it knows or cares which OS is under the
-                                browser — on a Deck that means desktop mode and any browser you have
+                                browser. On a Deck that means desktop mode and any browser you have
                                 there.
                             </p>
                             <p>
                                 The full game isn't out yet. When it ships to Steam it ships
-                                with a native x86_64 Linux binary — Ubuntu 22.04 or SteamOS 3 and
-                                later — so there's no Proton in the way and no compatibility tool to
+                                with a native x86_64 Linux binary (Ubuntu 22.04 or SteamOS 3 and
+                                later), so there's no Proton in the way and no compatibility tool to
                                 go and pick.
                             </p>
                             <p>
@@ -739,7 +739,7 @@
                         <div class="answer">
                             <p>
                                 Windows 10 64-bit or later. macOS 12 Monterey or later on Apple
-                                Silicon — there's no Intel build, and that's a decision rather than
+                                Silicon: there's no Intel build, and that's a decision rather than
                                 a thing still coming. Either one wants about 500 MB on disk, 4 GB of
                                 memory, and no graphics card in particular: integrated is fine. The
                                 game is the half megabyte above; the other 499 are the browser
@@ -752,7 +752,7 @@
                         <summary>Does it work on a phone or a tablet?<a class="hash" href="#mobile" aria-label="Link to this question">#</a></summary>
                         <div class="answer">
                             <p>
-                                It does. Touch controls — two sticks, a trigger and the roll keys —
+                                It does. Touch controls (two sticks, a trigger and the roll keys)
                                 come up on first touch and are sized in millimetres rather than
                                 pixels, so they're the same size on every screen. Hold it in
                                 landscape; the game will ask you to.
@@ -764,7 +764,7 @@
                         <summary>Do I need a controller?<a class="hash" href="#controller" aria-label="Link to this question">#</a></summary>
                         <div class="answer">
                             <p>
-                                Not to fly alone — keyboard and mouse is what it was built on, and
+                                Not to fly alone: keyboard and mouse is what it was built on, and
                                 pads are fully supported if you'd rather. Split-screen is where it
                                 matters: up to four pilots share one screen, and every pilot after
                                 the first needs a controller of their own.
@@ -798,7 +798,7 @@
     </main>
 
     <script>
-        // Screenshot carousel — auto-advances, with prev/next controls and a square per shot.
+        // Screenshot carousel: auto-advances, with prev/next controls and a square per shot.
         const carousel = document.querySelector('.carousel');
         const images = carousel.children;
         const dots = document.getElementById('dots');

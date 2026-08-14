@@ -23,9 +23,9 @@
 
     <section>
         <p>
-            I've been building a game called BELT NINE. It's first person, you fly around an asteroid
+            I've been building a game called BELT NINE. It's third person, you fly around an asteroid
             belt, shoot rocks until they come apart, fill your hold and take it home to the
-            mothership. Vanilla JavaScript, no engine, no libraries, and no assets at all — the whole
+            mothership. Vanilla JavaScript, no engine, no libraries, and no assets at all: the whole
             belt comes out of a seed and the soundtrack is played by a sequencer instead of an mp3.
         </p>
 
@@ -40,7 +40,7 @@
         </p>
 
         <h2>Same scene, twice</h2>
-        <p>This is what the game opens as — lines, drawn at whatever resolution your display has:</p>
+        <p>This is what the game opens as: lines, drawn at whatever resolution your display has:</p>
         <div class="preview-pixel">
             <img src="../beltnine/vector.png" alt="BELT NINE drawn as glowing wireframe: rocks as lit outlines">
         </div>
@@ -57,7 +57,7 @@
         <h2>The scene renderer can't tell which one it's talking to</h2>
         <p>
             There's exactly one file that turns the world into screen positions. 3D floats in, 2D out,
-            everything drawn back to front because there is no depth buffer anywhere in this game —
+            everything drawn back to front because there is no depth buffer anywhere in this game:
             painter's order <em>is</em> the depth buffer. That file never touches a canvas. It calls
             whatever object is sitting in <b>screen.paint</b>:
         </p>
@@ -83,12 +83,12 @@ export const RASTER = {
             because they're what let the renderer stop caring:
         </p>
         <ul>
-            <li><b>grain</b> — how many art pixels the smallest mark of this backend covers.</li>
-            <li><b>lodMax</b> — how far up the mesh detail ladder it's worth climbing. 3 for pixels, 2
+            <li><b>grain</b>: how many art pixels the smallest mark of this backend covers.</li>
+            <li><b>lodMax</b>: how far up the mesh detail ladder it's worth climbing. 3 for pixels, 2
                 for lines.</li>
-            <li><b>creaseCos</b> — the fold angle worth drawing an edge along, or null for "never ask
+            <li><b>creaseCos</b>: the fold angle worth drawing an edge along, or null for "never ask
                 me that".</li>
-            <li><b>strokes</b>, <b>tint</b> — whether edges come out as lines, and whether distance
+            <li><b>strokes</b>, <b>tint</b>: whether edges come out as lines, and whether distance
                 should be spent on the colour ramp.</li>
         </ul>
         <p>
@@ -107,7 +107,7 @@ const marks = rs / paint.grain;   // radius in marks this backend can make</pre>
 
         <h2>1. Pixels</h2>
         <p>
-            A <b>Uint8Array</b>, one byte per pixel, and that byte is a palette index — never a colour,
+            A <b>Uint8Array</b>, one byte per pixel, and that byte is a palette index, never a colour,
             never a brightness. Shading is a 4x4 Bayer matrix, so a continuous shade becomes a stable
             dither pattern instead of noise:
         </p>
@@ -121,12 +121,12 @@ for (let i = 0; i &lt; data.length; i++) px[i] = PALETTE[data[i]];
 ctx.putImageData(img, 0, 0);</pre>
         <p>
             That's the entire "pixel art" of it. Nothing is rendered big and scaled down, nothing is
-            posterized afterwards — which is the argument for the whole design, really. A filter can
+            posterized afterwards, which is the argument for the whole design, really. A filter can
             only ever know what survived; a backend gets asked before anything is thrown away.
         </p>
         <p>
             The nice side effect is that the palette is one file of 35 entries, and the interface reads
-            the same values as CSS variables — so retuning the game's colours retunes the HUD and the
+            the same values as CSS variables, so retuning the game's colours retunes the HUD and the
             menus with it. The stylesheet has exactly one hex value in it, and it's the page background,
             because that one has to paint before any script runs.
         </p>
@@ -154,26 +154,26 @@ const CREASE = Math.cos((22 * Math.PI) / 180);</pre>
 
         <h2>How do you test two renderers?</h2>
         <p>
-            The logic tests — about 3,000 of them, plain Node, no DOM, no timers, dt is just a number I
-            pass in — are no help here at all. They'll happily prove the projection is correct while the
+            The logic tests (about 3,000 of them, plain Node, no DOM, no timers, dt is just a number I
+            pass in) are no help here at all. They'll happily prove the projection is correct while the
             page draws absolutely nothing.
         </p>
         <p>
             So there's a second kind of check that launches headless Chrome, drives the real game over
             the DevTools protocol, and reads pixels back off the canvas. One per backend. The vector one
             exists to ask the single question a headless framebuffer can't answer: did strokes actually
-            land on the glass. And not by asking "is the canvas non-empty" — there's a bloom pass that
-            leaves a wash of near-background pixels around every line, and counting those rates a blank
-            screen as a drawn one. It has to be lit <em>meaningfully</em> off the void.
+            land on the glass. And not by asking "is the canvas non-empty", since there's a bloom
+            pass that leaves a wash of near-background pixels around every line, and counting those
+            rates a blank screen as a drawn one. It has to be lit <em>meaningfully</em> off the void.
         </p>
         <p>
             Every screenshot in this post came out of that harness. There's an <b>?autoplay=1</b> flag
             that hands every seat to an autopilot which flies, mines, fights and docks indefinitely,
-            through the same bag of inputs a hand writes to — nothing else in the game knows it exists.
-            I don't frame these shots: the autopilot picks the moment, I just press the shutter.
+            through the same bag of inputs a hand writes to, and nothing else in the game knows it
+            exists. I don't frame these shots: the autopilot picks the moment, I just press the shutter.
         </p>
         <p>
-            The one below is the exception, since I did have to arrange for the poor thing to die — but
+            The one below is the exception, since I did have to arrange for the poor thing to die, but
             the 28 units of ore on it were flown home by the autopilot, one hold at a time:
         </p>
         <div class="preview-pixel">
@@ -182,7 +182,7 @@ const CREASE = Math.cos((22 * Math.PI) / 180);</pre>
 
         <h2>Play it</h2>
         <p>
-            It's at <a href="https://beltnine.curzel.it">beltnine.curzel.it</a> — runs in a browser, no
+            It's at <a href="https://beltnine.curzel.it">beltnine.curzel.it</a>. It runs in a browser, no
             install, no account, and it never talks to anything. THEME is in the settings if you want to
             see the other one.
         </p>
