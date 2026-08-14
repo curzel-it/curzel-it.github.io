@@ -1,85 +1,290 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unlimited Radio - AI Music Generator</title>
-    <meta name="description" content="Infinite AI-generated lo-fi, jazz & rock. No streaming, no wifi, 100% offline. Free for iOS and Android.">
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>UnRadio</title>
+    <meta name="description"
+        content="UnRadio is a radio station that composes its own music. No model, no samples, no network: every track is written and played on your phone from a seed. Free on iPhone and iPad.">
+    <link rel="icon" href="icon.png">
+    <meta name="theme-color" content="#111111">
+
+    <!-- Open Graph / social cards -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="UnRadio">
+    <meta property="og:description"
+        content="A radio station that composes its own music, offline, from a seed. No model, no samples, no network.">
+    <meta property="og:image" content="https://curzel.it/unlimited-radio/icon.png">
+    <meta property="og:url" content="https://curzel.it/unlimited-radio/">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <style>
+        /* THIS PAGE IS THE APP'S DESIGN LANGUAGE, PRINTED ON THE WEB. Self-contained, like
+           beltnine's and sneakbit's landings: it matches the APP rather than the rest of curzel.it,
+           and the values below are unradio's own design.md rather than a mood taken off a
+           screenshot: background, border, primary, muted and dim, in that order.
+
+           SHARP, MONOSPACE, NO ORNAMENT, which is the whole of that document's shape rule. There is
+           no border radius anywhere on this page for the same reason there is none in the app.
+
+           THE ONE ADDITION IS THE ACCENT. design.md says no accent colour, and in an app with no
+           links that costs nothing; a page is made of links and needs one thing that points. So the
+           accent is the SITE'S, #ffb703, the value style.css keeps and the other two landings copy,
+           and it does the pointing and nothing else. Same bargain beltnine's page strikes. */
+        :root {
+            --bg: #111111;
+            --border: #222222;
+            --ink: #cccccc;
+            --muted: #999999;
+            --dim: #444444;
+            --accent: #ffb703;
+
+            --line: 1px;
+            --gap: 8px;
+            --font: ui-monospace, SFMono-Regular, Menlo, Consolas, "Courier New", monospace;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { background: var(--bg); }
+
+        /* IT STAYS DARK IN BOTH SCHEMES, because the app has no light version and a light page in
+           front of a dark app is a promise the download does not keep. */
+        body {
+            margin: 0 auto;
+            max-width: 720px;
+            padding: clamp(16px, 5vw, 48px) clamp(16px, 4vw, 24px);
+            font-family: var(--font);
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--ink);
+            background: var(--bg);
+        }
+
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ---- the masthead ---------------------------------------------------------------- */
+
+        .masthead {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: var(--gap) calc(var(--gap) * 2);
+            padding-bottom: calc(var(--gap) * 2);
+            border-bottom: var(--line) solid var(--border);
+        }
+
+        h1 {
+            margin: 0;
+            font-weight: 500;
+            font-size: clamp(1.5rem, 6vw, 2rem);
+            line-height: 1.2;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .crumb, .strip {
+            font-size: 0.8em;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .crumb a { color: var(--muted); }
+        .crumb a::before { content: "\2190\00a0"; }
+        .strip { margin-left: auto; white-space: nowrap; }
+
+        /* ---- the body -------------------------------------------------------------------- */
+
+        section { margin: calc(var(--gap) * 5) 0; }
+
+        /* A HEAD IS A LABEL AND NOT A HEADLINE. Tracked caps at the muted weight, which is exactly
+           what design.md's Labels row asks for. No rule under it: the air is the separation. */
+        h2 {
+            margin: 0 0 var(--gap);
+            font-weight: 500;
+            font-size: 0.68em;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        p { margin: 0 0 var(--gap); }
+        p:last-child { margin-bottom: 0; }
+
+        .lede { font-size: 1.05em; }
+        .muted { color: var(--muted); }
+
+        /* ---- the DJ ---------------------------------------------------------------------- */
+
+        /* THE APP'S OWN MASCOT, AT THE APP'S OWN SIZE, and the only picture on the page. There is
+           no screenshot here on purpose: a still of a music player says nothing a sentence does not
+           say better, and this is the thing you actually look at while it plays. */
+        .dj {
+            display: block;
+            width: 192px;
+            max-width: 60%;
+            height: auto;
+            margin: calc(var(--gap) * 3) auto 0;
+            image-rendering: pixelated;
+        }
+
+        /* ---- the badge ------------------------------------------------------------------- */
+
+        .download-links { margin: calc(var(--gap) * 3) 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+        .download-links img { width: 200px; height: auto; }
+
+        /* ---- the readouts ---------------------------------------------------------------- */
+
+        /* A LABEL, A LEADER AND A VALUE. The dotted rule carries the eye across a line that would
+           otherwise be two words marooned at opposite edges, and it is the one place on the page
+           where anything is drawn purely to be read along. */
+        .spec { margin: 0; padding: 0; list-style: none; }
+
+        .spec div {
+            display: flex;
+            align-items: baseline;
+            gap: var(--gap);
+            padding: 6px 0;
+            font-size: 0.9em;
+        }
+
+        .spec dt {
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+        }
+
+        .spec .leader {
+            flex: 1;
+            border-bottom: var(--line) dotted var(--dim);
+            transform: translateY(-0.25em);
+        }
+
+        .spec dd { margin: 0; text-align: right; }
+
+        /* ---- the foot -------------------------------------------------------------------- */
+
+        .foot {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px 16px;
+            margin-top: calc(var(--gap) * 6);
+            padding-top: calc(var(--gap) * 2);
+            border-top: var(--line) solid var(--border);
+            font-size: 0.8em;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .foot a { color: var(--muted); }
+        .foot a:hover { color: var(--ink); }
+        .foot .rule { margin-right: auto; color: var(--dim); }
+
+        @media (max-width: 560px) {
+            .download-links img { width: 100%; max-width: 260px; }
+            .strip { margin-left: 0; }
+            .foot .rule { margin-right: 0; width: 100%; }
+        }
+
+    </style>
 </head>
 
 <body>
-    <canvas id="dither-bg" class="pixelated"></canvas>
-
-    <div class="container">
-        <header class="page-header">
-            <h1>UNLIMITED<br>RADIO</h1>
-            <p class="subtitle">infinite ai-generated music</p>
-        </header>
-
-        <main class="page-main">
-            <section class="hero">
-                <p class="tagline">An on-device neural network generates endless lo-fi, jazz, and chill rock &mdash; right on your phone. No streaming. No wifi. No two songs are ever the same.</p>
-            </section>
-
-            <section class="features">
-                <div class="feature-grid">
-                    <div class="feature">
-                        <h3>100% Offline</h3>
-                        <p>Works on airplane mode, in the subway, anywhere. No internet required, ever.</p>
-                    </div>
-                    <div class="feature">
-                        <h3>Infinite Music</h3>
-                        <p>Never repeats, never runs out. Every song is generated from scratch in real time.</p>
-                    </div>
-                    <div class="feature">
-                        <h3>Multiple Genres</h3>
-                        <p>Lo-fi hip hop, mellow jazz, chill rock. The AI cycles through moods and styles.</p>
-                    </div>
-                    <div class="feature">
-                        <h3>Share Songs</h3>
-                        <p>Hear something you love? Export it as an audio file and share it.</p>
-                    </div>
-                    <div class="feature">
-                        <h3>Background Playback</h3>
-                        <p>Lock your phone, switch apps. The music keeps playing with lock screen controls.</p>
-                    </div>
-                    <div class="feature">
-                        <h3>No Accounts</h3>
-                        <p>No sign-ups, no subscriptions, no data collection. Just open and listen.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="how-it-works">
-                <h2>HOW IT WORKS</h2>
-                <p>A neural network (VAE) running entirely on your device generates chord progressions and melodies from a random seed. A composition engine arranges them into full tracks with piano, guitar, bass, drums, and effects. Everything is created in real time &mdash; nothing is pre-recorded.</p>
-                <p class="credits">The model is trained on publicly available datasets including Sage and based on <a href="https://github.com/jacbz/lofi">jacbz/lofi</a>.</p>
-            </section>
-
-            <section class="perfect-for">
-                <h2>PERFECT FOR</h2>
-                <ul>
-                    <li>Studying, reading, or deep focus</li>
-                    <li>Falling asleep or relaxing</li>
-                    <li>Working, coding, or creative sessions</li>
-                    <li>Commuting without cell service</li>
-                    <li>Anyone tired of hearing the same playlists</li>
-                </ul>
-            </section>
-
-            <footer class="page-footer">
-                <p>
-                    <a href="https://curzel.it/privacy">Privacy Policy</a>
-                    &nbsp;&middot;&nbsp;
-                    <a href="https://curzel.it/terms-and-conditions">Terms and Conditions</a>
-                </p>
-                <p class="copyright">Federico Curzel</p>
-            </footer>
-        </main>
+    <div class="masthead">
+        <h1>UnRadio</h1>
+        <div class="crumb"><a href="/">curzel.it</a></div>
+        <div class="strip">iOS &middot; free</div>
     </div>
 
-    <script src="dither.js"></script>
+    <section>
+        <p class="lede">
+            A radio station that composes its own music. It writes the song, plays it, names it,
+            and starts another one. Nothing is downloaded, because there is nothing to download:
+            no model, no samples, no network.
+        </p>
+
+        <img class="dj" src="dj_dancing.gif" width="192" height="192"
+            alt="UnRadio's pixel-art robot DJ, nodding along behind a pair of turntables">
+
+        <div class="download-links">
+            <a href="https://apps.apple.com/app/unlimited-radio/id6761679302" target="_blank" rel="noopener">
+                <img src="/images/appstore_badge.webp" alt="Download UnRadio on the App Store">
+            </a>
+        </div>
+    </section>
+
+    <section>
+        <h2>A song is a seed</h2>
+        <p>
+            Every track is a pure function of one short string. A composer writes the score from it,
+            note by note, and a synth plays what the composer wrote. Hand the same seed back and the
+            same song comes out, on any device, forever.
+        </p>
+        <p>
+            That is what lets a station be a counter instead of a library. It plays
+            <span class="muted">unradio#1</span>, then <span class="muted">unradio#2</span>, and on,
+            and the titles and the DJ's patter come off the same arithmetic. Nothing repeats because
+            nothing was ever stored to repeat.
+        </p>
+    </section>
+
+    <section>
+        <h2>What it plays</h2>
+        <p>
+            Four genres, each with its own mode, tempo, chord vocabulary and set of voices:
+            synthwave, psychedelic rock, berlin school and lofi hip-hop. A track runs about two
+            minutes, picks its own key, and hands over to the next one on a note the two keys share.
+        </p>
+        <p>
+            Play, pause, mute, skip. Anything you like, you can export as an audio file and send on.
+            It keeps playing with the screen locked, with the usual controls on the lock screen.
+        </p>
+    </section>
+
+    <section>
+        <h2>Under it</h2>
+        <p>
+            The composer and the synth are a Kotlin port of
+            <a href="https://github.com/curzel-it/musicbox" target="_blank" rel="noopener">musicbox</a>,
+            a generative soundtrack written in vanilla JavaScript, which is open source and is where
+            the music is actually tuned. A parity test checks the port against it note for note, so
+            the phone and the browser agree on what a seed sounds like.
+        </p>
+        <p>
+            The app is Kotlin Multiplatform with a Compose interface. The engine ran on a neural
+            decoder and 62 MB of samples once; a composer that is a pure function of its seed
+            replaced both, and the app got smaller and the music got better.
+        </p>
+    </section>
+
+    <section>
+        <h2>The details</h2>
+        <dl class="spec">
+            <div><dt>Platform</dt><span class="leader"></span><dd>iPhone and iPad</dd></div>
+            <div><dt>Price</dt><span class="leader"></span><dd>Free</dd></div>
+            <div><dt>Network</dt><span class="leader"></span><dd>None, ever</dd></div>
+            <div><dt>Account</dt><span class="leader"></span><dd>None</dd></div>
+            <div><dt>Ads and tracking</dt><span class="leader"></span><dd>None</dd></div>
+            <div><dt>Audio assets</dt><span class="leader"></span><dd>None</dd></div>
+            <div><dt>Track length</dt><span class="leader"></span><dd>About two minutes</dd></div>
+            <div><dt>Engine</dt><span class="leader"></span><dd>musicbox, ported to Kotlin</dd></div>
+        </dl>
+    </section>
+
+    <div class="foot">
+        <span class="rule">&copy; Federico Curzel</span>
+        <a href="https://apps.apple.com/app/unlimited-radio/id6761679302">App Store</a>
+        <a href="https://github.com/curzel-it/musicbox" target="_blank" rel="noopener">musicbox</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms-and-conditions.html">Terms</a>
+        <a href="/support.html">Support</a>
+    </div>
 </body>
 
 </html>
