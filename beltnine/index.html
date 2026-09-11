@@ -4,57 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BELT NINE</title>
-    <!-- THE COPY ON THIS PAGE SELLS THE GAME AND NOT THE BUILD, and the difference is worth writing
-         down because the old version got it backwards twice.
-
-         IT SAID ASTEROIDS WERE "TERRAIN RATHER THAN TARGETS", which is the opposite of the game:
-         you shoot rock until it comes apart, and the belt shoots back. Whatever that sentence was
-         reaching for, it read as a promise that nothing out here is hostile.
-
-         AND IT LED WITH THE SEED. "The belt is grown from a seed, every note is played by a
-         sequencer, there isn't one asset in the build" is true, and it is a sentence a buyer reads
-         as NO ART, NO MUSIC AND NOBODY MADE ANY OF IT. It is a good engineering story and it
-         belongs in the blog post that is linked below, where the audience came for that. The
-         player-facing half of it, which is that the page opens and is playing, is in the FAQ
-         where somebody is actually asking what they need. Do not put it back at the top. -->
+    <title>Belt Nine</title>
     <meta name="description"
-        content="BELT NINE: a third person space shooter about mining asteroids. Break rock, fill the hold, fly it home. Free in your browser, solo or four-player split screen.">
+        content="Explore a galaxy in a stolen ship. Mine asteroids, trade in planetary cities, and evade bounty hunters. Play Belt Nine free in your browser, solo or with up to four players in local split screen.">
     <link rel="canonical" href="https://curzel.it/beltnine/">
     <link rel="icon" href="/favicon.ico">
     <meta name="theme-color" content="#06080c">
 
-    <!-- Open Graph / social cards -->
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="BELT NINE">
-    <meta property="og:title" content="BELT NINE">
+    <meta property="og:site_name" content="Belt Nine">
+    <meta property="og:title" content="Belt Nine">
     <meta property="og:description"
-        content="Break rock, fill the hold, fly it home. A third person space shooter set in an asteroid belt that is not empty. Free in your browser.">
-    <meta property="og:image" content="https://curzel.it/beltnine/vector.png">
-    <meta property="og:image:alt" content="A mining ship firing on an asteroid, drawn as glowing wireframe">
+        content="Explore, mine, trade, and evade bounty hunters in a stolen ship. Play free in your browser, solo or with up to four players in local split screen.">
+    <meta property="og:image" content="https://curzel.it/beltnine/card.jpg">
+    <meta property="og:image:alt" content="A mining ship flying past a banded gas giant in an asteroid field">
     <meta property="og:url" content="https://curzel.it/beltnine/">
     <meta name="twitter:card" content="summary_large_image">
 
-    <!-- WHAT A SEARCH ENGINE READS INSTEAD OF GUESSING: the same facts the page already states,
-         in the shape Google's game result wants them. The offer is the browser demo and says so by
-         name, because the full game is not free and this file must not imply it is. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "VideoGame",
       "name": "Belt Nine",
       "url": "https://curzel.it/beltnine/",
-      "image": "https://curzel.it/beltnine/vector.png",
-      "description": "A third person space shooter about mining asteroids. Break rock until it shatters, catch what falls out, and fly the hold back to the mothership. Solo, or up to four pilots on one screen.",
-      "genre": ["Action", "Shooter", "Space Simulation", "Indie"],
-      "gamePlatform": ["Web browser", "Windows", "macOS", "Linux"],
+      "image": "https://curzel.it/beltnine/card.jpg",
+      "description": "Explore a galaxy in a stolen ship. Mine asteroids, trade in planetary cities, take Guild missions, and evade bounty hunters. Play solo or with up to four players in local split screen.",
+      "genre": ["Action", "Adventure", "Space Simulation", "Exploration", "Indie"],
+      "gamePlatform": ["Web browser", "Windows", "macOS", "Linux", "SteamOS"],
       "playMode": ["SinglePlayer", "CoOp"],
       "numberOfPlayers": { "@type": "QuantitativeValue", "minValue": 1, "maxValue": 4 },
       "author": { "@type": "Person", "name": "Federico Curzel", "url": "https://curzel.it/" },
-      "publisher": { "@type": "Person", "name": "Federico Curzel", "url": "https://curzel.it/" },
+      "publisher": { "@type": "Organization", "name": "Hidden Mugs", "url": "https://curzel.it/" },
       "offers": {
         "@type": "Offer",
-        "name": "Free browser demo",
+        "name": "Free browser build",
         "price": "0",
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock",
@@ -64,59 +47,19 @@
     </script>
 
     <style>
-        /* THIS PAGE IS THE GAME'S INTERFACE, PRINTED ON THE WEB. Self-contained, like sneakbit's
-           landing: it matches the GAME rather than the rest of curzel.it.
-
-           IT SAYS AS LITTLE AS IT CAN. The game is six readings, five screenshots and one button;
-           anything that needed a paragraph to explain was not worth a paragraph. What is left is
-           borrowed from the game's own stylesheet as whole materials rather than as a mood:
-
-             THE GROUND     the void, the belt in it, and one line of scan texture in three, over
-                            the whole window, not a box, because a page is not over anything.
-             THE MASTHEAD   the name in large tracked type over an INK rule, with the crumb back to
-                            where you came from and the machine's own line at the far end.
-             THE HEADS      dim, tracked, hung off a tick in the gutter with a hairline running out
-                            of the word, which is what turns a list into a page.
-             THE READOUTS   a dim label, a dotted leader carrying the eye across, and the value at
-                            full ink. Full INK is reserved for what you are meant to read now.
-             THE ROWS       a thing you can aim at: a stripe in the gutter that lights, and a wash
-                            the width of the row.
-             THE FOOT       one band, quieter than the masthead, with the keys punched into it.
-
-           THE ONE THING THAT IS NOT THE GAME'S IS THE PLAY BADGE, and that is deliberate: it is
-           sneakbit's, to the pixel, because it stands next to a Steam badge and the pair have to
-           read as two badges rather than as a badge and an idea.
-
-           THE GROUND AND THE INK ARE THE GAME'S PALETTE, values copied out of src/palette.js (BG,
-           INK, STAR), and --dim is the panel's own dim, INK mixed 55% toward BG, which is the
-           game's rule for scaffolding. THE ACCENT IS THE SITE'S: one colour does all the pointing
-           on this page, and it is curzel.it's rather than the game's.
-
-           IT STAYS DARK IN BOTH SCHEMES on purpose: the game is a black void and there is no light
-           version of the belt. */
         :root {
             --bg: #06080c;
             --ink: #e2ecf7;
-            --star: #7c90b4;
+            --star: #7f97c3;
 
-            /* ONE ACCENT, AND IT IS THE SITE'S: #ffb703, the value style.css keeps and sneakbit's
-               landing copies. The game's own ROCK and LASER were here before, which left the page
-               pointing in three colours at once: a tan tagline, a green link and a grey control,
-               none of them curzel.it's. A page can be built out of the game's black and the game's
-               instrument and still say whose site it is, in the one colour that does the pointing. */
             --accent: #ffb703;
 
             --dim: color-mix(in srgb, var(--ink) 55%, var(--bg));
+            --hair: color-mix(in srgb, var(--ink) 22%, transparent);
+
             --scan: color-mix(in srgb, var(--ink) 7%, transparent);
-            /* A star on a page is not a star in the game: there it is the far field and has to be
-               seen, here it is the thing behind the words. Dimmed in the COLOUR rather than with
-               an opacity on the layer, because the grain rides on that same layer and would be
-               dimmed with it. */
             --spark: color-mix(in srgb, var(--star) 45%, transparent);
 
-            /* The interface constants, in CSS pixels, as the game keeps them. --line is every rule
-               and tick on the page: one value, so the masthead, the foot and a head's stub are
-               visibly the same instrument. */
             --line: 2px;
             --gap: 8px;
             --font: ui-monospace, "Cascadia Mono", Consolas, monospace;
@@ -124,31 +67,19 @@
 
         * { box-sizing: border-box; }
 
-        /* NO `scroll-behavior: smooth` HERE, AND IT IS NOT AN OVERSIGHT. It was tried, and on a
-           cold load of /beltnine/#linux Chrome landed at the top of the page instead of on the
-           question, because the smooth path defers the initial fragment scroll and then drops it.
-           Sliding to an anchor is worth nothing next to arriving at the one somebody was sent. */
         html { background: var(--bg); }
 
         body {
             margin: 0;
             padding: clamp(12px, 4vw, 40px) clamp(10px, 3vw, 24px);
             font-family: var(--font);
-            font-size: 15px;
+            font-size: 16px;
             line-height: 1.7;
             color: var(--ink);
             background: transparent;
             letter-spacing: 0.02em;
         }
 
-        /* THE GROUND, AND IT IS THE WHOLE WINDOW. One fixed layer carrying everything behind the
-           words: the void, the belt in it, and the grain over both. Nothing about it knows where
-           the column of text starts, which is the point: a ground that stopped at the column
-           would be a frame again, drawn in a slightly different black.
-
-           STARS AT THREE SIZES THAT SHARE NO FACTOR, so the tiling has no seam you can find, and
-           dim enough that you know the belt is there without picking a single star out of it. A
-           fixed element rather than `background-attachment: fixed`, which iOS has never done. */
         .belt {
             position: fixed;
             inset: 0;
@@ -168,11 +99,6 @@
             background-size: 703px 521px, 1103px 829px, 1499px 1129px;
         }
 
-        /* THE GRAIN, OVER THE STARS AND UNDER THE WORDS. One line in three at a fourteenth of the
-           ink, deliberately almost nothing, so the page reads as a lit screen rather than as a
-           rectangle of paint. Its own element rather than another layer on `.belt`, because the
-           star layers already cycle through three background-sizes and adding one at the front
-           shifts every one of them onto the wrong size. */
         .belt::after {
             content: "";
             position: absolute;
@@ -181,38 +107,21 @@
                 to bottom, var(--scan) 0 1px, transparent 1px 3px);
         }
 
-        /* ---- the column ------------------------------------------------------------------ */
-
-        /* NOT A PLATE AND NOT ANYTHING. The game's panel is a box because it came UP over a running
-           belt and has to say where it ends. This page is not over anything, so it has no frame and
-           no ground of its own (the ground is the window), and this is only a measure to set the
-           words in. The rules that are left are the ones doing a job. */
-        /* THE COLUMN IS THE MEASURE, which is the whole reason for the number. It was 1000px with
-           the paragraphs capped at 70ch inside it, so every rule on the page ran to 950px and
-           every sentence stopped at 630, and the text read as wrapping in the middle of the page
-           rather than as being set to a width. One of the two had to give, and it is the column:
-           lines running the full 950 would be ninety-five characters, which is a measure nobody
-           reads twice.
-           800 BECAUSE THAT IS THE GAME'S OWN PANEL: `#panel .page` is min(800px, …), so the page
-           and the thing it is selling are set on the same width. Nothing is capped inside it now;
-           what ends the line is the column, and everything on the page ends at the same edge. */
         .plate {
-            max-width: 800px;
+            max-width: 920px;
             margin: 0 auto;
         }
 
-        /* ---- the masthead ---------------------------------------------------------------- */
-
-        /* WHICH PAGE, WHERE FROM, AND WHICH MACHINE: one line across the top, in that order,
-           because that is the order the questions come in. */
         .masthead {
             display: flex;
-            align-items: baseline;
+            align-items: flex-end;
             flex-wrap: wrap;
             gap: var(--gap) calc(var(--gap) * 2);
-            padding: calc(var(--gap) * 2) calc(var(--gap) * 3) calc(var(--gap) * 2);
-            border-bottom: var(--line) solid var(--ink);
+            padding: calc(var(--gap) * 2) calc(var(--gap) * 3);
+            border-bottom: var(--line) solid var(--hair);
         }
+
+        .heading { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 
         h1 {
             margin: 0;
@@ -223,7 +132,13 @@
             white-space: nowrap;
         }
 
-        /* WHERE THIS PAGE WAS OPENED FROM, in the word the arrow would take you back to. */
+        .heading .what {
+            color: var(--dim);
+            font-size: 0.85em;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
         .crumb {
             font-size: 0.85em;
             letter-spacing: 0.18em;
@@ -233,8 +148,6 @@
         .crumb a { color: var(--dim); }
         .crumb a::before { content: "← "; }
 
-        /* THE MACHINE'S OWN LINE, hard against the far end: it answers a different question from
-           the two marks beside it, so it takes the other end rather than a place in the sequence. */
         .strip {
             margin-left: auto;
             color: var(--dim);
@@ -244,8 +157,6 @@
             white-space: nowrap;
         }
 
-        /* ---- the body of the page -------------------------------------------------------- */
-
         .body { padding: calc(var(--gap) * 2) calc(var(--gap) * 3) calc(var(--gap) * 3); }
 
         section { margin: calc(var(--gap) * 4) 0; }
@@ -254,41 +165,27 @@
         a { color: var(--accent); text-decoration: none; }
         a:hover { text-decoration: underline; }
 
-        .tagline {
-            margin: 0 0 var(--gap);
-            color: var(--accent);
-            letter-spacing: 0.24em;
-            text-transform: uppercase;
-            font-size: 0.9em;
-        }
-
-        /* NO MEASURE OF THEIR OWN. The column is already one (see `.plate`), and a second cap
-           inside it is what put a ragged edge two thirds of the way across the page. */
         .lede, .say { margin: 0; }
+        .say + .say { margin-top: var(--gap); }
 
-        /* AIR ABOVE, AND A TICK TO HANG THE BLOCK OFF. A head is scaffolding and not information,
-           so it stays dim, because full INK is for the lines under it. The solid stub in the gutter is
-           what makes a block read as hanging off a mark rather than as a caption that happens to
-           be dimmer. */
         h2 {
             display: flex;
             align-items: center;
             gap: var(--gap);
             margin: 0 0 calc(var(--gap) * 1.5);
             font-weight: 400;
-            font-size: 0.8em;
-            letter-spacing: 0.3em;
+            font-size: 0.875rem;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--dim);
-            white-space: nowrap;
+            white-space: normal;
         }
 
         h2::before {
             content: "";
             align-self: stretch;
+            flex-shrink: 0;
             width: calc(var(--line) * 2);
-            /* The tracking is applied to the right of every letter, so the gap after the word is
-               already 0.3em wider than the one before it. Taking that off centres the rule. */
             margin-right: calc(var(--gap) * -0.3);
             background: var(--dim);
         }
@@ -296,19 +193,9 @@
         h2::after {
             content: "";
             flex: 1;
-            border-bottom: var(--line) solid var(--dim);
+            border-bottom: var(--line) solid var(--hair);
         }
 
-        /* ---- the one thing on the page that is news ---------------------------------------- */
-
-        /* NOT A NEW SHAPE, BUT TWO THAT ARE ALREADY HERE. The stripe and the wash are a selected row's
-           (below), and the tag is punched the way the keys along the foot are; the hue is the
-           accent, which is the only hue on the page. Assembled out of parts rather than invented,
-           so a banner cannot look like something another site left behind.
-
-           AND IT IS QUIETER THAN THE BADGES ABOVE IT, deliberately. The things to press are up
-           there and this is not one of them: a promise about a build nobody can play yet must not
-           be the loudest mark on a page whose whole argument is that you can play right now. */
         .soon {
             display: flex;
             align-items: baseline;
@@ -334,60 +221,10 @@
 
         .soon .said { flex: 1 1 20ch; }
 
-        /* ---- rows you can aim at --------------------------------------------------------- */
-
-        /* A ROW IS A TARGET. The stripe is always in the layout and only sometimes inked, because
-           added and removed for real it would shove every label sideways as the cursor moved. */
-        .rows { margin: 0; padding: 0; list-style: none; }
-
-        .rows a {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: calc(var(--gap) * 2);
-            padding: 10px calc(var(--gap) * 1.5);
-            border-left: calc(var(--line) * 3) solid transparent;
-            color: var(--ink);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            font-size: 0.9em;
-        }
-
-        .rows a .tag { color: var(--dim); }
-        .rows a .value { color: var(--accent); }
-
-        .rows a:hover,
-        .rows a:focus-visible {
-            border-left-color: var(--accent);
-            background: color-mix(in srgb, var(--accent) 10%, transparent);
-            text-decoration: none;
-            outline: none;
-        }
-
-        .rows a:hover .tag,
-        .rows a:focus-visible .tag { color: var(--ink); }
-
-        /* ---- the questions --------------------------------------------------------------- */
-
-        /* CLOSED UNTIL ASKED, AND NATIVE. `<details>` rather than a scripted accordion: it is
-           keyboard-operable, find-in-page reaches inside it, and it still opens if the script at
-           the bottom of this page never runs. A list of questions is a menu, and a menu of five
-           closed questions is read in one glance where five open ones are a wall.
-
-           THE ONE THING A DISCLOSURE COSTS is the deep link, which is the whole reason these have
-           ids: a link to #linux that lands on a closed question has answered nobody. The script
-           opens whatever the address names; see the note there.
-
-           THE MARKS ARE ALREADY ON THIS PAGE. A question under the cursor wears the stripe and the
-           wash a row wears, because it IS a row you aim at now; a question you were sent to wears
-           the same in the accent and keeps it. The toggle is `+` and `−` rather than a triangle:
-           the OS marker is a rounded shape from somebody else's interface, and nothing in this
-           game is round. */
         .faq { margin: 0; }
 
         .faq .qa {
             border-left: calc(var(--line) * 3) solid transparent;
-            /* A question landed on is not a question jammed against the top of the glass. */
             scroll-margin-block: calc(var(--gap) * 3);
         }
 
@@ -401,7 +238,6 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
             font-size: 0.9em;
-            /* Both spellings of "no triangle": the standard one and the one Safari still wants. */
             list-style: none;
         }
 
@@ -410,7 +246,6 @@
         .faq summary::before {
             content: "+";
             color: var(--accent);
-            /* A fixed cell, so the question does not step sideways when the sign changes under it. */
             flex: 0 0 1ch;
         }
 
@@ -430,9 +265,6 @@
             background: color-mix(in srgb, var(--accent) 10%, transparent);
         }
 
-        /* THE ADDRESS OF THIS ONE ANSWER, PRINTED RATHER THAN REVEALED ON HOVER: a mark that only
-           exists under a cursor is a mark nobody on a phone will ever find. Pushed to the far end
-           so it is a thing beside the question rather than a character in it. */
         .faq .hash {
             margin-left: auto;
             color: var(--dim);
@@ -445,14 +277,9 @@
         .faq .answer p { margin: 0; }
         .faq .answer p + p { margin-top: var(--gap); }
 
-        /* ---- the badges ------------------------------------------------------------------ */
-
-        /* SNEAKBIT'S PLAY BADGE, COPIED RULE FOR RULE from /sneakbit/index.html rather than
-           restyled to match this page. It sits beside a Steam badge, and a store badge is a shape
-           people recognise before they read it, so the pair have to be two badges. It is the only
-           thing on this page that is not the game's own interface, and that is the reason. */
         .download-links { margin: 20px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
         .download-links a { display: inline-flex; align-items: center; }
+        .download-links img { width: 200px; height: auto; }
         .play-badge {
             display: inline-flex; align-items: center; gap: 8px; box-sizing: border-box;
             width: 200px; aspect-ratio: 560 / 168; padding: 0 14px;
@@ -465,15 +292,6 @@
         .play-badge .label .small { font-size: 0.6rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
         .play-badge .label .big { font-size: 1.1rem; font-weight: 700; }
 
-        /* THE TRAILER IS A BADGE AND NOT A BANNER, and it is in this row because this row is
-           where somebody looks for a thing to press. It was a bar over the screenshots first,
-           which put the one link that leaves the site in the one place the page keeps for
-           showing the game; a badge in the row says the same thing and says it where it will
-           be looked for.
-           BUILT TO THE PLAY BADGE'S MEASUREMENTS (same width, same aspect, same hairline and
-           corner), so the row reads as a row of badges rather than as a badge with a link
-           leaning on it. It is the homepage's Trailer button, which is this button on a
-           lighter page. */
         .text-btn {
             display: inline-flex; align-items: center; justify-content: center; gap: 8px;
             box-sizing: border-box;
@@ -484,17 +302,17 @@
         }
         .text-btn:hover { opacity: 0.85; text-decoration: none; }
 
-        /* ---- the viewport ------------------------------------------------------------------ */
-
         .viewport {
             position: relative;
             overflow: hidden;
-            border: var(--line) solid var(--dim);
+            aspect-ratio: 16 / 9;
+            border: var(--line) solid var(--hair);
             background: var(--bg);
         }
 
         .carousel {
             display: flex;
+            height: 100%;
             width: 100%;
             transition: transform 0.5s ease-in-out;
         }
@@ -502,9 +320,9 @@
         .carousel img {
             flex: 0 0 100%;
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: contain;
             display: block;
-            image-rendering: pixelated;
         }
 
         .carousel-controls {
@@ -516,10 +334,6 @@
             transform: translateY(-50%);
         }
 
-        /* PUNCHED INTO THE BAR RATHER THAN PRINTED ON IT: the same inversion the function keys
-           along the bottom of the game's pages wear, but in the accent rather than in dim: these
-           are pressable and the keys in the foot are not, and the page says pressable in one
-           colour. */
         .carousel-controls button {
             font: inherit;
             padding: 6px 11px;
@@ -545,8 +359,6 @@
             font-size: 0.85em;
         }
 
-        /* Where you are in the strip. Squares rather than dots, because nothing in this game is
-           round and the sensor's contacts are the same mark. */
         .dots { display: flex; gap: 6px; }
 
         .dots button {
@@ -561,12 +373,7 @@
 
         .dots button[aria-current="true"] { background: var(--accent); opacity: 1; }
 
-        /* ---- the foot ---------------------------------------------------------------------- */
-
-        /* ONE BAND, QUIETER THAN THE MASTHEAD. Same shape, one step down, which is what makes the
-           two read as the top and the bottom of one page rather than as two headers. The keys are
-           the only instruction left on the page, and they need no sentence over them. */
-        .foot { border-top: var(--line) solid var(--ink); }
+        .foot { border-top: var(--line) solid var(--hair); }
 
         .legend {
             display: flex;
@@ -590,8 +397,6 @@
             letter-spacing: 0.08em;
         }
 
-        /* The links are not keys and must not be drawn as any: a bar of punched caps with a
-           hyperlink hiding among them is a bar where one of the keys does something. */
         .links {
             display: flex;
             flex-wrap: wrap;
@@ -599,7 +404,7 @@
             gap: 6px 16px;
             margin: 0;
             padding: var(--gap) calc(var(--gap) * 3) calc(var(--gap) * 2);
-            border-top: var(--line) solid var(--dim);
+            border-top: var(--line) solid var(--hair);
             list-style: none;
             font-size: 0.85em;
             letter-spacing: 0.08em;
@@ -610,16 +415,14 @@
         .links a:hover { color: var(--ink); }
         .links .rule { margin-right: auto; }
 
-        /* A PHONE IS ONE COLUMN, which is the width the game's own panel gives up its two at. */
         @media (max-width: 700px) {
             .download-links img, .play-badge, .text-btn { width: 100%; max-width: 320px; }
 
-            /* Two things holding opposite ends of a line only works while they are on one. */
-            .rows a { flex-wrap: wrap; gap: 0; }
-            .rows a .value { margin-left: auto; }
             .shot-foot { align-items: flex-start; }
             .links .rule { margin-right: 0; width: 100%; }
-            .strip { margin-left: 0; }
+            .strip { margin-left: 0; white-space: normal; }
+            .masthead, .body { padding-left: 12px; padding-right: 12px; }
+            h1 { letter-spacing: 0.25em; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -633,21 +436,21 @@
 
     <main class="plate">
         <div class="masthead">
-            <h1>BELT NINE</h1>
+            <div class="heading">
+                <h1>BELT NINE</h1>
+                <span class="what">A space exploration game</span>
+            </div>
             <div class="crumb"><a href="/">curzel.it</a></div>
-            <!-- NO VERSION NUMBER HERE. It said v0.9 while the build was on 0.10, which is the
-                 failure mode of any number kept in two repositories: nobody comes back to a
-                 marketing page to bump it. What this line is for is WHERE YOU CAN PLAY IT. -->
-            <div class="strip">Free in browser · Steam soon</div>
+            <div class="strip">Free in browser · Steam Q1 2027</div>
         </div>
 
         <div class="body">
             <section>
-                <p class="tagline">Shoot the rock. Fill the hold. Get home.</p>
                 <p class="lede">
-                    A third-person space shooter about taking asteroids apart. Break rock for ore
-                    and hardware, fly the hold back to the mothership, and get through whatever
-                    else is out there with you. Solo, or up to four pilots on one screen.
+                    Explore a galaxy in a stolen ship, with JX-9, your onboard AI and self-appointed
+                    DJ. Mine asteroids, land in cities to trade and upgrade your ship, and take on
+                    Guild missions while evading bounty hunters. Play solo or with up to four
+                    players in local split screen.
                 </p>
 
                 <div class="download-links">
@@ -660,37 +463,33 @@
                             <span class="big">In Browser</span>
                         </span>
                     </a>
+                    <a href="https://store.steampowered.com/app/4686590/Belt_Nine/" target="_blank" rel="noopener">
+                        <img src="/images/steam_badge.webp" alt="Belt Nine on Steam" width="564" height="168">
+                    </a>
                     <a href="https://www.youtube.com/watch?v=m_XYyKTPgGw" class="text-btn" target="_blank" rel="noopener">
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <polygon points="5 3 19 12 5 21 5 3" />
                         </svg>
                         Trailer
                     </a>
-                    <!-- THE STEAM BADGE IS OUT UNTIL THERE IS A STORE PAGE TO SEND ANYBODY TO. It
-                         pointed at app/0000000, which is not a placeholder so much as a broken
-                         promise with a logo on it. The banner below says the same thing and says
-                         it truthfully. Kept here rather than deleted: when the app id exists this
-                         is two lines of work, and the sizing has to match the badge beside it.
-                    <a href="https://store.steampowered.com/app/0000000/Belt_Nine/" target="_blank" rel="noopener">
-                        <img src="/images/steam_badge.webp" alt="Belt Nine on Steam" style="width: 200px; height: auto;">
-                    </a>
-                    -->
                 </div>
 
                 <p class="soon">
-                    <span class="tag">Soon</span>
-                    <span class="said">The build above is the free demo. The full game is coming to
-                        Steam, and there's no date on it yet.</span>
+                    <span class="tag">Steam</span>
+                    <span class="said">Planned for Q1 2027 on Windows, macOS and Linux.
+                        The browser version is free to play now.</span>
                 </p>
             </section>
 
             <section>
                 <div class="viewport">
                     <div class="carousel">
-                        <img src="vector.png" width="1280" height="633" alt="BELT NINE in the wireframe theme: a mining ship firing on an asteroid, a bolt still in the air">
-                        <img src="pixel.png" width="1280" height="633" alt="BELT NINE in the pixel theme: quarrying an asteroid for ore">
-                        <img src="menu.png" width="1280" height="633" alt="The BELT NINE title screen">
-                        <img src="death.png" width="1280" height="633" alt="The HULL BREACH card at the end of a run">
+                        <img src="flight.webp" width="1600" height="900" alt="Belt Nine: the ship crossing an asteroid field past a banded gas giant" fetchpriority="high">
+                        <img src="reef.webp" width="1600" height="900" alt="Belt Nine: a reef-covered asteroid, its growths picked out in cyan, with a planet behind it">
+                        <img src="city.webp" width="1600" height="900" alt="Landed at the city of Loam: a menu of Exchange, Shipyard and Guild beside readouts for the world">
+                        <img src="map.webp" width="1600" height="900" alt="The belt map: sectors joined by wormholes, with the pilot's port picked out">
+                        <img src="split.webp" width="1600" height="900" alt="Four pilots in split screen, one ship per quadrant in green, pink, cyan and yellow">
+                        <img src="pixels.webp" width="1600" height="900" alt="Belt Nine in the pixel theme: the same belt drawn as dithered pixels">
                     </div>
                     <div class="carousel-controls">
                         <button id="prev" aria-label="Previous screenshot">&#10094;</button>
@@ -698,68 +497,56 @@
                     </div>
                 </div>
                 <div class="shot-foot">
-                    <span>Wireframe or pixels, swapped without leaving the flight.</span>
-                    <div class="dots" id="dots" role="tablist" aria-label="Screenshots"></div>
+                    <span>Switch between wireframe and pixel graphics in the settings.</span>
+                    <div class="dots" id="dots" role="group" aria-label="Screenshots"></div>
                 </div>
             </section>
 
             <section>
-                <h2>What you do out there</h2>
+                <h2>Explore, mine and trade</h2>
                 <p class="say">
-                    Every rock is a target. Shoot one long enough and it comes apart into smaller
-                    rocks, and the break pays out: ore for the hold, hardware for the ship. The gun
-                    overheats, nothing on the hull grows back on its own, and ore is worth nothing
-                    until it's unloaded at the mothership. Every run is the same bet, one more rock
-                    or turn for home while the hull holds.
+                    Travel between star systems through wormholes. Break asteroids apart to collect
+                    metal, crystal and deuterium. Weapons and boost share heat capacity, so watch
+                    your temperature during a fight.
+                </p>
+                <p class="say">
+                    Land in cities to trade resources at the Exchange, upgrade your ship at the
+                    Shipyard, or accept delivery, recovery and supply missions from the Guild.
+                    Completing missions earns rewards and unlocks better jobs.
                 </p>
             </section>
 
             <section>
-                <h2>The belt is not empty</h2>
+                <h2>Bounty hunters and wildlife</h2>
                 <p class="say">
-                    Something stocked this place. Break a big enough rock and a crab comes out of
-                    it, startled for a second and then jumping at the nearest solid thing, which is
-                    sometimes you. Squid land on the plating and stay. Their full-grown relatives
-                    are twenty times the size and have opinions about you, ships come looking, and
-                    whales strain dust in the deep field and mostly don't care.
+                    Staying in a sector and completing Guild jobs raises your wanted level,
+                    attracting bounty hunters. Move to other sectors and let the heat die down.
+                </p>
+                <p class="say">
+                    You'll also encounter reefs growing on asteroids, creatures that attach to
+                    your hull, and pods of space whales. Some are harmless; others can damage
+                    your ship.
                 </p>
             </section>
 
             <section>
-                <h2>Split-screen co-op</h2>
+                <h2>Local multiplayer</h2>
                 <p class="say">
-                    Two to four pilots on one screen: two and three side by side, four in a grid.
-                    Every pilot after the first needs a controller of their own. Friendly fire is on
-                    by default, and it's a setting for a reason.
+                    Up to four players can explore together in split screen. Each additional player
+                    needs a controller. Friendly fire is enabled by default and can be changed in
+                    the settings.
                 </p>
             </section>
 
             <section>
-                <h2>Wireframe or pixels</h2>
+                <h2>Wireframe or pixel graphics</h2>
                 <p class="say">
-                    The same sector draws two ways, and a row in the settings swaps them mid-flight:
-                    glowing wireframe at your display's own resolution, or dithered pixels through a
-                    palette. Same rocks, same run, two different games to look at.
+                    Choose glowing wireframe graphics or a dithered pixel style. You can switch
+                    between them during play.
+                    <a href="/blog/2026_08_04_one_scene_three_renderers.html">Read how the two renderers work</a>.
                 </p>
-                <ul class="rows">
-                    <li>
-                        <a href="/blog/2026_08_04_one_scene_three_renderers.html">
-                            <span class="tag">Two renderers, one scene</span>
-                            <span class="value">Read it →</span>
-                        </a>
-                    </li>
-                </ul>
             </section>
 
-            <!-- WHAT PEOPLE ACTUALLY WRITE IN TO ASK, WHICH IS ALL OF IT ABOUT MACHINES. Nobody
-                 needs a page to tell them what a mining game is; they need to know whether the
-                 thing will start on the box they own, and the Deck question is the one that comes
-                 in most. Every answer is a fact from the build rather than a hope about it: where
-                 an answer is not settled yet, as with the Deck's badge, it says so instead of
-                 rounding up to a yes.
-                 THE IDS ARE THE PROMISE, AND THEY DO NOT CHANGE. #faq and #linux go in mails,
-                 forum replies and a store page's support field, and a renamed anchor is a dead
-                 link somebody else has already sent. -->
             <section id="faq">
                 <h2>Questions</h2>
                 <div class="faq">
@@ -767,10 +554,19 @@
                         <summary>What do I need to play it?<a class="hash" href="#browser" aria-label="Link to this question">#</a></summary>
                         <div class="answer">
                             <p>
-                                A browser, on whatever the browser is running on. No install, no
-                                plugin, no account, no patch and no download past the page itself:
-                                it opens and it's playing, and there are no loading screens in it
-                                anywhere. Any current Chrome, Edge, Firefox or Safari will do.
+                                Use a current version of Chrome, Edge, Firefox or Safari.
+                                No installation or account is required.
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="qa" id="steam">
+                        <summary>When is the Steam release?<a class="hash" href="#steam" aria-label="Link to this question">#</a></summary>
+                        <div class="answer">
+                            <p>
+                                The desktop version is planned for Q1 2027 on Windows, macOS and
+                                Linux. You can <a href="https://store.steampowered.com/app/4686590/Belt_Nine/" target="_blank" rel="noopener">wishlist Belt Nine on Steam</a>.
+                                The <a href="https://beltnine.curzel.it">browser version</a> will remain free.
                             </p>
                         </div>
                     </details>
@@ -779,35 +575,23 @@
                         <summary>Does it run on Linux, SteamOS or the Steam Deck?<a class="hash" href="#linux" aria-label="Link to this question">#</a></summary>
                         <div class="answer">
                             <p>
-                                In the browser, yes, and today.
-                                <a href="https://beltnine.curzel.it">beltnine.curzel.it</a> is the
-                                demo, and nothing in it knows or cares which OS is under the
-                                browser. On a Deck that means desktop mode and any browser you have
-                                there.
+                                You can play in a browser on Linux. On Steam Deck, use a browser
+                                in desktop mode.
                             </p>
                             <p>
-                                The full game isn't out yet. When it ships to Steam it ships
-                                with a native x86_64 Linux binary (Ubuntu 22.04 or SteamOS 3 and
-                                later), so there's no Proton in the way and no compatibility tool to
-                                go and pick.
-                            </p>
-                            <p>
-                                Steam Deck Verified is Valve's rating rather than mine, and it's
-                                awarded after they review the build. I'm not claiming it before it's
-                                earned, so treat the Deck as untested until the badge on the store
-                                page says otherwise.
+                                A native Linux version is planned for Steam. Steam Deck
+                                compatibility has not yet been verified by Valve.
                             </p>
                         </div>
                     </details>
 
                     <details class="qa" id="desktop">
-                        <summary>Which Windows, and which Mac?<a class="hash" href="#desktop" aria-label="Link to this question">#</a></summary>
+                        <summary>What are the desktop system requirements?<a class="hash" href="#desktop" aria-label="Link to this question">#</a></summary>
                         <div class="answer">
                             <p>
-                                Windows 10 64-bit or later. macOS 12 Monterey or later on Apple
-                                Silicon: there's no Intel build, and that's a decision rather than
-                                a thing still coming. Either one wants about 500 MB on disk, 4 GB of
-                                memory, and no graphics card in particular: integrated is fine.
+                                The desktop release is planned for Windows 11, macOS on Apple
+                                Silicon, and Linux. See the <a href="https://store.steampowered.com/app/4686590/Belt_Nine/" target="_blank" rel="noopener">Steam page</a>
+                                for system requirements.
                             </p>
                         </div>
                     </details>
@@ -816,10 +600,8 @@
                         <summary>Does it work on a phone or a tablet?<a class="hash" href="#mobile" aria-label="Link to this question">#</a></summary>
                         <div class="answer">
                             <p>
-                                It does. Touch controls (two sticks, a trigger and the roll keys)
-                                come up on first touch and are sized in millimetres rather than
-                                pixels, so they're the same size on every screen. Hold it in
-                                landscape; the game will ask you to.
+                                Yes. Open the browser version on your phone or tablet and play
+                                in landscape. Touch controls appear when you touch the screen.
                             </p>
                         </div>
                     </details>
@@ -828,10 +610,9 @@
                         <summary>Do I need a controller?<a class="hash" href="#controller" aria-label="Link to this question">#</a></summary>
                         <div class="answer">
                             <p>
-                                Not to fly alone: keyboard and mouse is what it was built on, and
-                                pads are fully supported if you'd rather. Split-screen is where it
-                                matters: up to four pilots share one screen, and every pilot after
-                                the first needs a controller of their own.
+                                You can play solo with a keyboard and mouse, a controller, or
+                                touch controls. In split screen, each additional player needs
+                                their own controller.
                             </p>
                         </div>
                     </details>
@@ -852,6 +633,7 @@
             <ul class="links">
                 <li class="rule">&copy; Federico Curzel</li>
                 <li><a href="https://beltnine.curzel.it">Play</a></li>
+                <li><a href="https://store.steampowered.com/app/4686590/Belt_Nine/" target="_blank" rel="noopener">Steam</a></li>
                 <li><a href="#faq">Questions</a></li>
                 <li><a href="https://github.com/curzel-it" target="_blank" rel="noopener">GitHub</a></li>
                 <li><a href="https://www.youtube.com/@HiddenMugs" target="_blank" rel="noopener">YouTube</a></li>
@@ -889,12 +671,7 @@
         showImage(0);
         setInterval(() => showImage(index + 1), 4000);
 
-        // A QUESTION SOMEBODY WAS SENT A LINK TO HAS TO BE OPEN WHEN THEY ARRIVE. Browsers are
-        // starting to expand a <details> containing the fragment on their own, and the ones that
-        // do make this a no-op; the ones that do not would otherwise land a reader on a closed
-        // question, which is the one failure a permalink cannot survive. Re-scrolling after the
-        // open is not belt-and-braces either: the browser aimed at a collapsed box and everything
-        // below it moved the moment the answer unfolded.
+        // Open FAQ answers when following a direct link. Keep the question IDs stable.
         function openFromHash() {
             const id = decodeURIComponent(location.hash.slice(1));
             if (!id) return;
