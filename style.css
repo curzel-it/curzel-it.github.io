@@ -231,8 +231,6 @@ table tr td:last-child {
 }
 
 .previews.retro-deck img { width: 180px; }
-.previews.phone { display: flex; gap: 12px; }
-.previews.phone img { width: 160px; min-width: 0; border-radius: 12px; padding: 0; }
 
 .preview-pixel { margin: 20px 0; }
 
@@ -370,8 +368,6 @@ footer {
 @media only screen and (max-width: 660px) {
     .previews img { width: 100%; }
     .previews.retro-deck img { width: 30%; }
-    .previews.phone { gap: 8px; }
-    .previews.phone img { flex: 1; width: auto; }
 }
 
 @media print {
