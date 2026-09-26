@@ -3,24 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Crediti e riconoscimenti di Little Planets.">
-    <title>Little Planets — Crediti</title>
-    <link rel="stylesheet" type="text/css" href="../style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;0,600;0,800;1,200&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    <title>Little Planets</title>
+    <meta name="description" content="Little Planets è un gioco accogliente in pixel art: punta il telescopio, scopri stelle e pianeti veri e immaginati, e colleziona le loro carte in un album tutto tuo.">
+    <link rel="canonical" href="https://curzel.it/little-planets/">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="theme-color" content="#1a3a63">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Little Planets">
+    <meta property="og:description" content="Punta il telescopio, scopri stelle e pianeti e colleziona le loro carte.">
+    <meta property="og:image" content="https://curzel.it/little-planets/home.webp">
+    <meta property="og:url" content="https://curzel.it/little-planets/">
+
+    <link rel="preload" href="fonts/baloo2-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/patrick-hand-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+    <style>
+        @font-face { font-family: "Baloo 2"; font-weight: 400 800; font-display: swap; src: url("fonts/baloo2-latin.woff2") format("woff2"); }
+        @font-face { font-family: "Patrick Hand"; font-weight: 400; font-display: swap; src: url("fonts/patrick-hand-latin.woff2") format("woff2"); }
+        @font-face { font-family: "Patrick Hand SC"; font-weight: 400; font-display: swap; src: url("fonts/patrick-hand-sc-latin.woff2") format("woff2"); }
+
+        /* Paint sampled from the game's src/palette.js. */
+        :root {
+            --night: #1a3a63;
+            --night-deep: #102440;
+            --ink: #16273f;
+            --ink-deep: #0b1524;
+            --paper: #f4ead3;
+            --paper-edge: #fdf6e6;
+            --paper-shade: #d9c6a4;
+            --teal: #8fbdb8;
+            --teal-light: #c3ded8;
+            --teal-shade: #568a97;
+            --timber: #c9a87c;
+            --timber-shade: #a9855c;
+            --gold: #f6cd5c;
+            --gold-light: #ffe59a;
+            --gold-shade: #e0b444;
+            --rose: #de5d68;
+            --violet: #9a7ad0;
+            --lime: #9ce271;
+            --text-dim: color-mix(in srgb, var(--ink) 62%, transparent);
+
+            --line: 3px solid var(--ink);
+            --drop: 0 5px 0 var(--ink-deep);
+            --cel-paper: inset 0 3px 0 var(--paper-edge), inset 0 -5px 0 var(--paper-shade);
+            --cel-teal: inset 0 3px 0 color-mix(in srgb, #fff 34%, transparent), inset 0 -5px 0 var(--teal-shade);
+            --cel-gold: inset 0 3px 0 var(--gold-light), inset 0 -5px 0 var(--gold-shade);
+            --cel-timber: inset 0 3px 0 color-mix(in srgb, #fff 26%, transparent), inset 0 -5px 0 var(--timber-shade);
+
+            color-scheme: dark;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: var(--night);
+            color: var(--paper);
+            font-family: "Patrick Hand", "Comic Sans MS", cursive;
+            font-size: 20px;
+            line-height: 1.45;
+        }
+
+        a { color: inherit; }
+
+        .page { max-width: 880px; margin: 0 auto; padding: 0 16px 48px; }
+
+        nav { padding: 18px 0; font-family: "Patrick Hand SC", cursive; letter-spacing: .1em; }
+        nav a { color: var(--teal-light); text-decoration: none; }
+        nav a:hover { color: var(--gold); }
+
+        /* Hero */
+        .hero { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 32px; padding: 24px 0 40px; }
+        .hero h1 {
+            margin: 0;
+            font-family: "Baloo 2", sans-serif;
+            font-weight: 800;
+            font-size: clamp(64px, 13vw, 116px);
+            line-height: .92;
+            letter-spacing: -.01em;
+            color: var(--paper);
+            text-shadow: 4px 5px 0 var(--violet);
+        }
+        .kicker { margin: 18px 0 0; font-family: "Patrick Hand SC", cursive; font-size: 18px; letter-spacing: .22em; color: var(--teal-light); }
+        .hero p.lead { margin: 18px 0 26px; max-width: 30ch; font-size: 22px; }
+
+        .badge {
+            display: inline-block;
+            padding: 10px 24px 12px;
+            border: var(--line);
+            border-radius: 999px;
+            background: var(--gold);
+            color: var(--ink);
+            font-family: "Patrick Hand SC", cursive;
+            font-size: 19px;
+            letter-spacing: .08em;
+            box-shadow: var(--cel-gold), var(--drop);
+        }
+
+        .moon {
+            width: 150px;
+            aspect-ratio: 1;
+            border: var(--line);
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 62% 66%, color-mix(in srgb, var(--ink-deep) 16%, transparent) 0 26%, transparent 27%),
+                radial-gradient(circle at 34% 30%, color-mix(in srgb, #fff 30%, transparent) 0 18%, transparent 19%),
+                var(--gold);
+            box-shadow:
+                0 0 0 14px color-mix(in srgb, var(--gold) 13%, transparent),
+                0 0 0 32px color-mix(in srgb, var(--gold) 7%, transparent),
+                0 0 60px 20px color-mix(in srgb, var(--gold) 18%, transparent);
+            margin-right: 32px;
+        }
+
+        /* Screenshots */
+        .shots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px 32px;
+            margin: 0 0 56px;
+            padding: 0;
+            list-style: none;
+        }
+        .shots figure { position: relative; margin: 0; }
+        .shots li:nth-child(3n+1) figure { rotate: -1.2deg; }
+        .shots li:nth-child(3n+2) figure { rotate: .8deg; translate: 0 18px; }
+        .shots li:nth-child(3n) figure { rotate: -.4deg; }
+        /* The teal bezel of the game's instruments, around each screen. */
+        .bezel {
+            padding: 10px;
+            border: var(--line);
+            border-radius: 30px;
+            background: var(--teal);
+            box-shadow: var(--cel-teal), var(--drop);
+        }
+        .shots img {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 598 / 1300;
+            border: var(--line);
+            border-radius: 20px;
+            background: var(--night-deep);
+        }
+        .shots figcaption {
+            position: relative;
+            width: max-content;
+            max-width: 100%;
+            white-space: nowrap;
+            margin: -22px auto 0;
+            padding: 6px 16px 8px;
+            border: var(--line);
+            border-radius: 10px;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: "Patrick Hand SC", cursive;
+            font-size: 17px;
+            letter-spacing: .06em;
+            text-align: center;
+            box-shadow: var(--cel-paper), 0 4px 0 var(--ink-deep);
+            rotate: 1.5deg;
+        }
+
+        /* Paper notes, as on the game's home screen */
+        .notes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-bottom: 44px; }
+        .note {
+            position: relative;
+            padding: 22px 24px 24px;
+            border: var(--line);
+            border-radius: 14px;
+            background: var(--paper);
+            color: var(--ink);
+            box-shadow: var(--cel-paper), var(--drop);
+        }
+        .notes .note:nth-child(odd) { rotate: -.6deg; }
+        .notes .note:nth-child(even) { rotate: .5deg; }
+        .note h2, .panel h2 {
+            margin: 0 0 8px;
+            font-family: "Patrick Hand SC", cursive;
+            font-weight: 400;
+            font-size: 17px;
+            letter-spacing: .14em;
+            color: var(--rose);
+        }
+        .note p { margin: 0; font-size: 20px; }
+
+        /* Instrument panel */
+        .panel {
+            margin-bottom: 44px;
+            padding: 24px 26px 26px;
+            border: var(--line);
+            border-radius: 18px;
+            background: var(--teal);
+            color: var(--ink);
+            box-shadow: var(--cel-teal), var(--drop);
+        }
+        .panel h2 { color: var(--ink); }
+        .panel p { margin: 0 0 12px; }
+        .panel p:last-child { margin-bottom: 0; }
+        .panel .price {
+            display: inline-block;
+            margin-right: 6px;
+            padding: 1px 12px 3px;
+            border: 2px solid var(--ink);
+            border-radius: 8px;
+            background: var(--lime);
+            font-family: "Patrick Hand SC", cursive;
+            letter-spacing: .06em;
+        }
+
+        .panel.credits { background: var(--paper); box-shadow: var(--cel-paper), var(--drop); }
+        .panel.credits h2 { color: var(--rose); }
+        .credits ul { margin: 0; padding-left: 20px; font-size: 18px; }
+        .credits li + li { margin-top: 8px; }
+        .credits a { color: var(--night); }
+
+        footer { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 18px; color: var(--teal-light); }
+        footer a { color: var(--teal-light); }
+
+        @media (max-width: 640px) {
+            body { font-size: 19px; }
+            .hero { grid-template-columns: 1fr; padding-top: 8px; }
+            .moon { display: none; }
+            .notes { grid-template-columns: 1fr; }
+            .shots {
+                display: flex;
+                gap: 20px;
+                margin: 0 -16px 40px;
+                padding: 10px 16px 24px;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                scroll-padding: 0 16px;
+            }
+            .shots li { flex: 0 0 68vw; max-width: 280px; scroll-snap-align: start; }
+            .shots li:nth-child(n) figure { translate: none; }
+        }
+    </style>
 </head>
 <body>
-    <nav class="blog-nav"><a href="/">← curzel.it</a></nav>
+    <div class="page">
+        <nav><a href="/">← curzel.it</a></nav>
 
-    <header>
-        <h1>Little Planets</h1>
-        <p>Un piccolo osservatorio tascabile dove scoprire il cielo, catalogare corpi celesti e collezionare le loro carte.</p>
-    </header>
+        <header class="hero">
+            <div>
+                <h1>Little<br>Planets</h1>
+                <p class="kicker">Osservatorio personale</p>
+                <p class="lead">Punta il telescopio, scopri stelle e pianeti veri e immaginati, e colleziona le loro carte in un album tutto tuo.</p>
+                <span class="badge">Presto su iOS e Android</span>
+            </div>
+            <div class="moon" aria-hidden="true"></div>
+        </header>
 
-    <main>
-        <section id="credits">
+        <ul class="shots" aria-label="Screenshot">
+            <li><figure>
+                <div class="bezel"><img src="home.webp" alt="La schermata principale: un osservatorio tra gli alberi sotto il cielo notturno" width="598" height="1300" loading="lazy"></div>
+                <figcaption>Il tuo osservatorio</figcaption>
+            </figure></li>
+            <li><figure>
+                <div class="bezel"><img src="scope.webp" alt="Il telescopio inquadra un pianeta temperato durante la scansione" width="598" height="1300" loading="lazy"></div>
+                <figcaption>Metti a fuoco e scatta</figcaption>
+            </figure></li>
+            <li><figure>
+                <div class="bezel"><img src="card.webp" alt="La carta di un pianeta appena catalogato" width="598" height="1300" loading="lazy"></div>
+                <figcaption>Ogni scoperta è una carta</figcaption>
+            </figure></li>
+            <li><figure>
+                <div class="bezel"><img src="system.webp" alt="L'album aperto sul Sistema Solare" width="598" height="1300" loading="lazy"></div>
+                <figcaption>Completa i sistemi</figcaption>
+            </figure></li>
+            <li><figure>
+                <div class="bezel"><img src="atlas.webp" alt="La costellazione dell'Orsa Maggiore completata nell'atlante" width="598" height="1300" loading="lazy"></div>
+                <figcaption>88 costellazioni</figcaption>
+            </figure></li>
+            <li><figure>
+                <div class="bezel"><img src="workshop.webp" alt="Il banco ottico con i componenti del telescopio" width="598" height="1300" loading="lazy"></div>
+                <figcaption>Migliora il telescopio</figcaption>
+            </figure></li>
+        </ul>
+
+        <section class="notes">
+            <article class="note">
+                <h2>Il cielo vero</h2>
+                <p>Stelle reali e pianeti confermati, dal Sistema Solare agli esopianeti. E oltre, un universo procedurale senza fondo.</p>
+            </article>
+            <article class="note">
+                <h2>Il telescopio</h2>
+                <p>Gira le ghiere di azimut e altezza, ingrandisci, metti a fuoco e tieni fermo lo strumento per completare la scansione.</p>
+            </article>
+            <article class="note">
+                <h2>L'album</h2>
+                <p>Ogni foto diventa una carta. Unisci i doppioni, completa i sistemi e tutte le 88 costellazioni.</p>
+            </article>
+            <article class="note">
+                <h2>Il banco ottico</h2>
+                <p>Scambia le carte con nuove lenti, montature e spettrografi per raggiungere il cielo profondo. Le carte sono l'unica moneta.</p>
+            </article>
+        </section>
+
+        <section class="panel">
+            <h2>Com'è fatto</h2>
+            <p><span class="price">Gratis</span> Nessuna pubblicità, mai. Nessun account: i salvataggi restano sul tuo dispositivo e il gioco funziona offline.</p>
+            <p>Un solo acquisto facoltativo, l'Osservatorio completo, apre gli strumenti più potenti e le regioni più lontane del cielo. Non vende carte né scorciatoie, e non ti toglie nulla.</p>
+            <p>In italiano e in inglese.</p>
+        </section>
+
+        <section class="panel credits" id="credits">
             <h2>Crediti e riconoscimenti</h2>
             <ul>
                 <li>Ideazione, design e sviluppo di <a href="https://curzel.it">Federico Curzel</a>.</li>
@@ -30,10 +319,12 @@
                 <li>I caratteri <strong>Baloo 2</strong> di Ek Type, <strong>Patrick Hand</strong> e <strong>Patrick Hand SC</strong> di Patrick Wagesreiter sono distribuiti con licenza <a href="https://openfontlicense.org/">SIL Open Font License 1.1</a>.</li>
             </ul>
         </section>
-    </main>
 
-    <footer>
-        <p>© Federico Curzel</p>
-    </footer>
+        <footer>
+            <span>© Federico Curzel</span>
+            <a href="/privacy.html">Privacy</a>
+            <a href="/terms-and-conditions.html">Termini e condizioni</a>
+        </footer>
+    </div>
 </body>
 </html>
