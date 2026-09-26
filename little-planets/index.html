@@ -42,6 +42,7 @@
             --gold-shade: #e0b444;
             --rose: #de5d68;
             --violet: #9a7ad0;
+            --grass: #58885f;
             --lime: #9ce271;
             --text-dim: color-mix(in srgb, var(--ink) 62%, transparent);
 
@@ -58,8 +59,24 @@
         * { box-sizing: border-box; }
 
         body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100svh;
             margin: 0;
-            background: var(--night);
+            /* Tiny stars thin out as the sky fades from deep night into the page blue. */
+            background:
+                radial-gradient(1.5px 1.5px at 12% 90px, var(--paper) 50%, transparent 51%),
+                radial-gradient(1px 1px at 27% 260px, var(--paper) 50%, transparent 51%),
+                radial-gradient(1.5px 1.5px at 44% 40px, var(--paper) 50%, transparent 51%),
+                radial-gradient(1px 1px at 58% 330px, var(--paper) 50%, transparent 51%),
+                radial-gradient(1.5px 1.5px at 71% 120px, var(--paper) 50%, transparent 51%),
+                radial-gradient(1px 1px at 86% 420px, var(--paper) 50%, transparent 51%),
+                radial-gradient(1.5px 1.5px at 93% 60px, var(--paper) 50%, transparent 51%),
+                radial-gradient(1px 1px at 6% 500px, var(--paper) 50%, transparent 51%),
+                radial-gradient(1px 1px at 36% 620px, color-mix(in srgb, var(--paper) 70%, transparent) 50%, transparent 51%),
+                radial-gradient(1px 1px at 79% 700px, color-mix(in srgb, var(--paper) 70%, transparent) 50%, transparent 51%),
+                linear-gradient(var(--night-deep), var(--night) 1100px) no-repeat,
+                var(--night);
             color: var(--paper);
             font-family: "Patrick Hand", "Comic Sans MS", cursive;
             font-size: 20px;
@@ -68,14 +85,14 @@
 
         a { color: inherit; }
 
-        .page { max-width: 880px; margin: 0 auto; padding: 0 16px 48px; }
+        .page { flex: 1; width: 100%; max-width: 880px; margin: 0 auto; padding: 0 16px 48px; }
 
         nav { padding: 18px 0; font-family: "Patrick Hand SC", cursive; letter-spacing: .1em; }
         nav a { color: var(--teal-light); text-decoration: none; }
         nav a:hover { color: var(--gold); }
 
         /* Hero */
-        .hero { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 32px; padding: 24px 0 40px; }
+        .hero { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 32px; padding: 24px 0 40px; }
         .hero h1 {
             margin: 0;
             font-family: "Baloo 2", sans-serif;
@@ -220,13 +237,34 @@
         .credits li + li { margin-top: 8px; }
         .credits a { color: var(--night); }
 
-        footer { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 18px; color: var(--teal-light); }
-        footer a { color: var(--teal-light); }
+        .sparkle { position: absolute; color: var(--gold); line-height: 1; pointer-events: none; }
+        .sparkle.cream { color: var(--paper); }
+
+        /* The rolling hills of the game's home screen, with the footer standing on them. */
+        .ground { position: relative; overflow: hidden; padding: 110px 16px 36px; }
+        .ground::before, .ground::after {
+            content: "";
+            position: absolute;
+            border: var(--line);
+            border-bottom: 0;
+        }
+        .ground::before {
+            inset: 20px -20% 0 30%;
+            border-radius: 50% 50% 0 0 / 70px 70px 0 0;
+            background: color-mix(in srgb, var(--grass), var(--night) 45%);
+        }
+        .ground::after {
+            inset: 56px -10% 0 -10%;
+            border-radius: 46% 54% 0 0 / 60px 60px 0 0;
+            background: linear-gradient(var(--grass), color-mix(in srgb, var(--grass), var(--ink-deep) 30%));
+        }
+        footer { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 8px 20px; max-width: 848px; margin: 0 auto; font-size: 18px; color: var(--paper); }
+        footer a { color: var(--paper); }
 
         @media (max-width: 640px) {
             body { font-size: 19px; }
             .hero { grid-template-columns: 1fr; padding-top: 8px; }
-            .moon { display: none; }
+            .moon, .sparkle.mid { display: none; }
             .notes { grid-template-columns: 1fr; }
             .shots {
                 display: flex;
@@ -254,6 +292,10 @@
                 <span class="badge">Presto su iOS e Android</span>
             </div>
             <div class="moon" aria-hidden="true"></div>
+            <span class="sparkle" style="top: 0; left: 56%; font-size: 26px;" aria-hidden="true">✦</span>
+            <span class="sparkle cream mid" style="top: 34%; left: 64%; font-size: 16px;" aria-hidden="true">✦</span>
+            <span class="sparkle mid" style="top: 76%; right: 2%; font-size: 20px;" aria-hidden="true">✦</span>
+            <span class="sparkle cream" style="top: 6%; right: 6%; font-size: 14px;" aria-hidden="true">✦</span>
         </header>
 
         <ul class="shots" aria-label="Screenshot">
@@ -319,7 +361,9 @@
                 <li>I caratteri <strong>Baloo 2</strong> di Ek Type, <strong>Patrick Hand</strong> e <strong>Patrick Hand SC</strong> di Patrick Wagesreiter sono distribuiti con licenza <a href="https://openfontlicense.org/">SIL Open Font License 1.1</a>.</li>
             </ul>
         </section>
+    </div>
 
+    <div class="ground">
         <footer>
             <span>© Federico Curzel</span>
             <a href="/privacy.html">Privacy</a>
