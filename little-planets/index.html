@@ -106,6 +106,9 @@
         .kicker { margin: 18px 0 0; font-family: "Patrick Hand SC", cursive; font-size: 18px; letter-spacing: .22em; color: var(--teal-light); }
         .hero p.lead { margin: 18px 0 26px; max-width: 30ch; font-size: 22px; }
 
+        .stores { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+        .stores img { display: block; width: 200px; height: auto; }
+
         .badge {
             display: inline-block;
             padding: 10px 24px 12px;
@@ -289,7 +292,12 @@
                 <h1>Little<br>Planets</h1>
                 <p class="kicker">Osservatorio personale</p>
                 <p class="lead">Punta il telescopio, scopri stelle e pianeti veri e immaginati, e colleziona le loro carte in un album tutto tuo.</p>
-                <span class="badge">Presto su iOS e Android</span>
+                <div class="stores">
+                    <a href="https://play.google.com/store/apps/details?id=it.curzel.littleplanets" target="_blank" rel="noopener">
+                        <img src="/images/playstore_badge.webp" alt="Disponibile su Google Play" width="200">
+                    </a>
+                    <span class="badge">Presto su iOS</span>
+                </div>
             </div>
             <div class="moon" aria-hidden="true"></div>
             <span class="sparkle" style="top: 0; left: 56%; font-size: 26px;" aria-hidden="true">✦</span>
