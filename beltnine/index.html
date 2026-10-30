@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Belt Nine</title>
     <meta name="description"
-        content="Fly a stolen ship through a living asteroid belt. Mine rocks, trade in planetary cities, take Guild work and cross wormholes with bounty hunters behind you. Play Belt Nine free in your browser, solo or with up to four players in local split screen.">
+        content="A forward-scrolling arcade shooter in vector neon. Steal a ship, blast down an endless asteroid belt through fighter squadrons, space whales, krakens and moon-sized bosses, and see how far you get. Free to play in your browser.">
     <link rel="canonical" href="https://curzel.it/beltnine/">
     <link rel="icon" href="/favicon.ico">
     <meta name="theme-color" content="#06080c">
@@ -15,9 +15,9 @@
     <meta property="og:site_name" content="Belt Nine">
     <meta property="og:title" content="Belt Nine">
     <meta property="og:description"
-        content="Mine, trade, take Guild work and outrun bounty hunters in a stolen ship. Play free in your browser, solo or with up to four players in local split screen.">
+        content="Steal a ship. Cross the Belt. See how far you get. An endless vector-neon shooter, free in your browser.">
     <meta property="og:image" content="https://curzel.it/beltnine/card.jpg">
-    <meta property="og:image:alt" content="A mining ship crossing an asteroid field past a banded gas giant">
+    <meta property="og:image:alt" content="A green wireframe ship facing a blue space station boss and a violet fighter among asteroids">
     <meta property="og:url" content="https://curzel.it/beltnine/">
     <meta name="twitter:card" content="summary_large_image">
 
@@ -28,11 +28,10 @@
       "name": "Belt Nine",
       "url": "https://curzel.it/beltnine/",
       "image": "https://curzel.it/beltnine/card.jpg",
-      "description": "Fly a stolen ship through a living asteroid belt. Mine rocks, trade in planetary cities, take Guild work, cross wormholes and outrun bounty hunters. Play solo or with up to four players in local split screen.",
-      "genre": ["Action", "Adventure", "Space Simulation", "Exploration", "Indie"],
+      "description": "A forward-scrolling arcade shooter in vector neon. Steal a ship, blast down an endless asteroid belt through fighter squadrons, space whales, krakens and moon-sized bosses, and see how far you get. Free to play in your browser.",
+      "genre": ["Action", "Arcade", "Shoot 'em up", "Indie"],
       "gamePlatform": ["Web browser", "Windows", "macOS", "Linux", "SteamOS"],
-      "playMode": ["SinglePlayer", "CoOp"],
-      "numberOfPlayers": { "@type": "QuantitativeValue", "minValue": 1, "maxValue": 4 },
+      "playMode": "SinglePlayer",
       "author": { "@type": "Person", "name": "Federico Curzel", "url": "https://curzel.it/" },
       "publisher": { "@type": "Organization", "name": "Hidden Mugs", "url": "https://curzel.it/" },
       "offers": {
@@ -438,7 +437,7 @@
         <div class="masthead">
             <div class="heading">
                 <h1>BELT NINE</h1>
-                <span class="what">A space exploration game</span>
+                <span class="what">An endless space shooter</span>
             </div>
             <div class="crumb"><a href="/">curzel.it</a></div>
             <div class="strip">Free in browser · Steam Q1 2027</div>
@@ -447,10 +446,10 @@
         <div class="body">
             <section>
                 <p class="lede">
-                    Fly a stolen ship through a living asteroid belt, with JX-9, your onboard AI and
-                    self-appointed DJ. Mine rocks, land in cities to trade and upgrade, take Guild
-                    work, and cross the belt through wormholes with bounty hunters behind you.
-                    Play solo or with up to four players in local split screen.
+                    Steal a ship. Cross the Belt. See how far you get.
+                    Belt Nine is a forward-scrolling arcade shooter drawn in vector neon: your ship
+                    flies on down an endless asteroid belt, and you slide it across the lane to
+                    shoot whatever comes the other way.
                 </p>
 
                 <div class="download-links">
@@ -484,12 +483,14 @@
             <section>
                 <div class="viewport">
                     <div class="carousel">
-                        <img src="flight.webp" width="1600" height="900" alt="Belt Nine: the ship crossing an asteroid field past a banded gas giant" fetchpriority="high">
-                        <img src="wormhole.webp" width="1600" height="900" alt="Belt Nine: a wormhole mouth open in the belt, a spiral of green and violet arcs ahead of the ship">
-                        <img src="reef.webp" width="1600" height="900" alt="Belt Nine: a reef-covered asteroid, its growths picked out in cyan">
-                        <img src="city.webp" width="1600" height="900" alt="Landed at the city of Garpha: a menu of Exchange, Shipyard and Guild over the city below">
-                        <img src="map.webp" width="1600" height="900" alt="The belt map: sectors joined by wormholes, with the pilot's sector picked out">
-                        <img src="split.webp" width="1600" height="900" alt="Four pilots in split screen, one ship per quadrant in green, pink, cyan and yellow">
+                        <img src="squadrons.webp" width="1600" height="900" alt="Belt Nine: a squadron of violet fighters sweeping down the lane at the green ship" fetchpriority="high">
+                        <img src="deathstar.webp" width="1600" height="900" alt="Belt Nine: a blue space station boss among the rocks">
+                        <img src="mimic.webp" width="1600" height="900" alt="Belt Nine: a mimic, a rock that turns out to be a great stone face">
+                        <img src="elder.webp" width="1600" height="900" alt="Belt Nine: an elder kraken's red tentacles reaching between whales">
+                        <img src="pod.webp" width="1600" height="900" alt="Belt Nine: a pod of whales crossing the belt over a planet">
+                        <img src="kraken.webp" width="1600" height="900" alt="Belt Nine: a kraken coiled in the dark">
+                        <img src="angel.webp" width="1600" height="900" alt="Belt Nine: the angel, a ring-shaped boss">
+                        <img src="destroyer.webp" width="1600" height="900" alt="Belt Nine: a destroyer looming across the lane">
                     </div>
                     <div class="carousel-controls">
                         <button id="prev" aria-label="Previous screenshot">&#10094;</button>
@@ -497,56 +498,46 @@
                     </div>
                 </div>
                 <div class="shot-foot">
-                    <span>Every sector, world and piece of music is generated from a seed.</span>
+                    <span>Every stage, creature and piece of music is grown from a seed.</span>
                     <div class="dots" id="dots" role="group" aria-label="Screenshots"></div>
                 </div>
             </section>
 
             <section>
-                <h2>Explore, mine and trade</h2>
+                <h2>On rails, two hands</h2>
                 <p class="say">
-                    Cross the belt through wormholes, one system at a time, and keep a chart of
-                    where you have been. Break asteroids apart for metal, crystal and deuterium.
-                    Weapons and boost share the same heat, so a long fight costs you your escape.
+                    The ship never turns. It flies down the track, and you slide it from side to
+                    side and push it ahead or hold it back. Hold the turbo and the belt rushes past,
+                    and the faster you go, the more every point is worth.
                 </p>
                 <p class="say">
-                    Land in cities to trade at the Exchange, fit permanent upgrades at the Shipyard,
-                    or take work from the Guild: recover lost cargo, run a courier packet, supply a
-                    port with ore, or collect a bounty. Finished jobs pay, and the credit you build
-                    up opens better work.
-                </p>
-            </section>
-
-            <section>
-                <h2>Bounty hunters and wildlife</h2>
-                <p class="say">
-                    Working a sector raises your wanted level there, and hunters come looking.
-                    Move on and let the heat die down, or stay and fight for it.
-                </p>
-                <p class="say">
-                    The belt is inhabited. Reefs grow on asteroids, things attach themselves to your
-                    hull, probe swarms strip rocks and multiply, some rocks turn out not to be
-                    rocks, and pods of whales pass through on their own business. Derelict
-                    freighters can be flown into and picked over. Black holes are exactly as
-                    forgiving as they sound.
+                    Crack rocks for points and gems, pick up rapid fire, spread shots, double points
+                    and more, and keep an eye on the gun's heat: overheat it and you are left
+                    sliding out of the way.
                 </p>
             </section>
 
             <section>
-                <h2>Local multiplayer</h2>
+                <h2>Squadrons, monsters and bosses</h2>
                 <p class="say">
-                    Up to four players can explore together in split screen. Each additional player
-                    needs a controller. Friendly fire is enabled by default and can be changed in
-                    the settings.
+                    Fighter squadrons sweep down the lane in formation. Some rocks bite back. Pods of
+                    whales drift across the track, and krakens wait in the dark. Each level ends in
+                    a boss that stops the scroll until it is down: space stations, destroyers,
+                    angels and things that should not live in space.
+                </p>
+                <p class="say">
+                    You have three lives. Lose one and you fly the level again; lose the last and
+                    the run starts over. The run itself never ends: the goal is to beat your best score.
                 </p>
             </section>
 
             <section>
                 <h2>Built from seeds</h2>
                 <p class="say">
-                    The galaxy, the worlds, the ships and the soundtrack are generated rather than
+                    The belt, the worlds, the creatures and the soundtrack are generated rather than
                     stored: there are no texture files and no audio files, just the numbers they
-                    grow from. The scene is drawn as glowing wireframe on WebGL 2.
+                    grow from. Everything is drawn as glowing wireframe by a small home-made 3D engine
+                    on WebGL 2.
                     <a href="/blog/2026_08_04_one_scene_three_renderers.html">Read how the renderer got there</a>.
                 </p>
             </section>
@@ -605,7 +596,8 @@
                         <div class="answer">
                             <p>
                                 Yes. Open the browser version on your phone or tablet and play
-                                in landscape. Touch controls appear when you touch the screen.
+                                either way up, with a thumb stick on the left and fire and turbo on
+                                the right, or drag anywhere to slide the ship.
                             </p>
                         </div>
                     </details>
@@ -614,9 +606,8 @@
                         <summary>Do I need a controller?<a class="hash" href="#controller" aria-label="Link to this question">#</a></summary>
                         <div class="answer">
                             <p>
-                                You can play solo with a keyboard and mouse, a controller, or
-                                touch controls. In split screen, each additional player needs
-                                their own controller.
+                                No. You can play with a keyboard, a mouse, a controller or touch
+                                controls.
                             </p>
                         </div>
                     </details>
@@ -626,12 +617,10 @@
 
         <div class="foot">
             <ul class="legend">
-                <li class="fkey"><span class="key">W A S D</span> Fly</li>
-                <li class="fkey"><span class="key">Mouse</span> Aim</li>
+                <li class="fkey"><span class="key">A D</span> Slide</li>
+                <li class="fkey"><span class="key">W S</span> Speed</li>
                 <li class="fkey"><span class="key">Space</span> Fire</li>
-                <li class="fkey"><span class="key">Shift</span> Boost</li>
-                <li class="fkey"><span class="key">Q E</span> Roll</li>
-                <li class="fkey"><span class="key">X</span> Brake</li>
+                <li class="fkey"><span class="key">Shift</span> Turbo</li>
                 <li class="fkey"><span class="key">Esc</span> Menu</li>
             </ul>
             <ul class="links">
