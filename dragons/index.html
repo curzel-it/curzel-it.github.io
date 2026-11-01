@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dragons!</title>
+    <meta name="description" content="Dragons! is a cozy racing game of flying dragons: raise them from the egg, make new ones at the Soul Altar and race them in age leagues, every race broadcast live.">
+    <link rel="canonical" href="https://curzel.it/dragons/">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="theme-color" content="#7EC8F5">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Dragons!">
+    <meta property="og:description" content="Raise flying dragons and race them, every race broadcast live.">
+    <meta property="og:image" content="https://curzel.it/dragons/wide-race.webp">
+    <meta property="og:url" content="https://curzel.it/dragons/">
+
+    <link rel="preload" href="fonts/Fredoka-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+    <style>
+        @font-face { font-family: "Fredoka"; font-weight: 300 700; font-display: swap; src: url("fonts/Fredoka-latin.woff2") format("woff2"); }
+        @font-face { font-family: "Lilita One"; font-weight: 400; font-display: swap; src: url("fonts/LilitaOne-400.woff2") format("woff2"); }
+
+        /* Paint sampled from the game's styles/ui/tokens.css. */
+        :root {
+            --primary: #FF4B6E;
+            --primary-dark: #C7334F;
+            --secondary: #2EC4B6;
+            --accent: #FFC83D;
+            --accent-dark: #D9971F;
+            --purple: #A855F7;
+            --navy: #283246;
+            --cream: #FFFAF1;
+            --cream-deep: #F6EEDF;
+            --cream-edge: #EADFCB;
+            --ink-muted: #6A6F7C;
+            --leather: #6B4226;
+            --sky-top: #7EC8F5;
+            --sky-bottom: #D6F0FF;
+            --meadow: #86CC5C;
+            --meadow-deep: #5AA650;
+
+            --shadow-drop: 0 3px 0 rgb(120 90 50 / .16), 0 6px 14px rgb(60 40 20 / .14);
+            --shadow-card: 0 2px 0 rgb(120 90 50 / .10), 0 10px 24px rgb(60 40 20 / .16);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100svh;
+            margin: 0;
+            background: linear-gradient(var(--sky-top), var(--sky-bottom) 900px) no-repeat, var(--sky-bottom);
+            color: var(--navy);
+            font-family: "Fredoka", "Arial Rounded MT Bold", system-ui, sans-serif;
+            font-size: 18px;
+            line-height: 1.45;
+        }
+
+        a { color: inherit; }
+
+        .page { flex: 1; width: 100%; max-width: 960px; margin: 0 auto; padding: 0 16px 48px; }
+
+        nav { padding: 18px 0; font-weight: 600; }
+        nav a { color: var(--navy); text-decoration: none; opacity: .75; }
+        nav a:hover { opacity: 1; }
+
+        .hero { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 16px 0 36px; text-align: center; }
+        .hero h1 { margin: 0; }
+        .hero h1 img { display: block; width: min(560px, 92vw); height: auto; }
+        .kicker { margin: 0; font-weight: 600; font-size: 15px; letter-spacing: .2em; text-transform: uppercase; color: var(--leather); }
+        .lead { margin: 0; max-width: 34ch; font-size: 22px; font-weight: 500; }
+
+        .actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px; margin-top: 6px; }
+        .play {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px 16px;
+            border-radius: 999px;
+            background: var(--primary);
+            color: #fff;
+            font-weight: 600;
+            font-size: 21px;
+            text-decoration: none;
+            box-shadow: inset 0 -4px 0 var(--primary-dark), var(--shadow-drop);
+            transition: translate 90ms;
+        }
+        .play:hover { translate: 0 -2px; }
+        .play small { display: block; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; opacity: .9; }
+        .play span { text-align: left; line-height: 1.1; }
+        .soon {
+            display: inline-flex;
+            flex-direction: column;
+            padding: 10px 22px 12px;
+            border-radius: 999px;
+            background: var(--accent);
+            font-weight: 600;
+            font-size: 17px;
+            line-height: 1.15;
+            box-shadow: inset 0 -4px 0 var(--accent-dark), var(--shadow-drop);
+        }
+        .soon small { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--leather); }
+
+        .banner {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            margin: 0 0 48px;
+            border: 6px solid var(--cream);
+            border-radius: 28px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .shots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 36px 28px;
+            margin: 0 0 56px;
+            padding: 0;
+            list-style: none;
+        }
+        .shots figure { margin: 0; }
+        .shots img {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 598 / 1300;
+            border: 6px solid var(--cream);
+            border-radius: 28px;
+            background: var(--navy);
+            box-shadow: var(--shadow-card);
+        }
+        .shots figcaption {
+            width: max-content;
+            max-width: 100%;
+            margin: -20px auto 0;
+            padding: 6px 16px 8px;
+            position: relative;
+            border-radius: 999px;
+            background: var(--cream);
+            font-weight: 600;
+            font-size: 16px;
+            text-align: center;
+            box-shadow: var(--shadow-drop);
+        }
+
+        .notes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 40px; }
+        .note, .panel {
+            padding: 22px 24px 24px;
+            border-radius: 22px;
+            background: var(--cream);
+            box-shadow: inset 0 -4px 0 var(--cream-edge), var(--shadow-card);
+        }
+        .note h2, .panel h2 { margin: 0 0 6px; font-weight: 600; font-size: 22px; line-height: 1.15; }
+        .note h2 { color: var(--primary); }
+        .note:nth-child(2) h2 { color: var(--secondary); }
+        .note:nth-child(3) h2 { color: var(--purple); }
+        .note:nth-child(4) h2 { color: var(--accent-dark); }
+        .note p { margin: 0; }
+
+        .panel { margin-bottom: 40px; }
+        .panel p { margin: 0 0 10px; }
+        .panel p:last-child { margin-bottom: 0; }
+        .panel .tag {
+            display: inline-block;
+            margin-right: 6px;
+            padding: 1px 12px 3px;
+            border-radius: 999px;
+            background: var(--meadow);
+            color: #fff;
+            font-weight: 600;
+        }
+        .credits ul { margin: 0; padding-left: 20px; font-size: 16px; }
+        .credits li + li { margin-top: 6px; }
+
+        .ground { padding: 64px 16px 28px; background: linear-gradient(var(--meadow), var(--meadow-deep)); border-radius: 50% 50% 0 0 / 48px 48px 0 0; }
+        footer { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 24px; max-width: 960px; margin: 0 auto; color: #fff; font-weight: 500; }
+
+        @media (max-width: 720px) {
+            .shots { grid-template-columns: repeat(2, 1fr); gap: 28px 16px; }
+            .notes { grid-template-columns: 1fr; }
+            .lead { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <nav><a href="/">← curzel.it</a></nav>
+
+        <header class="hero">
+            <h1><img src="logo.webp" alt="Dragons!" width="1024" height="270"></h1>
+            <p class="kicker">Flying dragon racing</p>
+            <p class="lead">Raise dragons from the egg, race them through the skies and watch every race broadcast live.</p>
+            <div class="actions">
+                <a class="play" href="https://dragons.curzel.it/">
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><polygon points="7,4 20,12 7,20"/></svg>
+                    <span><small>Early preview</small>Play in your browser</span>
+                </a>
+                <span class="soon"><small>Coming soon</small>Steam · App Store · Google Play</span>
+            </div>
+        </header>
+
+        <img class="banner" src="wide-race.webp" alt="A race in full flight: dragons skim a forest meadow while the standings and race control commentary run on screen" width="1200" height="675">
+
+        <ul class="shots" aria-label="Screenshots">
+            <li><figure>
+                <img src="race.webp" alt="A white dragon with a rider leading the field over the forest" width="598" height="1300" loading="lazy">
+                <figcaption>Every race, live</figcaption>
+            </figure></li>
+            <li><figure>
+                <img src="results.webp" alt="The podium and finishing order after a Main Event race" width="598" height="1300" loading="lazy">
+                <figcaption>Climb the podium</figcaption>
+            </figure></li>
+            <li><figure>
+                <img src="stable.webp" alt="A purple dragon in the stable yard, with the rest of the stable below" width="598" height="1300" loading="lazy">
+                <figcaption>Your stable</figcaption>
+            </figure></li>
+            <li><figure>
+                <img src="dragon.webp" alt="A dragon's traits: its breath element and the parts that make up its look" width="598" height="1300" loading="lazy">
+                <figcaption>No two alike</figcaption>
+            </figure></li>
+            <li><figure>
+                <img src="altar.webp" alt="Fireworks over the standing stones of the Soul Altar at night" width="598" height="1300" loading="lazy">
+                <figcaption>The Soul Altar</figcaption>
+            </figure></li>
+            <li><figure>
+                <img src="egg.webp" alt="A yellow egg with teal spots waiting in the stable yard" width="598" height="1300" loading="lazy">
+                <figcaption>Warm the eggs</figcaption>
+            </figure></li>
+        </ul>
+
+        <section class="notes">
+            <article class="note">
+                <h2>Broadcast live</h2>
+                <p>A drone camera follows the field and a director picks the cuts: the lead change, the comeback, the photo finish, with race control calling it all.</p>
+            </article>
+            <article class="note">
+                <h2>Take the reins</h2>
+                <p>Watch from the stands or ride your own dragon: steer it through the course and fight for the line.</p>
+            </article>
+            <article class="note">
+                <h2>Raise them</h2>
+                <p>Every dragon starts as an egg. Warm it, hatch it, care for it a few times a day and watch it grow from kid to teen to adult, up the age leagues to the Main Event.</p>
+            </article>
+            <article class="note">
+                <h2>Make new ones</h2>
+                <p>Bring your adult dragons to the Soul Altar for a chance at a new egg. Heads, horns, wings, tails and colours pass on to the young, so no two dragons look alike.</p>
+            </article>
+        </section>
+
+        <section class="panel">
+            <h2>Early preview</h2>
+            <p><span class="tag">Free</span> The early preview plays in your browser, on phone or desktop. The game is still in development, so expect changes, and your stable may be reset along the way.</p>
+            <p>Your save stays on your device; an optional account keeps it in step across devices and puts it on the leaderboards.</p>
+            <p>Dragons! is coming to Steam, the App Store and Google Play.</p>
+        </section>
+
+        <section class="panel credits">
+            <h2>Credits</h2>
+            <ul>
+                <li>Concept, design and development by <a href="https://curzel.it">Federico Curzel</a>.</li>
+                <li>Every dragon, course and race is generated by the game itself, with no external art, and the lofi soundtrack is generated as it plays by <a href="https://github.com/curzel-it/musicbox">musicbox</a>.</li>
+                <li>The <strong>Fredoka</strong> and <strong>Lilita One</strong> fonts are distributed under the <a href="https://openfontlicense.org/">SIL Open Font License 1.1</a>.</li>
+            </ul>
+        </section>
+    </div>
+
+    <div class="ground">
+        <footer>
+            <span>© Federico Curzel</span>
+            <a href="/privacy.html">Privacy</a>
+            <a href="/terms-and-conditions.html">Terms and conditions</a>
+        </footer>
+    </div>
+</body>
+</html>

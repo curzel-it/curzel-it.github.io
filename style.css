@@ -314,6 +314,9 @@ table tr td:last-child {
 
 .play-badge:hover { opacity: 0.85; }
 
+.play-badge.soon { width: auto; }
+.play-badge.soon:hover { opacity: 1; }
+
 .carousel-container {
     position: relative;
     overflow: hidden;
